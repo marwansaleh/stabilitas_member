@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 
-$production_path = '/var/www/html/vh8083_member_stabilitas';
+$production_path = '/var/www/html/vh8083_member_stabilitas_********';
 $testing_path = '/var/www/html/vh8083_member_stabilitas';
 
 if (PHP_SAPI === 'cli'){
@@ -29,7 +29,6 @@ if (PHP_SAPI === 'cli'){
     }
 }
 
-exit(ENVIRONMENT);
 define('SITE_PATH', str_replace('\\', '/', dirname(__FILE__)).'/');
 
 /*
