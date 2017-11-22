@@ -5,6 +5,9 @@ switch (ENVIRONMENT){
     case 'production':
         $base_url = 'http://103.82.242.43:8083/';
         break;
+    case 'testing':
+        $base_url = 'http://103.82.242.43:8083/';
+        break;
     default:
         $base_url = 'http://localhost/~marwansaleh/stabilitasmember/';
 }
