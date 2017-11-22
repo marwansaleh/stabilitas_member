@@ -86,8 +86,9 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('APP_TITLE','STABILITAS - REGISTER PESERTA');
 
-define('AGENDA_ST_NEW', 0);
-define('AGENDA_ST_APPROVE', 1);
-define('AGENDA_ST_VISITED', 2);
-define('AGENDA_ST_REPORTED', 3);
-define('AGENDA_ST_REPORT_APP', 4);
+defined('ID_USER_ROOT') or define('ID_USER_ROOT',1);
+defined('USER_ACTIVE') or define('USER_ACTIVE', 1);
+defined('USER_NOT_ACTIVE') or define('USER_NOT_ACTIVE', 0);
+
+defined('SEX_MALE') or define ('SEX_MALE', 1);
+defined('SEX_FEMALE') or define ('SEX_FEMALE', 0);
