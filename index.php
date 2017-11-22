@@ -2,12 +2,16 @@
 date_default_timezone_set('Asia/Jakarta');
 
 $production_path = '/var/www/html/vh8083_member_stabilitas';
+$testing_path = '/var/www/html/vh8083_member_stabilitas';
 
 if (PHP_SAPI === 'cli'){
     $testing = "/srv/development/coreapp";
     switch (getcwd()){
         case $production_path:
             define('ENVIRONMENT', 'production');
+            break;
+        case $testing_path:
+            define('ENVIRONMENT', 'testing');
             break;
         default:
             define('ENVIRONMENT', 'development');
@@ -16,6 +20,9 @@ if (PHP_SAPI === 'cli'){
     switch (dirname(__FILE__)){
         case $production_path:
             define('ENVIRONMENT', 'production');
+            break;
+        case $testing_path:
+            define('ENVIRONMENT', 'testing');
             break;
         default:
             define('ENVIRONMENT', 'development');
