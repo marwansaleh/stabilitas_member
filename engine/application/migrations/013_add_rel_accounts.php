@@ -6,7 +6,7 @@
  * @author marwansaleh
  */
 class Migration_add_rel_accounts extends MY_Migration {
-    protected $_table_name = 'rel_accounts';
+    protected $_table_name = 'ref_auth_users';
     protected $_primary_key = 'id';
     protected $_index_keys = array('username');
     protected $_fields = array(
