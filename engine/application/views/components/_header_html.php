@@ -38,7 +38,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo get_asset_url('ico/bsm-favicon114x114.png') ?>">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo get_asset_url('ico/bsm-favicon72x72.png') ?>">
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="<?php echo get_asset_url('ico/bsm-favicon57x57.png'); ?>">
-        <link rel="shortcut icon" href="<?php echo get_asset_url('ico/favicon.png') ?>">
+        <!--<link rel="shortcut icon" href="<?php echo get_asset_url('ico/favicon.png') ?>">-->
         
         <script src="<?php echo get_plugin_url('jquery/jquery-2.1.0.min.js') ?>"></script>
         <script src="<?php echo get_asset_url('js/main.js?'.time()) ?>"></script>
