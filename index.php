@@ -29,6 +29,7 @@ if (PHP_SAPI === 'cli'){
     }
 }
 
+exit(ENVIRONMENT);
 define('SITE_PATH', str_replace('\\', '/', dirname(__FILE__)).'/');
 
 /*
