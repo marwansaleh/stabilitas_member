@@ -86,7 +86,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('APP_TITLE','STABILITAS - REGISTER PESERTA');
 
-defined('ID_USER_ROOT') or define('ID_USER_ROOT',1);
 defined('USER_ACTIVE') or define('USER_ACTIVE', 1);
 defined('USER_NOT_ACTIVE') or define('USER_NOT_ACTIVE', 0);
 
