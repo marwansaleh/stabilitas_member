@@ -9,8 +9,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="Sistem Informasi Agenda Broker - PT. BSM">
-        <meta name="author" content="Tim Teknologi Informasi BSM">
+        <meta name="description" content="Register Peserta Event Stabilitas">
+        <meta name="author" content="IT Stabilitas">
         <!-- CSS -->
         <link href="<?php echo get_asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo get_asset_url('css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
