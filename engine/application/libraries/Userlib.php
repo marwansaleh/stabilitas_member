@@ -86,7 +86,7 @@ class Userlib extends Library {
             $user_session = array();
             //set user loggedin status
             $user_session[$this->_prefix_session_access.'isloggedin'] = TRUE;
-            $user_session[$this->_prefix_session_access.'is_root'] = $account->group_user == GROUP_USER_ROOT;
+            $user_session[$this->_prefix_session_access.'is_root'] = $account->admin == 1;
             //Save user properties to session variable
             //But clean the data first from password word
             //unset($account->password);
