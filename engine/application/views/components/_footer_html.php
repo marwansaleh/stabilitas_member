@@ -1,6 +1,6 @@
         <!-- FOOTER -->
 	<footer class="footer">
-		&copy; 2016-2017 PT. BRIngin Sejahtera Makmur
+		&copy; 2017-2018 Majalah Stabilitas - LPPI
 	</footer>
 	<!-- END FOOTER -->
 	<!-- Javascript -->
