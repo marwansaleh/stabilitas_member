@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Class of Userlib
  * Handle management of user, group and privileges
@@ -9,7 +10,7 @@ class Userlib extends Library {
     private static $objInstance;
     private $_service_url;
     
-    private $_prefix_session_access = '_ACC_';
+    private $_prefix_session_access = '_STAB_';
     private $_role_session = '_ROLE_SESSION_';
     private $_page_session = '_PAGE_SESSION_';
     private $_menu_access_granted = '_MENU_GRANTED_';
@@ -67,91 +68,64 @@ class Userlib extends Library {
         
         return FALSE;
     }
-    /**
-     * 
-     * @param string $username
-     * @param string $password
-     * @return boolean FALSE if failed, return user object if succeed
-     */
+    
     public function login($username, $password){
-        $login_service = $this->_login_service($username, $password);
-        if ($login_service && $login_service->status){
-            //login success
-            $user_loggedin = $login_service->user;
-            //but we have to check if user is active or not
-            if ($user_loggedin->active != 1){
-                $this->_error_message = 'User akun terdaftar di database, namun di-tandai sebagai tidak aktif. Silahkan hubungi bagian IT.';
-                
-                return FALSE;
-            }
-            
-            //create session for detail user
+        $tbl_user = 'ref_auth_users';
+        //query ke database apakah ada account dengan username dan password yg sesuai
+        $this->ci->db->select('*')->from($tbl_user)->where(array('username'=>$username, 'password'=>  _hash_($password)));
+        $account = $this->ci->db->get()->row();
+        
+        if (!$account){
+            $this->_error_message = 'User dan password tidak sesuai';
+            return FALSE;
+        }else if ($account->active != USER_ACTIVE){
+            $this->_error_message = 'User ditandai sebagai TIDAK AKTIF"';
+            return FALSE;
+        }else{
+            //create session variable for user
             $user_session = array();
-            foreach ($user_loggedin as $prop => $prop_value){
+            //set user loggedin status
+            $user_session[$this->_prefix_session_access.'isloggedin'] = TRUE;
+            $user_session[$this->_prefix_session_access.'is_root'] = $account->group_user == GROUP_USER_ROOT;
+            //Save user properties to session variable
+            //But clean the data first from password word
+            //unset($account->password);
+            foreach ($account as $prop => $prop_value){
                 $user_session[$this->_prefix_session_access . $prop] = $prop_value;
             }
-            $user_session[$this->_prefix_session_access.'isloggedin'] = TRUE;
-            $user_session[$this->_prefix_session_access.'is_administrator'] = $user_loggedin->root;
+            $user_session[$this->_prefix_session_access.'avatar'] = $account->sex == SEX_MALE ? 'male.png' : 'female.png';
+            //Update sesion variables to the session
             $this->ci->session->set_userdata($user_session);
             
             //prepare user menu
-            $user_menu = $this->_prepare_user_menu();
+            $user_menu = $this->_prepare_user_menu($account);
             $this->ci->session->set_userdata($this->_page_session, $user_menu);
             
-            //prepare user access
-            //$user_access = $this->_prepare_user_access();
-            //$this->ci->session->set_userdata($this->_role_session, $user_access);
+            //Prepare user access
             
-            return $user_loggedin;
-        }else{
-            if ($login_service && isset($login_service->message)){
-                $this->_error_message = $login_service->message;
-            }else{
-                $this->_error_message = 'Login service tidak berhasil';
-            }
+            return TRUE;
         }
-        
-        return FALSE;
     }
+    
     /**
      * Get menu for currelntly loggedin user
      * @return stdclass menu
      */
-    private function _prepare_user_menu(){
+    private function _prepare_user_menu($user){
         $this->ci->load->model(array('mainmenu_m'));
         
-        $me = $this->me();
         $menu_user = array();
-
-//        $user_pages = array();
-//        
-//        if ($me->privilege!=CT_GROUP_SUPER){
-//            if (!isset($this->ci->auth_group_page_m)){
-//                $this->ci->load->model('auth_group_page_m');
-//            }
-//            $user_pages_query = $this->ci->auth_group_page_m->get_by(array('group_id'=>$me->privilege,'granted'=>1));
-//            
-//            
-//            foreach ($user_pages_query as $upq){
-//                $user_pages[] = $upq->page_id;
-//            }
-//        }
-
+        
+        $where = "(hidden=0)";
+        switch ($user->group_user){
+            case GROUP_USER_TERTANGGUNG: $where .= "AND(group_user=".GROUP_USER_TERTANGGUNG." OR group_user=".GROUP_USER_ALL.")"; break;
+            case GROUP_USER_BROKER: $where .= "AND(group_user=".GROUP_USER_BROKER." OR group_user=".GROUP_USER_ALL.")"; break;
+            case GROUP_USER_ASURADUR: $where .= "AND(group_user=".GROUP_USER_ASURADUR." OR group_user=".GROUP_USER_ALL.")"; break;
+        }
         $menu_access_granted = array();
-        foreach ($this->ci->mainmenu_m->get_by(array('hidden'=>0)) as $menuitem){
-            //$menuitem->module_name = $this->ci->mtr_module_m->get_value('name',array('id'=>$menuitem->module));
+        $main_menu = $this->ci->mainmenu_m->get_by($where);
+        foreach ($main_menu as $menuitem){
             $menuitem->granted = TRUE;
-            
-//            if ($me->privilege==CT_GROUP_SUPER){
-//                $menuitem->granted = TRUE;
-//            }else{
-//                if (in_array($menuitem->id,$user_pages)){
-//                    $menuitem->granted = TRUE;
-//                }else{
-//                    $menuitem->granted = FALSE;
-//                }
-//            }
-//            
             if ($menuitem->granted){
                 $menu_access_granted[] = $menuitem->id;
             }
@@ -290,10 +264,6 @@ class Userlib extends Library {
      * @param type $user_id USER ID(optional) if omitted, userID will be taken from session
      */
     public function logout(){
-        $userid = $this->get_userid();
-//        if ($userid){
-//            $this->user_set_online_status($userid, 0);
-//        }
         $this->ci->session->sess_destroy();
     }
     /**
@@ -323,20 +293,25 @@ class Userlib extends Library {
         return isset($role_session[$role_name]) ? $role_session[$role_name] : FALSE;
     }
     /**
+     * Chek if loggedin user is ROOT user account
+     * @return boolean TRUE if user logged in is root
+     */
+    public function is_root(){
+        return $this->ci->session->userdata($this->_prefix_session_access.'is_root');
+    }
+    public function get_user_prop($prop_name){
+        $prop_value = $this->ci->session->userdata($this->_prefix_session_access.$prop_name);
+        return $prop_value;
+    }
+    /**
      * Check group is admin group
      * @param int $group_id
      * @return boolean
      */
     public function is_admin(){
-        return $this->ci->session->userdata($this->_prefix_session_access.'root');
+        return $this->ci->session->userdata($this->_prefix_session_access.'is_admin');
     }
-    /**
-     * Get admin group ID
-     * @return int
-     */
-    public function get_admin_groupID(){
-        return CT_USERTYPE_ROOT;
-    }
+    
     /**
      * Generate password
      * @return string
@@ -368,9 +343,6 @@ class Userlib extends Library {
         return $user;
     }
     
-    public function update_avatar($avatar){
-        $this->ci->session->set_userdata($this->_prefix_session_access.'avatar', $avatar);
-    }
     /**
      * Get user menu
      * @return array of user menu
@@ -378,7 +350,6 @@ class Userlib extends Library {
     public function get_user_menu(){
         return $this->ci->session->userdata($this->_page_session);
     }
-    
 }
 
 /**
