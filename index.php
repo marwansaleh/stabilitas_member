@@ -66,7 +66,6 @@ switch (ENVIRONMENT)
 		exit(1); // EXIT_ERROR
 }
 
-exit(ENVIRONMENT);
 /*
  *---------------------------------------------------------------
  * SYSTEM FOLDER NAME
