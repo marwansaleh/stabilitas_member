@@ -13,71 +13,80 @@ class Member extends REST_Api {
     }
     
     public function index_post(){
-        $this->load->model(array('auth_user_m'));
+        $this->load->model(array('rel_member_m'));
         $result = array('status'=>FALSE, 'message'=>'');
         
         $id = $this->post('id');
-        $username = $this->post('username');
-        $group_user = $this->post('group_user');
-        $organisation = $this->post('organisation');
-        $sex = $this->post('sex');
-        $active = $this->post('active');
-        $fullname = $this->post('fullname');
-        $change_password = $this->post('change_password');
-        $retype_password = $this->post('retype_password');
-        
-        $continue = TRUE;
+        $nama = $this->post('nama');
+        $jenis_kelamin = $this->post('jenis_kelamin');
+        $tempat_lahir = $this->post('tempat_lahir');
+        $tanggal_lahir = $this->post('tanggal_lahir');
+        $agama = $this->post('agama');
+        $no_hp = $this->post('no_hp');
+        $alamat_email = $this->post('alamat_email');
+        $soc_facebook = $this->post('soc_facebook');
+        $soc_twitter = $this->post('soc_twitter');
+        $soc_instagram = $this->post('soc_instagram');
+        $soc_youtube = $this->post('soc_youtube');
+        $soc_linkedin = $this->post('soc_linkedin');
+        $alamat_rumah = $this->post('alamat_rumah');
+        $propinsi = $this->post('propinsi');
+        $kota = $this->post('kota');
+        $kode_pos = $this->post('kode_post');
+        $telepon_rumah = $this->post('telepon_rumah');
+        $nama_perusahaan = $this->post('nama_perusahaan');
+        $jabatan = $this->post('jabatan');
+        $alamat_kantor = $this->post('alamat_kantor');
+        $telepon_kantor = $this->post('telepon_kantor');
+        $fax_kantor = $this->post('fax_kantor');
+        $website_kantor = $this->post('website_kantor');
+        $pendidikan_terakhir = $this->post('pendidikan_terakhir');
         
         $data_update = array(
-            'username'      => $username,
-            'group_user'    => $group_user,
-            'organisation'  => $organisation,
-            'sex'           => $sex,
-            'active'        => $active,
-            'fullname'      => $fullname
+            'nama'                  => $nama,
+            'jenis_kelamin'         => $jenis_kelamin,
+            'tempat_lahir'          => $tempat_lahir,
+            'tanggal_lahir'         => $tanggal_lahir,
+            'agama'                 => $agama,
+            'no_hp'                 => $no_hp,
+            'alamat_email'          => $alamat_email,
+            'soc_facebook'          => $soc_facebook,
+            'soc_twitter'           => $soc_twitter,
+            'soc_instagram'         => $soc_instagram,
+            'soc_youtube'           => $soc_youtube,
+            'soc_linkedin'          => $soc_linkedin,
+            'alamat_rumah'          => $alamat_rumah,
+            'propinsi'              => $propinsi,
+            'kota'                  => $kota,
+            'kode_pos'              => $kode_pos,
+            'telepon_rumah'         => $telepon_rumah,
+            'nama_perusahaan'       => $nama_perusahaan,
+            'jabatan'               => $jabatan,
+            'alamat_kantor'         => $alamat_kantor,
+            'telepon_kantor'        => $telepon_kantor,
+            'fax_kantor'            => $fax_kantor,
+            'website_kantor'        => $website_kantor,
+            'pendidikan_terakhir'   => $pendidikan_terakhir
         );
         
         if (!$id){
-            //check whether same username exists
-            if ($this->auth_user_m->get_count(array('username'=>$username))){
-                $result['message'] = 'Same username already exists';
-                $continue = FALSE;
-            }else if (empty ($change_password) || empty ($retype_password)){
-                $result['message'] = 'Password must not empty';
-                $continue = FALSE;
-            }else if ($change_password != $retype_password){
-                $result['message'] = 'Password not matches';
-                $continue = FALSE;
-            }
-            
             $data_update = array_merge($data_update, array(
-                'password'      => _hash_($change_password),
-                'inserted'      => time()
+                'tanggal_daftar'      => date('Y-m-d H:i:s')
             ));
-        }else{
-            if (!empty($change_password)){
-                if ($change_password != $retype_password){
-                    $result['message'] = 'Password not matches';
-                    $continue = FALSE;
-                }
-                
-                $data_update = array_merge($data_update, array('password'=>  _hash_($change_password)));
-            }
         }
         
-        //if everything is ok, try to update
-        if ($continue){
-            if ($this->auth_user_m->save($data_update, $id)){
-                $result['status'] = TRUE;
-            }else{
-                $result['message'] = $this->auth_user_m->get_last_message();
-            }
+        $success_id=$this->rel_member_m->save($data_update, $id);
+        if ($success_id){
+            $result['status'] = TRUE;
+            $result['item'] = $this->rel_member_m->get($success_id);
+        }else{
+            $result['message'] = $this->rel_member_m->get_last_message();
         }
         
         $this->response($result);
     }
     
-    public function all_get(){
+    public function index_get(){
         $this->load->model(array('rel_member_m'));
         
         $draw = $this->get('draw');
@@ -122,169 +131,19 @@ class Member extends REST_Api {
         $this->response($result);
     }
     
-    
-    public function batch_upload_post(){
-        $this->load->model(array('rel_batch_penutupan_m','rel_history_m'));
-        
-        $result = array('error'=>NULL, 'initialPreview'=>NULL, 'initialPreviewConfig'=>NULL, 'initialPreviewThumbTags'=>TRUE);
-        
-        $upload_path = sys_get_temp_dir();
-        
-        $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = 'doc|docx|xls|xlsx';
-        $config['max_size'] = 10000;
-
-        $this->load->library('upload', $config);
-        
-        if (!$this->upload->do_upload('userfile')) {
-            $result['error'] = $this->upload->display_errors();
-        } else {
-            $upload = $this->upload->data();
-            
-            //create new batch data rows
-            $batchID = $this->rel_batch_penutupan_m->save(array(
-                'tanggal_upload'        => date('Y-m-d H:i:s'),
-                'user_upload'           => $this->post('user_upload'),
-                'status'                => 0
-            ));
-            //read downloaded file
-            $read_result = $this->_read_batch_penutupan_file($batchID, $upload['full_path'], 2);
-            if ($read_result->status){
-                $result['status'] = TRUE;
-                $result['batch_id'] = $batchID;
-                $result['upload'] = $read_result;
-            }
-            
-            //update action history
-            $this->rel_history_m->save(array(
-                'act_date'              => date('Y-m-d H:i:s'),
-                'batch'                 => $batchID,
-                'item'                  => 0,
-                'action'                => 'Upload data penutupan asuransi'
-            ));
-        }
-        
-        $this->response($result);
-    }
-    
-    private function _read_batch_penutupan_file($batchID, $excel_file, $start_row=1){
-        $this->load->model(array('rel_batch_penutupan_m','rel_penutupan_m','rel_premi_rate_m'));
-        
-        
-        
-        /** PHPExcel root directory */
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPPATH . 'libraries/');
-            require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-        }
-        
-        $return = new stdClass();
-        $return->status = FALSE;
-        $return->error = '';
-        $return->filepath = $excel_file;
-        
-        try {
-            $inputFileType = PHPExcel_IOFactory::identify($excel_file);
-            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-            $objPHPExcel = $objReader->load($excel_file);
-        } catch(Exception $e) {
-            $return->error = $e->getMessage();
-            return $return;
-        }
-        
-        //  Get worksheet dimensions
-        $sheet = $objPHPExcel->getSheet(0); 
-        $startCol = 'A';
-        $highestColumn = 'AV'; //change this 
-        $startRow = $start_row;
-        $highestRow = $sheet->getHighestRow(); //4016; //
-        
-        $colRef = array(
-            'no'=>0,'nama'=>1,'tgl_lahir'=>2,'nip'=>3, 'ktp'=>4, 'alamat'=>5, 'pendapatan'=>6,
-            'kredit'=>7, 'mulai'=>8, 'akhir'=>9
-        );
-        $return->batch_id = $batchID;
-        $return->start_row = $startRow;
-        $return->row_num = $highestRow;
-        
-        $total_data = 0;
-        $total_plafond = 0;
-        $total_premi = 0;
-        $total_komisi = 0;
-        
-        //  Loop through each row of the worksheet in turn
-        for ($rowNum = $startRow; $rowNum <= $highestRow; $rowNum++){ 
-            //  Read a row of data into an array
-            $rowData = $sheet->rangeToArray($startCol . $rowNum . ':' . $highestColumn . $rowNum, NULL, TRUE, TRUE);
-            
-            //calculate premi rate
-            $start_date = $this->_convert_date_2_mysql($rowData[0][$colRef['mulai']]);
-            $end_date = $this->_convert_date_2_mysql($rowData[0][$colRef['akhir']]);
-            $tenor = tenor_calc($start_date, $end_date);
-            $premi_rate_row = $this->rel_premi_rate_m->get_by(array('tenor'=>$tenor), TRUE);
-            if ($premi_rate_row){
-                $premi_rate = $premi_rate_row->rate;
-            }else{
-                $premi_rate = 0;
-            }
-            
-            //start manipulate data row
-            $data_update = array(
-                'batch'             => $batchID,
-                'nama_peserta'      => $rowData[0][$colRef['nama']],
-                'tanggal_lahir'     => $this->_convert_date_2_mysql($rowData[0][$colRef['tgl_lahir']]),
-                'nip_peserta'       => $rowData[0][$colRef['nip']],
-                'no_ktp'            => $rowData[0][$colRef['ktp']],
-                'alamat'            => $rowData[0][$colRef['alamat']],
-                'pendapatan_bulanan'=> $rowData[0][$colRef['pendapatan']],
-                'plafon_kredit'     => $rowData[0][$colRef['kredit']],
-                'waktu_mulai'       => $start_date,
-                'waktu_akhir'       => $end_date,
-                'tenor'             => $tenor,
-                'rate_premi'        => $premi_rate,
-                'nilai_premi'       => $premi_rate * $rowData[0][$colRef['kredit']],
-                'inserted'          => time()
-            );
-			
-            
-            //Insert data into database
-            $this->rel_penutupan_m->save($data_update);
-            
-            $total_plafond+=$rowData[0][$colRef['kredit']];
-            $total_premi+=$premi_rate * $rowData[0][$colRef['kredit']];
-            $total_data++;
-        }
-        
-        $return->total_data = $total_data;
-        
-        //update table batch penutupan
-        $this->rel_batch_penutupan_m->save(array(
-            'jumlah_data'       => $total_data,
-            'tsi_penutupan'     => $total_plafond,
-            'premi_penutupan'   => $total_premi,
-            'komisi_penutupan'  => 1
-        ), $batchID);
-        
-        $return->status = TRUE;
-        return $return;
-    }
-    
-    private function _convert_date_2_mysql($date){
-        $arr = explode('/', $date);
-        
-        return $arr[2].'-'.$arr[0].'-'.$arr[1];
-    }
-    
-    public function detail_get($id){
-        $this->load->model(array('rel_penutupan_m'));
+    public function detail_get(){
+        $this->load->model(array('rel_member_m','ref_agama_m'));
         $result = array('status'=>FALSE);
         
-        $item = $this->rel_penutupan_m->get($id);
+        $id = $this->get('id');
+        $item = $this->rel_member_m->get($id);
+        
         if ($item){
+            $item->agama = $this->ref_agama_m->get($item->agama);
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
-            $result['message'] = 'Data penutupan dengan ID:'.$id.' tidak ditemukan';
+            $result['message'] = 'Data peserta dengan ID:'.$id.' tidak ditemukan';
         }
         $this->response($result);
     }

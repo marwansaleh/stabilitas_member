@@ -19,7 +19,6 @@ class Member extends Admin_Controller {
         $this->data['subview'] = 'member/register/index';
         $this->load->view('_layout_main', $this->data);
     }
-    
 }
 
 /*
