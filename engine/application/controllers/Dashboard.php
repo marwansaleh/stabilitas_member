@@ -9,26 +9,20 @@ class Dashboard extends Admin_Controller {
         $page_title = 'Dashboard';
         $the_view = 'dashboard/root/index';
         $user = $this->userlib->me();
-        switch ($user->group_user){
-            case GROUP_USER_TERTANGGUNG:
-                $the_view = 'dashboard/tertanggung/index'; 
-                $page_title .= ' - TERTANGGUNG'; 
+        switch ($user->admin){
+            case GROUP_ADMIN:
+                $the_view = 'dashboard/admin/index'; 
+                $page_title .= ' - ADMIN'; 
                 break;
             case GROUP_USER_BROKER:
-                $the_view = 'dashboard/broker/index'; 
-                $page_title .= ' - BROKER';
+                $the_view = 'dashboard/user/index'; 
+                $page_title .= ' - USER';
                 break;
-            case GROUP_USER_ASURADUR:
-                $the_view = 'dashboard/asuradur/index'; 
-                $page_title .= ' - ASURADUR';
-                break;
-            case GROUP_USER_ROOT:
-                $the_view = 'dashboard/root/index'; break;
         }
         $this->data['subview'] = $the_view;
         
         $this->data['page_title'] = 'Dashboard';
-        $this->data['page_subtitle'] = 'Penutupan Asuransi Online LION';
+        $this->data['page_subtitle'] = 'Register data peserta';
         
         $this->load->view('_layout_main', $this->data);
     }
