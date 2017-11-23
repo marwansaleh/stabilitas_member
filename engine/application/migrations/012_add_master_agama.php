@@ -20,6 +20,34 @@ class Migration_add_master_agama extends MY_Migration {
             'null' => FALSE
         )
     );
+    
+    public function up() {
+        parent::up();
+        
+        $agama = array(
+            array(
+                'id'            => '01',
+                'agama'         => 'ISLAM'
+            ),
+            array(
+                'id'            => '02',
+                'agama'         => 'KATOLIK'
+            ),
+            array(
+                'id'            => '03',
+                'agama'         => 'PROTESTAN'
+            ),
+            array(
+                'id'            => '04',
+                'agama'         => 'BUDHA'
+            ),
+            array(
+                'id'            => '05',
+                'agama'         => 'HINDU'
+            ),
+        );
+        $this->_seed($agama);
+    }
 }
 
 /*

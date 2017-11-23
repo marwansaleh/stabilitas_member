@@ -5,15 +5,18 @@ class Member extends Admin_Controller {
 
     public function register()
     {
+        $this->load->model(array('ref_agama_m'));
         $this->data['page_title'] = 'Member';
         $this->data['page_subtitle'] = 'Register member';
+        
+        $this->data['religion'] = $this->ref_agama_m->get();
         
         //set breadcumb
         breadcumb_add($this->data['breadcumb'], '<i class="fa fa-home"></i> Home', get_action_url('dashboard'));
         breadcumb_add($this->data['breadcumb'], 'Member', get_action_url('member/register'));
         breadcumb_add($this->data['breadcumb'], 'Register', get_action_url('member/register'), TRUE);
         
-        $this->data['subview'] = 'member/register';
+        $this->data['subview'] = 'member/register/index';
         $this->load->view('_layout_main', $this->data);
     }
     
