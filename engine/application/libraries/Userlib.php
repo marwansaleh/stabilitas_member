@@ -10,7 +10,7 @@ class Userlib extends Library {
     private static $objInstance;
     private $_service_url;
     
-    private $_prefix_session_access = '_LIONBRI_';
+    private $_prefix_session_access = '_STAB_';
     private $_role_session = '_ROLE_SESSION_';
     private $_page_session = '_PAGE_SESSION_';
     private $_menu_access_granted = '_MENU_GRANTED_';
@@ -117,10 +117,10 @@ class Userlib extends Library {
         $menu_user = array();
         
         $where = "(hidden=0)";
-        switch ($user->group_user){
-            case GROUP_USER_TERTANGGUNG: $where .= "AND(group_user=".GROUP_USER_TERTANGGUNG." OR group_user=".GROUP_USER_ALL.")"; break;
-            case GROUP_USER_BROKER: $where .= "AND(group_user=".GROUP_USER_BROKER." OR group_user=".GROUP_USER_ALL.")"; break;
-            case GROUP_USER_ASURADUR: $where .= "AND(group_user=".GROUP_USER_ASURADUR." OR group_user=".GROUP_USER_ALL.")"; break;
+        switch ($user->admin){
+            case GROUP_USER:
+                $where .= "AND(admin=0)"; break;
+            default:
         }
         $menu_access_granted = array();
         $main_menu = $this->ci->mainmenu_m->get_by($where);
