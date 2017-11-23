@@ -93,7 +93,7 @@ class Userlib extends Library {
             foreach ($account as $prop => $prop_value){
                 $user_session[$this->_prefix_session_access . $prop] = $prop_value;
             }
-            $user_session[$this->_prefix_session_access.'avatar'] = $account->sex == SEX_MALE ? 'male.png' : 'female.png';
+            //$user_session[$this->_prefix_session_access.'avatar'] = $account->sex == SEX_MALE ? 'male.png' : 'female.png';
             //Update sesion variables to the session
             $this->ci->session->set_userdata($user_session);
             
