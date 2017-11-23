@@ -31,6 +31,11 @@ class Migration_add_rel_accounts extends MY_Migration {
             'constraint' => 48,
             'null' => TRUE
         ),
+        'sex'  => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => 0
+        ),
         'active'  => array(
             'type' => 'TINYINT',
             'constraint' => 1,
@@ -50,6 +55,7 @@ class Migration_add_rel_accounts extends MY_Migration {
                 'admin'         => 1,
                 'username'      => 'root',
                 'password'      => _hash_('root'),
+                'sex'           => SEX_MALE,
                 'active'        => 1,
                 'last_loggedin' => date('Y-m-d H:i:s')
             ),
@@ -57,6 +63,7 @@ class Migration_add_rel_accounts extends MY_Migration {
                 'admin'         => 0,
                 'username'      => 'user1',
                 'password'      => _hash_('123456'),
+                'sex'           => SEX_FEMALE,
                 'active'        => 1,
                 'last_loggedin' => date('Y-m-d H:i:s')
             )
