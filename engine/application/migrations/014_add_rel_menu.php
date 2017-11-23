@@ -194,6 +194,15 @@ class Migration_add_rel_menu extends MY_Migration {
                         'sort'          => 0,
                         'admin'         => 0,
                         'hidden'        => 0
+                    ),
+                    array(
+                        'caption'       => 'Daftar Kehadiran',
+                        'title'         => NULL,
+                        'icon'          => NULL,
+                        'link'          => 'event/participant',
+                        'sort'          => 1,
+                        'admin'         => 0,
+                        'hidden'        => 0
                     )
                 )
             )
