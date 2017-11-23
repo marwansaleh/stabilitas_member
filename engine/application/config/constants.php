@@ -91,3 +91,6 @@ defined('USER_NOT_ACTIVE') or define('USER_NOT_ACTIVE', 0);
 
 defined('SEX_MALE') or define ('SEX_MALE', 1);
 defined('SEX_FEMALE') or define ('SEX_FEMALE', 0);
+
+defined('GROUP_ADMIN') or define ('GROUP_ADMIN', 1);
+defined('GROUP_USER') or define ('GROUP_USER', 0);
