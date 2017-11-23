@@ -125,7 +125,7 @@ class Migration_add_rel_menu extends MY_Migration {
             array(
                 'caption'       => 'USER MANAGEMENT',
                 'title'         => 'Manage user accounts',
-                'icon'          => 'fa-users',
+                'icon'          => 'fa-lock',
                 'link'          => NULL,
                 'sort'          => 2,
                 'admin'         => 1,
@@ -158,7 +158,7 @@ class Migration_add_rel_menu extends MY_Migration {
             array(
                 'caption'       => 'PESERTA',
                 'title'         => 'Menu peserta',
-                'icon'          => 'fa-reg',
+                'icon'          => 'fa-users',
                 'link'          => NULL,
                 'sort'          => 3,
                 'admin'         => 0,
