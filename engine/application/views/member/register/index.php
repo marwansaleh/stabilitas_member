@@ -238,7 +238,11 @@
                 <table class="table table-bordered" id="tb-detail">
                     <tbody>
                         <tr>
-                            <th scope="row" class="active" style="width: 150px;">NAMA PESERTA</th>
+                            <th scope="row" class="active" style="width: 150px;">NOMOR REGISTRASI</th>
+                            <td class="nomor_registrasi"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="active">NAMA PESERTA</th>
                             <td class="nama"></td>
                         </tr>
                         <tr>
@@ -429,6 +433,7 @@
                                             var table = $dlg.find('table#tb-detail');
                                             var tb_events = $dlg.find('table#tb-events tbody');
                                             
+                                            table.find('.nomor_registrasi').html(data.item.nomor_registrasi);
                                             table.find('.nama').html(data.item.nama);
                                             table.find('.jenis_kelamin').html(data.item.jenis_kelamin);
                                             table.find('.tempat_tgl_lahir').html(data.item.tempat_lahir + ', '+data.item.tanggal_lahir);
