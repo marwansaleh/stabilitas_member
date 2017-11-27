@@ -4,7 +4,7 @@
             <thead>
                 <tr role="row">
                     <th style="width: 30px;"></th>
-                    <th class="text-center">ID</th>
+                    <th class="text-center">REGID</th>
                     <th>Nama</th>
                     <th class="text-center">L/P</th>
                     <th class="text-center">Tgl.Lahir</th>
@@ -482,7 +482,7 @@
                 select: true,
                 columns:[
                     {data: null, class:"select-checkbox text-center", orderable: false, defaultContent:""},
-                    {data: "id", class:"text-center"},
+                    {data: "nomor_registrasi", class:"text-center"},
                     {data: "nama"},
                     {data: "jenis_kelamin", class: "text-center"},
                     {data: "tanggal_lahir", class: "text-center"},
