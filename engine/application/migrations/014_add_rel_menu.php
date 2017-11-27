@@ -190,7 +190,7 @@ class Migration_add_rel_menu extends MY_Migration {
                         'caption'       => 'Daftar Event',
                         'title'         => NULL,
                         'icon'          => NULL,
-                        'link'          => 'event/register',
+                        'link'          => 'event/index',
                         'sort'          => 0,
                         'admin'         => 0,
                         'hidden'        => 0

@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Description of Rel_batch_penutupan_m
+ * Description of Rel_participant_m
  *
  * @author Marwan
  * @email amazzura.biz@gmail.com
  */
-class Rel_batch_penutupan_m extends MY_Model {
-    protected $_table_name = 'rel_batch_penutupan';
+class Rel_participant_m extends MY_Model {
+    protected $_table_name = 'rel_event_peserta';
     protected $_primary_key = 'id';
     protected $_primary_filter = 'intval';
     protected $_order_by = 'id';
@@ -15,5 +15,5 @@ class Rel_batch_penutupan_m extends MY_Model {
 }
 
 /*
- * file location: /application/models/Rel_batch_penutupan_m.php
+ * file location: /application/models/Rel_participant_m.php
  */

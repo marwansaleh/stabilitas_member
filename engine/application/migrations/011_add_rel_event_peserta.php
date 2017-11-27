@@ -24,6 +24,11 @@ class Migration_add_rel_event_peserta extends MY_Migration {
             'constraint' => 11,
             'null' => FALSE
         ),
+        'present'  => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => 0
+        ),
     );
 }
 

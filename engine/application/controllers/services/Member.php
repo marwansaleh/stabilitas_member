@@ -131,8 +131,24 @@ class Member extends REST_Api {
         $this->response($result);
     }
     
+    public function get_get(){
+        $this->load->model(array('rel_member_m'));
+        $result = array('status'=>FALSE);
+        
+        $id = $this->get('id');
+        $item = $this->rel_member_m->get($id);
+        
+        if ($item){
+            $result['status'] = TRUE;
+            $result['item'] = $item;
+        }else{
+            $result['message'] = 'Data peserta dengan ID:'.$id.' tidak ditemukan';
+        }
+        $this->response($result);
+    }
+    
     public function detail_get(){
-        $this->load->model(array('rel_member_m','ref_agama_m'));
+        $this->load->model(array('rel_member_m','ref_agama_m','ref_event_m','rel_participant_m'));
         $result = array('status'=>FALSE);
         
         $id = $this->get('id');
@@ -140,11 +156,84 @@ class Member extends REST_Api {
         
         if ($item){
             $item->agama = $this->ref_agama_m->get($item->agama);
+            $item->events = array();
+            $events = $this->rel_participant_m->get_by(array('anggota'=>$item->id));
+            if ($events){
+                foreach($events as $event_peserta){
+                    $event = $this->ref_event_m->get($event_peserta->event);
+                    $event->event_participant_id = $event_peserta->id;
+                    $event->present = $event_peserta->present;
+                    
+                    $item->events[] = $event;
+                }
+            }
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
             $result['message'] = 'Data peserta dengan ID:'.$id.' tidak ditemukan';
         }
+        $this->response($result);
+    }
+    
+    public function events_get(){
+        $this->load->model(array('ref_event_m','rel_participant_m'));
+        $result = array('event'=>array());
+        
+        $member_id = $this->get('member_id');
+        $events = $this->rel_participant_m->get_by(array('anggota'=>$member_id));
+        if ($events){
+            foreach($events as $event_peserta){
+                $event = $this->ref_event_m->get($event_peserta->event);
+                $event->event_participant_id = $event_peserta->id;
+                $event->present = $event_peserta->present;
+
+                $result['events'][] = $event;
+            }
+        }
+        $this->response($result);
+    }
+    
+    public function event_post(){
+        $this->load->model(array('rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $anggota = $this->post('anggota');
+        $event = $this->post('event');
+        $present = $this->post('event');
+        
+        if ($this->rel_participant_m->get_count(array('anggota'=>$anggota,'event'=>$event))){
+            $result['message'] = 'Peserta telah mengikuti event ini';
+        }else{
+
+            $success_id = $this->rel_participant_m->save(array('anggota'=>$anggota,'event'=>$event,'present'=>$present));
+            if ($success_id){
+                $result['status'] = TRUE;
+                $result['item'] = $this->rel_participant_m->get($success_id);
+            }else{
+                $result['message'] = $this->rel_participant_m->get_last_message();
+            }
+        }
+        $this->response($result);
+    }
+    
+    public function event_delete(){
+        $this->load->model(array('rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $event_participant_id = $this->delete('event');
+        $item = $this->rel_participant_m->get($event_participant_id);
+        
+        if ($item){
+            if ($this->rel_participant_m->delete($event_participant_id)){
+                $result['status'] = TRUE;
+                $result['item'] = $item;
+            }else{
+                $result['message'] = $this->rel_participant_m->get_last_message();
+            }
+        }else{
+            $result['message'] = 'Data kepesertaan dengan ID:'.$event_participant_id.' tidak ditemukan';
+        }
+        
         $this->response($result);
     }
     

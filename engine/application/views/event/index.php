@@ -1,0 +1,312 @@
+<div class="row">
+    <div class="col-sm-12">
+        <table id="myDataTable" class="table table-bordered" role="grid" style="width: 100%;">
+            <thead>
+                <tr role="row">
+                    <th style="width: 30px;"></th>
+                    <th class="text-center">Nama Event</th>
+                    <th class="text-center">Tanggal</th>
+                    <th class="text-right">#Hari</th>
+                    <th class="text-center">#Peserta</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade in" id="myModalUpdate" role="dialog" aria-labelledby="myModalUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title" id="myModalUpdateLabel">TAMBAH EVENT</h4>
+            </div>
+            <div class="modal-body">
+                <form id="MyFormUpdate" class="form-validation">
+                    <input type="hidden" name="id" class="form-control" value="0">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Nama kegiatan</label>
+                                <input type="text" name="nama_kegiatan" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Tanggal kegiatan</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control datepicker" name="tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Jumlah hari</label>
+                                <input type="number" step="1" min="1" name="jumlah_hari" class="form-control" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Lokasi kegiatan</label>
+                                <input type="text" name="lokasi" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Submit</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="myModalDetail" role="dialog" aria-labelledby="myModalDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title" id="myModalDetailLabel">DETAIL DATA EVENT</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" id="tb-detail">
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="active" style="width: 40%;">NAMA EVENT</th>
+                            <th scope="row" class="active text-center" style="width: 30%;">TANGGAL KEGIATAN</th>
+                            <th scope="row" class="active text-center" style="width: 30%;">JUMLAH HARI</th>
+                            
+                        </tr>
+                        <tr>
+                            <td class="nama_kegiatan"></td>
+                            <td class="tanggal text-center"></td>
+                            <td class="jumlah_hari text-center"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="active" colspan="3">LOKASI</th>
+                        </tr>
+                        <tr>
+                            <td class="lokasi" colspan="3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped" id="tb-participants">
+                    <thead>
+                        <tr>
+                            <th>NAMA PESERTA</th>
+                            <th>PERUSAHAAN</th>
+                            <th>JABATAN</th>
+                            <th class="text-center">HADIR</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-print" data-member-id=""><span class="fa fa-print"></span> Print</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var Manager_JS = {
+        init: function(){
+            var _this = this;
+            var table = $('#myDataTable').DataTable({
+                searching: true,
+                ordering: true,
+                order: [2,"desc"],
+                rowId: 'id',
+                processing: true,
+                serverSide: true,
+                sDom: "<'row'<'col-sm-2'l><'col-sm-7'B><'col-sm-3'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                buttons:{
+                    buttons: [
+                        { 
+                            text: '<i class="fa fa-plus"></i> Add', 
+                            className:'dt-btn-add', 
+                            enabled: true,
+                            action: function( e, dt, btn, config ){
+                                var $form = $('#MyFormUpdate');
+                                var $dlg = $('#myModalUpdate');
+                                $dlg.find('.modal-title').html('TAMBAH EVENT');
+                                $form.find('[name="id"]').val(0);
+                                $form.find('[name="nama_kegiatan"]').val('');
+                                $form.find('[name="tanggal"]').val();
+                                $form.find('[name="jumlah_hari"]').val(1);
+                                $form.find('[name="lokasi"]').val('');
+                                $dlg.modal();
+                                
+                            }
+                        },
+                        { 
+                            text: '<i class="fa fa-pencil"></i> Edit', 
+                            className:'dt-btn-edit', 
+                            enabled: false,
+                            action: function( e, dt, btn, config ){
+                                var item = dt.row({selected: true}).data();
+                                if (item){
+                                    var btnIcon = $(btn).find('i');
+                                    btnIcon.removeClass('fa-edit').addClass('fa-spin fa-spinner');
+
+                                    var $form = $('#MyFormUpdate');
+                                    var $dlg = $('#myModalUpdate');
+                                    $dlg.find('.modal-title').html('UPDATE EVENT');
+                                    
+                                    $.ajax({
+                                        url:"<?php echo get_action_url('services/event/get'); ?>",
+                                        type: "GET",
+                                        data: {id: item.id}
+                                    }).then(function(data){
+                                        if (data.status){
+                                            $form.find('[name="id"]').val(data.item.id);
+                                            $form.find('[name="nama_kegiatan"]').val(data.item.nama_kegiatan);
+                                            $form.find('[name="jumlah_hari"]').val(data.item.jumlah_hari);
+                                            $form.find('[name="tangal"]').val(data.item.tanggal);
+                                            $form.find('[name="lokasi"]').val(data.item.lokasi);
+                                            $dlg.modal();
+                                        }else{
+                                            alert(data.message);
+                                        }
+                                    }).always(function(){
+                                        btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-edit');
+                                    });
+
+                                    
+                                }else{
+                                    alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
+                                }
+                            }
+                        },
+                        { 
+                            text: '<i class="fa fa-eye"></i> Lihat Detail', 
+                            className:'dt-btn-detail', 
+                            enabled: false,
+                            action: function( e, dt, btn, config ){
+                                var item = dt.row({selected: true}).data();
+                                if (item){
+                                    var btnIcon = $(btn).find('i');
+                                    btnIcon.removeClass('fa-eye').addClass('fa-spin fa-spinner');
+
+                                    var $dlg = $('#myModalDetail');
+                                    $dlg.find('.modal-title').html('DETAIL DATA EVENT');
+                                    $dlg.find('.btn-print').data('memberId', item.id);
+                                    $.ajax({
+                                        url:"<?php echo get_action_url('services/event/detail'); ?>/"+item.id,
+                                        type: "GET",
+                                        data: {id: item.id}
+                                    }).then(function(data){
+                                        if (data.status){
+                                            var table = $dlg.find('#tb-detail');
+                                            var tb_participant = $dlg.find('#tb-participants tbody');
+                                            
+                                            table.find('.nama_kegiatan').html(data.item.nama_kegiatan);
+                                            table.find('.jumlah_hari').html(data.item.jumlah_hari);
+                                            table.find('.tanggal').html(data.item.tanggal);
+                                            table.find('.lokasi').html(data.item.lokasi);
+                                            
+                                            tb_participant.empty();
+                                            if (data.item.participants.length > 0){
+                                                
+                                                for (var p in data.item.participants){
+                                                    var participant = data.item.participants[p];
+                                                    var s = '<tr>';
+                                                    s+='<td>'+participant.nama+'</td>';
+                                                    s+='<td>'+participant.nama_perusahaan+'</td>';
+                                                    s+='<td>'+participant.jabatan+'</td>';
+                                                    s+='<td class="text-center">'+(participant.present==1?'<span class="fa fa-check"></span>':'<span class="fa fa-ellipsis-h"></span>')+'</td>';
+                                                    
+                                                    tb_participant.append(s);
+                                                }
+                                            }else{
+                                                var s ='<tr><td colspan="4">Tidak ada data peserta event ini</td></tr>';
+                                                tb_participant.append(s);
+                                            }
+                                            $dlg.modal();
+                                        }else{
+                                            alert(data.message);
+                                        }
+                                    }).always(function(){
+                                        btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-eye');
+                                    });
+
+                                    
+                                }else{
+                                    alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
+                                }
+                            }
+                        },
+                        { 
+                            text: '<i class="fa fa-recycle"></i> Reload', 
+                            className:'dt-btn-reload', 
+                            action: function(e, dt, btn, config){
+                                dt.ajax.reload( null, false ); // user paging is not reset on reload
+                            }
+                        }
+                    ]
+                },
+                ajax: {
+                    url: "<?php echo get_action_url('services/event/index'); ?>",
+                    dataSrc: "items"
+                },
+                select: true,
+                columns:[
+                    {data: null, class:"select-checkbox text-center", orderable: false, defaultContent:""},
+                    {data: "nama_kegiatan"},
+                    {data: "tanggal", class: "text-center"},
+                    {data: "jumlah_hari", class: "text-right"},
+                    {data: "jumlah_peserta", class: "text-right"}
+                ]
+            });
+            table.on( 'select', function ( e, dt, type, indexes ) {
+                var selectedRows = table.rows( { selected: true } ).count();
+                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+            });
+            table.on( 'deselect', function ( e, dt, type, indexes ) {
+                var selectedRows = table.rows( { selected: true } ).count();
+                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+            });
+			
+            $('#MyFormUpdate').validate({
+                ignore: [],
+                rules: {
+                    nama_kegiatan: "required",
+                },
+                submitHandler: function(form){
+                    var $btn = $(form).find('[type="submit"]');
+                    var $btnIcon = $btn.find('span');
+                    $btnIcon.removeClass('fa-save').addClass('fa-spin fa-spinner');
+                    
+                    $(form).ajaxSubmit({
+                        url: "<?php echo get_action_url('services/event/index'); ?>",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(data){
+                            if (data.status){
+                                $('#myModalUpdate').modal('hide');
+                                table.ajax.reload( null, false );
+                            }else{
+                                alert(data.message);
+                            }
+                        },
+                        complete: function(){
+                            $btnIcon.addClass('fa-save').removeClass('fa-spin fa-spinner');
+                        }
+                    });
+                    
+                }
+            });
+        }
+    };
+    $(document).ready(function(){
+        Manager_JS.init();
+    });
+</script>
