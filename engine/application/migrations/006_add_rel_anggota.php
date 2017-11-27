@@ -8,7 +8,7 @@
 class Migration_add_rel_anggota extends MY_Migration {
     protected $_table_name = 'rel_anggota';
     protected $_primary_key = 'id';
-    protected $_index_keys = array('nama','alamat_email','username');
+    protected $_index_keys = array('nama','alamat_email','username','nomor_registrasi');
     protected $_fields = array(
         'id'    => array (
             'type'  => 'INT',
@@ -162,6 +162,11 @@ class Migration_add_rel_anggota extends MY_Migration {
         'tanggal_daftar'  => array(
             'type' => 'DATETIME',
             'null' => TRUE
+        ),
+        'nomor_registrasi'  => array(
+            'type' => 'VARCHAR',
+            'constraint' => 12,
+            'null' => FALSE
         )
     );
 }
