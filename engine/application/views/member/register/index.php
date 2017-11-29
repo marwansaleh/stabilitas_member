@@ -391,7 +391,7 @@
                                     
                                     $form.find('[name="anggota"]').val(item.id);
                                     $form.find('[name="event"]').val(0);
-                                    $form.find('[name="present"]').val(1);
+                                    $form.find('[name="present"]').val(0);
                                     
                                     $dlg.modal();
                                     
