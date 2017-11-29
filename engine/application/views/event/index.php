@@ -5,10 +5,10 @@
                 <tr role="row">
                     <th style="width: 30px;"></th>
                     <th class="text-center">Nama Event</th>
-                    <th class="text-center">Tanggal</th>
-                    <th class="text-center">#Hari</th>
-                    <th class="text-right">#Seat</th>
-                    <th class="text-right">#Peserta</th>
+                    <th class="text-center" style="width: 100px;">Tanggal</th>
+                    <th class="text-center" style="width: 70px;">#Hari</th>
+                    <th class="text-right" style="width: 50px;">#Seat</th>
+                    <th class="text-right" style="width: 100px;">#Peserta</th>
                 </tr>
             </thead>
             <tbody></tbody>
