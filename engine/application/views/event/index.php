@@ -6,8 +6,9 @@
                     <th style="width: 30px;"></th>
                     <th class="text-center">Nama Event</th>
                     <th class="text-center">Tanggal</th>
-                    <th class="text-right">#Hari</th>
-                    <th class="text-center">#Peserta</th>
+                    <th class="text-center">#Hari</th>
+                    <th class="text-right">#Seat</th>
+                    <th class="text-right">#Peserta</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -34,7 +35,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Tanggal kegiatan</label>
                                 <div class="input-group">
@@ -43,10 +44,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Jumlah hari</label>
                                 <input type="number" step="1" min="1" name="jumlah_hari" class="form-control" value="1">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Maks. seat</label>
+                                <input type="number" step="1" min="0" name="seat" class="form-control" value="0">
                             </div>
                         </div>
                     </div>
@@ -142,6 +149,7 @@
                                 $form.find('[name="nama_kegiatan"]').val('');
                                 $form.find('[name="tanggal"]').val();
                                 $form.find('[name="jumlah_hari"]').val(1);
+                                $form.find('[name="seat"]').val(0);
                                 $form.find('[name="lokasi"]').val('');
                                 $dlg.modal();
                                 
@@ -171,6 +179,7 @@
                                             $form.find('[name="nama_kegiatan"]').val(data.item.nama_kegiatan);
                                             $form.find('[name="jumlah_hari"]').val(data.item.jumlah_hari);
                                             $form.find('[name="tangal"]').val(data.item.tanggal);
+                                            $form.find('[name="seat"]').val(data.item.seat);
                                             $form.find('[name="lokasi"]').val(data.item.lokasi);
                                             $dlg.modal();
                                         }else{
@@ -263,6 +272,7 @@
                     {data: "nama_kegiatan"},
                     {data: "tanggal", class: "text-center"},
                     {data: "jumlah_hari", class: "text-right"},
+                    {data: "seat", class: "text-right"},
                     {data: "jumlah_peserta", class: "text-right"}
                 ]
             });
