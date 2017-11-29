@@ -169,6 +169,9 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Submit</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default btn-event" data-member-id=""><span class="fa fa-tag"></span> Update Event</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -321,6 +324,7 @@
                                 $form.find('[name="alamat_kantor"]').val('');
                                 $dlg.modal();
                                 
+                                $dlg.find('.btn-event').prop('disabled', true);
                             }
                         },
                         { 
@@ -362,6 +366,8 @@
                                             $form.find('[name="telepon_kantor"]').val(data.item.telepon_kantor);
                                             $form.find('[name="alamat_kantor"]').val(data.item.alamat_kantor);
                                             $dlg.modal();
+                                            
+                                            $dlg.find('.btn-event').prop('disabled', false).data('memberId',data.item.id);
                                         }else{
                                             alert(data.message);
                                         }
@@ -580,6 +586,32 @@
                 }else{
                     alert('Data ID tidak terdefinisi');
                 }
+            });
+            
+            $('#myModalUpdate').on('click', '.btn-event', function(){
+                var memberId = $(this).data('memberId');
+                var btnIcon = $(this).find('i');
+                btnIcon.removeClass('fa-tag').addClass('fa-spin fa-spinner');
+
+                var $form = $('#MyFormUpdateEvent');
+                var $dlg = $('#myModalUpdateEvent');
+                $dlg.find('.modal-title').html('UPDATE DATABASE EVENT PESERTA');
+
+                $form.find('[name="anggota"]').val(memberId);
+                $form.find('[name="event"]').val(0);
+                $form.find('[name="present"]').val(0);
+
+                $dlg.modal();
+
+                $.ajax({
+                    url:"<?php echo get_action_url('services/member/events'); ?>",
+                    type: "GET",
+                    data: {member_id: memberId}
+                }).then(function(data){
+                    _this.loadEvents(memberId, $dlg.find('table tbody'));
+                }).always(function(){
+                    btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-tag');
+                });
             });
         },
         loadEvents: function(member,targetTable){
