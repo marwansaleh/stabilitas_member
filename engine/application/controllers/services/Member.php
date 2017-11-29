@@ -209,7 +209,7 @@ class Member extends REST_Api {
         
         $anggota = $this->post('anggota');
         $event = $this->post('event');
-        $present = $this->post('event');
+        $present = $this->post('present');
         
         if ($this->rel_participant_m->get_count(array('anggota'=>$anggota,'event'=>$event))){
             $result['message'] = 'Peserta telah mengikuti event ini';
