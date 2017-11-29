@@ -10,9 +10,22 @@ class Event extends Admin_Controller {
         
         //set breadcumb
         breadcumb_add($this->data['breadcumb'], '<i class="fa fa-home"></i> Home', get_action_url('dashboard'));
-        breadcumb_add($this->data['breadcumb'], 'Event', get_action_url('event/index'), TRUE);
+        breadcumb_add($this->data['breadcumb'], 'Event', get_action_url('event/register'), TRUE);
         
         $this->data['subview'] = 'event/index';
+        $this->load->view('_layout_main', $this->data);
+    }
+    
+    public function participant(){
+        $this->data['page_title'] = 'Event';
+        $this->data['page_subtitle'] = 'Participants';
+        
+        //set breadcumb
+        breadcumb_add($this->data['breadcumb'], '<i class="fa fa-home"></i> Home', get_action_url('dashboard'));
+        breadcumb_add($this->data['breadcumb'], 'Event', get_action_url('event/register'));
+        breadcumb_add($this->data['breadcumb'], 'Participant', get_action_url('event/participant'), TRUE);
+        
+        $this->data['subview'] = 'event/participant';
         $this->load->view('_layout_main', $this->data);
     }
 }

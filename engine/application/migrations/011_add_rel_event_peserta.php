@@ -29,6 +29,11 @@ class Migration_add_rel_event_peserta extends MY_Migration {
             'constraint' => 1,
             'default' => 0
         ),
+        'seat'  => array(
+            'type' => 'INT',
+            'constraint' => 4,
+            'default' => 0
+        )
     );
 }
 

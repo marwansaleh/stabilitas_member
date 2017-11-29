@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
@@ -74,7 +74,7 @@
                                 <label>Agama</label>
                                 <select name="agama" class="form-control">
                                     <?php foreach ($religion as $reli): ?>
-                                    <option value="<?php echo $reli->id; ?>"><?php echo $reli->agama; ?></option>
+                                        <option value="<?php echo $reli->id; ?>"><?php echo $reli->agama; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
@@ -164,7 +164,7 @@
                                 <input type="text" name="alamat_kantor" class="form-control">
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Submit</button>
@@ -190,7 +190,7 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>NAMA KEGIATAN</th><th class="text-center">HADIR</th><th class="text-center">#</th>
+                            <th>NAMA KEGIATAN</th><th class="text-center">HADIR</th><th class="text-center">KURSI</th><th class="text-center">#</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -203,12 +203,12 @@
                                 <label>Nama Kegiatan</label>
                                 <select name="event" class="form-control">
                                     <?php foreach ($events as $event): ?>
-                                    <option value="<?php echo $event->id; ?>"><?php echo $event->nama_kegiatan; ?></option>
+                                        <option value="<?php echo $event->id; ?>"><?php echo $event->nama_kegiatan; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Hadir</label>
                                 <select name="present" class="form-control">
@@ -217,14 +217,20 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Kursi</label>
+                                <input type="number" name="seat" class="form-control" step="1" min="0">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Submit</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
                     </div>
                 </form>
-                
-                
+
+
             </div>
         </div>
     </div>
@@ -269,7 +275,7 @@
                 <table class="table table-bordered table-striped" id="tb-events">
                     <thead>
                         <tr>
-                            <th>NAMA EVENT</th><th class="text-center">TANGGAL</th><th class="text-center">KEHADIRAN</th>
+                            <th>NAMA EVENT</th><th class="text-center">TANGGAL</th><th class="text-center">KEHADIRAN</th><th class="text-center">KURSI</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -284,23 +290,23 @@
 </div>
 <script type="text/javascript">
     var Manager_JS = {
-        init: function(){
+        init: function () {
             var _this = this;
             var table = $('#myDataTable').DataTable({
                 searching: true,
                 ordering: true,
-                order: [2,"desc"],
+                order: [2, "desc"],
                 rowId: 'id',
                 processing: true,
                 serverSide: true,
                 sDom: "<'row'<'col-sm-2'l><'col-sm-7'B><'col-sm-3'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-                buttons:{
+                buttons: {
                     buttons: [
-                        { 
-                            text: '<i class="fa fa-plus"></i> Add', 
-                            className:'dt-btn-add', 
+                        {
+                            text: '<i class="fa fa-plus"></i> Add',
+                            className: 'dt-btn-add',
                             enabled: true,
-                            action: function( e, dt, btn, config ){
+                            action: function (e, dt, btn, config) {
                                 var $form = $('#MyFormUpdate');
                                 var $dlg = $('#myModalUpdate');
                                 $dlg.find('.modal-title').html('TAMBAH DATABASE PESERTA');
@@ -323,30 +329,30 @@
                                 $form.find('[name="telepon_kantor"]').val('');
                                 $form.find('[name="alamat_kantor"]').val('');
                                 $dlg.modal();
-                                
+
                                 $dlg.find('.btn-event').prop('disabled', true);
                             }
                         },
-                        { 
-                            text: '<i class="fa fa-pencil"></i> Edit', 
-                            className:'dt-btn-edit', 
+                        {
+                            text: '<i class="fa fa-pencil"></i> Edit',
+                            className: 'dt-btn-edit',
                             enabled: false,
-                            action: function( e, dt, btn, config ){
+                            action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
-                                if (item){
+                                if (item) {
                                     var btnIcon = $(btn).find('i');
                                     btnIcon.removeClass('fa-edit').addClass('fa-spin fa-spinner');
 
                                     var $form = $('#MyFormUpdate');
                                     var $dlg = $('#myModalUpdate');
                                     $dlg.find('.modal-title').html('UPDATE DATABASE PESERTA');
-                                    
+
                                     $.ajax({
-                                        url:"<?php echo get_action_url('services/member/get'); ?>",
+                                        url: "<?php echo get_action_url('services/member/get'); ?>",
                                         type: "GET",
                                         data: {id: item.id}
-                                    }).then(function(data){
-                                        if (data.status){
+                                    }).then(function (data) {
+                                        if (data.status) {
                                             $form.find('[name="id"]').val(data.item.id);
                                             $form.find('[name="nama"]').val(data.item.nama);
                                             $form.find('[name="tanggal_lahir"]').val(data.item.tanggal_lahir);
@@ -366,64 +372,65 @@
                                             $form.find('[name="telepon_kantor"]').val(data.item.telepon_kantor);
                                             $form.find('[name="alamat_kantor"]').val(data.item.alamat_kantor);
                                             $dlg.modal();
-                                            
-                                            $dlg.find('.btn-event').prop('disabled', false).data('memberId',data.item.id);
-                                        }else{
+
+                                            $dlg.find('.btn-event').prop('disabled', false).data('memberId', data.item.id);
+                                        } else {
                                             alert(data.message);
                                         }
-                                    }).always(function(){
+                                    }).always(function () {
                                         btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-edit');
                                     });
 
-                                    
-                                }else{
+
+                                } else {
                                     alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
                                 }
                             }
                         },
-                        { 
-                            text: '<i class="fa fa-tag"></i> Events', 
-                            className:'dt-btn-event', 
+                        {
+                            text: '<i class="fa fa-tag"></i> Events',
+                            className: 'dt-btn-event',
                             enabled: false,
-                            action: function( e, dt, btn, config ){
+                            action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
-                                if (item){
+                                if (item) {
                                     var btnIcon = $(btn).find('i');
                                     btnIcon.removeClass('fa-tag').addClass('fa-spin fa-spinner');
 
                                     var $form = $('#MyFormUpdateEvent');
                                     var $dlg = $('#myModalUpdateEvent');
                                     $dlg.find('.modal-title').html('UPDATE DATABASE EVENT PESERTA');
-                                    
+
                                     $form.find('[name="anggota"]').val(item.id);
                                     $form.find('[name="event"]').val(0);
                                     $form.find('[name="present"]').val(0);
-                                    
+                                    $form.find('[name="seat"]').val(0);
+
                                     $dlg.modal();
-                                    
+
                                     $.ajax({
-                                        url:"<?php echo get_action_url('services/member/events'); ?>",
+                                        url: "<?php echo get_action_url('services/member/events'); ?>",
                                         type: "GET",
                                         data: {member_id: item.id}
-                                    }).then(function(data){
+                                    }).then(function (data) {
                                         _this.loadEvents(item.id, $dlg.find('table tbody'));
-                                    }).always(function(){
+                                    }).always(function () {
                                         btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-tag');
                                     });
 
-                                    
-                                }else{
+
+                                } else {
                                     alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
                                 }
                             }
                         },
-                        { 
-                            text: '<i class="fa fa-eye"></i> Lihat Detail', 
-                            className:'dt-btn-detail', 
+                        {
+                            text: '<i class="fa fa-eye"></i> Lihat Detail',
+                            className: 'dt-btn-detail',
                             enabled: false,
-                            action: function( e, dt, btn, config ){
+                            action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
-                                if (item){
+                                if (item) {
                                     var btnIcon = $(btn).find('i');
                                     btnIcon.removeClass('fa-eye').addClass('fa-spin fa-spinner');
 
@@ -431,57 +438,58 @@
                                     $dlg.find('.modal-title').html('DETAIL DATA PESERTA');
                                     $dlg.find('.btn-print').data('memberId', item.id);
                                     $.ajax({
-                                        url:"<?php echo get_action_url('services/member/detail'); ?>/"+item.id,
+                                        url: "<?php echo get_action_url('services/member/detail'); ?>/" + item.id,
                                         type: "GET",
                                         data: {id: item.id}
-                                    }).then(function(data){
-                                        if (data.status){
+                                    }).then(function (data) {
+                                        if (data.status) {
                                             var table = $dlg.find('table#tb-detail');
                                             var tb_events = $dlg.find('table#tb-events tbody');
-                                            
+
                                             table.find('.nomor_registrasi').html(data.item.nomor_registrasi);
                                             table.find('.nama').html(data.item.nama);
                                             table.find('.jenis_kelamin').html(data.item.jenis_kelamin);
-                                            table.find('.tempat_tgl_lahir').html(data.item.tempat_lahir + ', '+data.item.tanggal_lahir);
+                                            table.find('.tempat_tgl_lahir').html(data.item.tempat_lahir + ', ' + data.item.tanggal_lahir);
                                             table.find('.agama').html(data.item.agama.agama);
                                             table.find('.no_hp').html(data.item.no_hp);
-                                            
+
                                             tb_events.empty();
-                                            if (data.item.events.length>0){
-                                                for (var e in data.item.events){
+                                            if (data.item.events.length > 0) {
+                                                for (var e in data.item.events) {
                                                     var event = data.item.events[e];
                                                     var s = '<tr>';
-                                                    s+='<td>'+event.nama_kegiatan+'</td>';
-                                                    s+='<td class="text-center">'+event.tanggal+'</td>';
-                                                    s+='<td class="text-center">'+(event.present==1?'<span class="fa fa-check"></span>':'<span class="fa fa-ellipsis-h"></span>')+'</td>';
-                                                    s+='</tr>';
-                                                    
+                                                    s += '<td>' + event.nama_kegiatan + '</td>';
+                                                    s += '<td class="text-center">' + event.tanggal + '</td>';
+                                                    s += '<td class="text-center">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
+                                                    s += '<td class="text-center">' + event.seat + '</td>';
+                                                    s += '</tr>';
+
                                                     tb_events.append(s);
                                                 }
-                                            }else{
-                                                var s= '<tr><td colspan="3">Tidak ada data event yang diikuti peserta ini</td></tr>';
+                                            } else {
+                                                var s = '<tr><td colspan="4">Tidak ada data event yang diikuti peserta ini</td></tr>';
                                                 tb_events.append(s);
                                             }
-                                            
+
                                             $dlg.modal();
-                                        }else{
+                                        } else {
                                             alert(data.message);
                                         }
-                                    }).always(function(){
+                                    }).always(function () {
                                         btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-eye');
                                     });
 
-                                    
-                                }else{
+
+                                } else {
                                     alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
                                 }
                             }
                         },
-                        { 
-                            text: '<i class="fa fa-recycle"></i> Reload', 
-                            className:'dt-btn-reload', 
-                            action: function(e, dt, btn, config){
-                                dt.ajax.reload( null, false ); // user paging is not reset on reload
+                        {
+                            text: '<i class="fa fa-recycle"></i> Reload',
+                            className: 'dt-btn-reload',
+                            action: function (e, dt, btn, config) {
+                                dt.ajax.reload(null, false); // user paging is not reset on reload
                             }
                         }
                     ]
@@ -491,9 +499,9 @@
                     dataSrc: "items"
                 },
                 select: true,
-                columns:[
-                    {data: null, class:"select-checkbox text-center", orderable: false, defaultContent:""},
-                    {data: "nomor_registrasi", class:"text-center"},
+                columns: [
+                    {data: null, class: "select-checkbox text-center", orderable: false, defaultContent: ""},
+                    {data: "nomor_registrasi", class: "text-center"},
                     {data: "nama"},
                     {data: "jenis_kelamin", class: "text-center"},
                     {data: "tanggal_lahir", class: "text-center"},
@@ -502,93 +510,93 @@
                     {data: "jabatan"}
                 ]
             });
-            table.on( 'select', function ( e, dt, type, indexes ) {
-                var selectedRows = table.rows( { selected: true } ).count();
-                dt.buttons([".dt-btn-event",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+            table.on('select', function (e, dt, type, indexes) {
+                var selectedRows = table.rows({selected: true}).count();
+                dt.buttons([".dt-btn-event", ".dt-btn-detail", ".dt-btn-delete", ".dt-btn-edit"]).enable(selectedRows > 0);
             });
-            table.on( 'deselect', function ( e, dt, type, indexes ) {
-                var selectedRows = table.rows( { selected: true } ).count();
-                dt.buttons([".dt-btn-event",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+            table.on('deselect', function (e, dt, type, indexes) {
+                var selectedRows = table.rows({selected: true}).count();
+                dt.buttons([".dt-btn-event", ".dt-btn-detail", ".dt-btn-delete", ".dt-btn-edit"]).enable(selectedRows > 0);
             });
-			
+
             $('#MyFormUpdate').validate({
                 ignore: [],
                 rules: {
                     nama: "required",
                 },
-                submitHandler: function(form){
+                submitHandler: function (form) {
                     var $btn = $(form).find('[type="submit"]');
                     var $btnIcon = $btn.find('span');
                     $btnIcon.removeClass('fa-save').addClass('fa-spin fa-spinner');
-                    
+
                     $(form).ajaxSubmit({
                         url: "<?php echo get_action_url('services/member/index'); ?>",
                         type: "POST",
                         dataType: 'json',
-                        success: function(data){
-                            if (data.status){
+                        success: function (data) {
+                            if (data.status) {
                                 $('#myModalUpdate').modal('hide');
-                                table.ajax.reload( null, false );
-                            }else{
+                                table.ajax.reload(null, false);
+                            } else {
                                 alert(data.message);
                             }
                         },
-                        complete: function(){
+                        complete: function () {
                             $btnIcon.addClass('fa-save').removeClass('fa-spin fa-spinner');
                         }
                     });
-                    
+
                 }
             });
-            
+
             $('#MyFormUpdateEvent').validate({
                 ignore: [],
                 rules: {
                     anggota: "required",
                     event: "required",
                 },
-                submitHandler: function(form){
+                submitHandler: function (form) {
                     var $btn = $(form).find('[type="submit"]');
                     var $btnIcon = $btn.find('span');
                     $btnIcon.removeClass('fa-save').addClass('fa-spin fa-spinner');
-                    
+
                     $(form).ajaxSubmit({
                         url: "<?php echo get_action_url('services/member/event'); ?>",
                         type: "POST",
                         dataType: 'json',
-                        success: function(data){
-                            if (data.status){
+                        success: function (data) {
+                            if (data.status) {
                                 _this.loadEvents(data.item.anggota, $('#myModalUpdateEvent').find('table tbody'));
-                            }else{
+                            } else {
                                 alert(data.message);
                             }
                         },
-                        complete: function(){
+                        complete: function () {
                             $btnIcon.addClass('fa-save').removeClass('fa-spin fa-spinner');
                         }
                     });
-                    
+
                 }
             });
-            
-            $('#myModalUpdateEvent').on('click','.btn-del-event', function(){
+
+            $('#myModalUpdateEvent').on('click', '.btn-del-event', function () {
                 var event_participant_id = $(this).data('eventId');
-                if (event_participant_id){
+                if (event_participant_id) {
                     $.ajax({
-                        url:"<?php echo get_action_url('services/member/event'); ?>",
+                        url: "<?php echo get_action_url('services/member/event'); ?>",
                         type: "DELETE",
                         data: {event: event_participant_id}
-                    }).then(function(data){
-                        if (data.status){
+                    }).then(function (data) {
+                        if (data.status) {
                             _this.loadEvents(data.item.anggota, $('#myModalUpdateEvent').find('tbody'));
                         }
                     });
-                }else{
+                } else {
                     alert('Data ID tidak terdefinisi');
                 }
             });
-            
-            $('#myModalUpdate').on('click', '.btn-event', function(){
+
+            $('#myModalUpdate').on('click', '.btn-event', function () {
                 var memberId = $(this).data('memberId');
                 var btnIcon = $(this).find('i');
                 btnIcon.removeClass('fa-tag').addClass('fa-spin fa-spinner');
@@ -600,47 +608,49 @@
                 $form.find('[name="anggota"]').val(memberId);
                 $form.find('[name="event"]').val(0);
                 $form.find('[name="present"]').val(0);
+                $form.find('[name="seat"]').val(0);
 
                 $dlg.modal();
 
                 $.ajax({
-                    url:"<?php echo get_action_url('services/member/events'); ?>",
+                    url: "<?php echo get_action_url('services/member/events'); ?>",
                     type: "GET",
                     data: {member_id: memberId}
-                }).then(function(data){
+                }).then(function (data) {
                     _this.loadEvents(memberId, $dlg.find('table tbody'));
-                }).always(function(){
+                }).always(function () {
                     btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-tag');
                 });
             });
         },
-        loadEvents: function(member,targetTable){
+        loadEvents: function (member, targetTable) {
             $.ajax({
-                url:"<?php echo get_action_url('services/member/events'); ?>",
+                url: "<?php echo get_action_url('services/member/events'); ?>",
                 type: "GET",
                 data: {member_id: member}
-            }).then(function(data){
+            }).then(function (data) {
                 var tbl_events = targetTable;
                 tbl_events.empty();
 
-                if (data.events.length > 0){
-                    for (var i in data.events){
+                if (data.events.length > 0) {
+                    for (var i in data.events) {
                         var event = data.events[i];
                         var s = '<tr>';
-                        s+='<td>'+event.nama_kegiatan+'</td>';
-                        s+='<td class="text-center">'+(event.present==1?'<span class="fa fa-check"></span>':'<span class="fa fa-ellipsis-h"></span>')+'</td>';
-                        s+='<td class="text-center"><button class="btn btn-xs btn-danger btn-del-event" data-event-id="'+event.event_participant_id+'"><span class="fa fa-remove"></span></button></td>';
-                        s+='</tr>';
+                        s += '<td>' + event.nama_kegiatan + '</td>';
+                        s += '<td class="text-center">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
+                        s += '<td class="text-center">' + event.seat + '</td>';
+                        s += '<td class="text-center"><button class="btn btn-xs btn-danger btn-del-event" data-event-id="' + event.event_participant_id + '"><span class="fa fa-remove"></span></button></td>';
+                        s += '</tr>';
                         tbl_events.append(s);
                     }
-                }else{
+                } else {
                     var s = '<tr><td colspan="3">Tidak ada event yang diikuti</td></tr>';
                     tbl_events.append(s);
                 }
             });
         }
     };
-    $(document).ready(function(){
+    $(document).ready(function () {
         Manager_JS.init();
     });
 </script>

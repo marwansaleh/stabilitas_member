@@ -97,6 +97,17 @@
                             <td class="jumlah_hari text-center"></td>
                         </tr>
                         <tr>
+                            <th scope="row" class="active">MAX SEAT</th>
+                            <th scope="row" class="active text-center">PESERTA</th>
+                            <th scope="row" class="active text-center">KEHADIRAN</th>
+                            
+                        </tr>
+                        <tr>
+                            <td class="seat"></td>
+                            <td class="participants text-center"></td>
+                            <td class="presents text-center"></td>
+                        </tr>
+                        <tr>
                             <th scope="row" class="active" colspan="3">LOKASI</th>
                         </tr>
                         <tr>
@@ -104,7 +115,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table table-bordered table-striped" id="tb-participants">
+                <table class="table table-bordered table-striped table-condensed" id="tb-participants">
                     <thead>
                         <tr>
                             <th>NAMA PESERTA</th>
@@ -221,6 +232,9 @@
                                             table.find('.jumlah_hari').html(data.item.jumlah_hari);
                                             table.find('.tanggal').html(data.item.tanggal);
                                             table.find('.lokasi').html(data.item.lokasi);
+                                            table.find('.seat').html(data.item.seat);
+                                            table.find('.participants').html(data.item.participants.length);
+                                            table.find('.presents').html(data.item.presents);
                                             
                                             tb_participant.empty();
                                             if (data.item.participants.length > 0){

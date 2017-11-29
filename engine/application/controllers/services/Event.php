@@ -112,6 +112,7 @@ class Event extends REST_Api {
         $item = $this->ref_event_m->get($id);
         
         if ($item){
+            $item->presents = 0;
             $item->participants = array();
             $participants = $this->rel_participant_m->get_by(array('event'=>$id));
             if ($participants){
@@ -119,8 +120,10 @@ class Event extends REST_Api {
                     $member = $this->rel_member_m->get($participant->anggota);
                     $member->present = $participant->present;
                     $item->participants [] = $member;
+                    $item->presents = $participant->present > 0 ? ($item->presents+1) : $item->presents;
                 }
             }
+            
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
