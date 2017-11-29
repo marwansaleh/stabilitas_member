@@ -209,8 +209,8 @@
                             <div class="form-group">
                                 <label>Hadir</label>
                                 <select name="present" class="form-control">
-                                    <option value="1">YA</option>
                                     <option value="0">TIDAK</option>
+                                    <option value="1">YA</option>
                                 </select>
                             </div>
                         </div>
