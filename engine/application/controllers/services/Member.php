@@ -187,7 +187,7 @@ class Member extends REST_Api {
     
     public function events_get(){
         $this->load->model(array('ref_event_m','rel_participant_m'));
-        $result = array('event'=>array());
+        $result = array('events'=>array());
         
         $member_id = $this->get('member_id');
         $events = $this->rel_participant_m->get_by(array('anggota'=>$member_id));
