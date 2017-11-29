@@ -602,7 +602,7 @@
                         tbl_events.append(s);
                     }
                 }else{
-                    var s = '<tr><td colspan="2">Tidak ada event yang diikuti</td></tr>';
+                    var s = '<tr><td colspan="3">Tidak ada event yang diikuti</td></tr>';
                     tbl_events.append(s);
                 }
             });
