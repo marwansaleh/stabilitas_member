@@ -20,12 +20,14 @@ class Event extends REST_Api {
         $nama_kegiatan = $this->post('nama_kegiatan');
         $tanggal = $this->post('tanggal');
         $jumlah_hari = $this->post('jumlah_hari');
+        $seat = $this->post('seat');
         $lokasi = $this->post('lokasi');
         
         $data_update = array(
             'nama_kegiatan'     => $nama_kegiatan,
             'tanggal'           => $tanggal,
             'jumlah_hari'       => $jumlah_hari,
+            'seat'              => $seat,
             'lokasi'            => $lokasi,
         );
         
@@ -126,39 +128,6 @@ class Event extends REST_Api {
         }
         $this->response($result);
     }
-    
-    public function batch_deletes_delete(){
-        $this->load->model(array('rel_batch_penutupan_m','rel_penutupan_m'));
-        $result = array('status'=>FALSE);
-        
-        $ids = $this->delete('itemIds');
-        
-        $success = 0;
-        $failed = 0;
-        foreach ($ids as $id){
-            //get the batch
-            $batch = $this->rel_batch_penutupan_m->get($id);
-            if ($batch->status == BATCH_UPLOADED){
-                if ($this->rel_batch_penutupan_m->delete($id)){
-                    //Hapus data detail penutupan
-                    $this->rel_penutupan_m->delete_where(array('batch'=>$id));
-                    $success++;
-                }else{
-                    $failed++;
-                }
-            }else{
-                $failed++;
-            }
-            
-        }
-        
-        $result['status'] = TRUE;
-        $result['deleted'] = $success;
-        $result['failed'] = $failed;
-        
-        $this->response($result);
-    }
-    
 }
 
 /**
