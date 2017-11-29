@@ -173,6 +173,7 @@ class Member extends REST_Api {
                     $event = $this->ref_event_m->get($event_peserta->event);
                     $event->event_participant_id = $event_peserta->id;
                     $event->present = $event_peserta->present;
+                    $event->seat = $event_peserta->seat;
                     
                     $item->events[] = $event;
                 }
@@ -181,6 +182,35 @@ class Member extends REST_Api {
             $result['item'] = $item;
         }else{
             $result['message'] = 'Data peserta dengan ID:'.$id.' tidak ditemukan';
+        }
+        $this->response($result);
+    }
+    
+    public function noreg_post(){
+        $this->load->model(array('rel_member_m','ref_agama_m','ref_event_m','rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $nomor_registrasi = $this->post('nomor_registrasi');
+        $item = $this->rel_member_m->get_by(array('nomor_registrasi'=>$nomor_registrasi), TRUE);
+        
+        if ($item){
+            $item->agama = $this->ref_agama_m->get($item->agama);
+            $item->events = array();
+            $events = $this->rel_participant_m->get_by(array('anggota'=>$item->id));
+            if ($events){
+                foreach($events as $event_peserta){
+                    $event = $this->ref_event_m->get($event_peserta->event);
+                    $event->event_participant_id = $event_peserta->id;
+                    $event->present = $event_peserta->present;
+                    $event->seat = $event_peserta->seat;
+                    
+                    $item->events[] = $event;
+                }
+            }
+            $result['status'] = TRUE;
+            $result['item'] = $item;
+        }else{
+            $result['message'] = 'Data peserta dengan nomor registrasi:'.$nomor_registrasi.' tidak ditemukan';
         }
         $this->response($result);
     }
@@ -196,6 +226,7 @@ class Member extends REST_Api {
                 $event = $this->ref_event_m->get($event_peserta->event);
                 $event->event_participant_id = $event_peserta->id;
                 $event->present = $event_peserta->present;
+                $event->seat = $event_peserta->seat;
 
                 $result['events'][] = $event;
             }
