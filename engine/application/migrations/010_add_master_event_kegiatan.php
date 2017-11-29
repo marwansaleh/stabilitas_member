@@ -43,7 +43,7 @@ class Migration_add_master_event_kegiatan extends MY_Migration {
             'constraint' =>4,
             'null' => FALSE
         ),
-        'max_peserta'    => array(
+        'seat'    => array(
             'type' => 'INT',
             'constraint' => 4,
             'default' => 0
