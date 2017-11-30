@@ -145,7 +145,7 @@ class Member extends REST_Api {
         $this->load->model(array('rel_member_m','rel_participant_m','rel_interest_m','rel_training_m','rel_pendidikan_m'));
         $result = array('status'=>FALSE);
         
-        $id = $this->get('id');
+        $id = $this->delete('id');
         $item = $this->rel_member_m->get($id);
         
         if ($item){

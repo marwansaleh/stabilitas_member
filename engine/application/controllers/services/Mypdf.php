@@ -31,10 +31,10 @@ class Mypdf extends REST_Api {
         $html[] = '<p>NAMA PESERTA <br>';
         $html[] = $member->nama . '</p>';
         $html[] = '<p>NOMOR KURSI<br>';
-        $html[] = ($seat ? $seat->seat :'').'</p>';
+        $html[] = ($seat ? str_pad($seat->seat, 3, '0', STR_PAD_LEFT) :'').'</p>';
         
         $html[] = '<p>'.$event->lokasi.'</p>';
-        $html[] = '<p>'.$event->tanggal.'</p>';
+        $html[] = '<p>'.  indonesia_date_format('%d %M %Y', strtotime($event->tanggal)).'</p>';
         $html[] = '</div>'; //end of nametag container
         
         $pdf_file = $this->_set_pdf(implode("", $html),"A4","NAME_TAG SEMINAR");

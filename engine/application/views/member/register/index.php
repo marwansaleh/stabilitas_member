@@ -394,7 +394,7 @@
                             action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
                                 if (item) {
-                                    if (confirm('Hapus data peserta terpilih ?')){
+                                    if (confirm('Hapus data peserta terpilih berikut data atribut lainnya?')){
                                         var btnIcon = $(btn).find('i');
                                         btnIcon.removeClass('fa-remove').addClass('fa-spin fa-spinner');
                                         
