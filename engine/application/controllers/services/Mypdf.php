@@ -27,14 +27,15 @@ class Mypdf extends REST_Api {
         
         $html = array();
         $html[] = '<div id="name-tag-container">';
-        $html[] = '<h2>'.$event->nama_kegiatan.'</h2>';
-        $html[] = '<p>NAMA PESERTA <br>';
-        $html[] = $member->nama . '</p>';
-        $html[] = '<p>NOMOR KURSI<br>';
-        $html[] = ($seat ? str_pad($seat->seat, 3, '0', STR_PAD_LEFT) :'').'</p>';
+        $html[] = '<h3>MAJALAH STABILITAS<hr></h3>';
+        $html[] = '<h2>'.$event->nama_kegiatan.'</h2><br><br><br>';
+        $html[] = '<h4>NAMA PESERTA</h4>';
+        $html[] = '<h2><strong>'.$member->nama . '</strong></h2><br>';
+        $html[] = '<h4>NOMOR KURSI</h4>';
+        $html[] = '<h2><strong>'. ($seat ? str_pad($seat->seat, 3, '0', STR_PAD_LEFT) :'').'</strong></h2><br><br>';
         
-        $html[] = '<p>'.$event->lokasi.'</p>';
-        $html[] = '<p>'.  indonesia_date_format('%d %M %Y', strtotime($event->tanggal)).'</p>';
+        $html[] = '<h6>'.$event->lokasi.'</h6>';
+        $html[] = '<h6>'.  indonesia_date_format('%d %M %Y', strtotime($event->tanggal)).'</h6>';
         $html[] = '</div>'; //end of nametag container
         
         $pdf_file = $this->_set_pdf(implode("", $html),"A4","NAME_TAG SEMINAR");
