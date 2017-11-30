@@ -328,6 +328,10 @@
                     
                 }
             });
+            
+            $('#myModalDetail').on('click', '.btn-print', function(){
+                $('#myModalDetail').find('.modal-body').printThis();
+            });
         }
     };
     $(document).ready(function(){
