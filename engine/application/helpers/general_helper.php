@@ -231,22 +231,38 @@ if (!function_exists('currency_format')){
         return $formatted;
     }
 }
-if (!function_exists('status_agenda')){
-    function status_agenda($status=NULL){
-        $statuses = array(
-            AGENDA_ST_NEW       => 'New',
-            AGENDA_ST_APPROVE   => 'Approved',
-            AGENDA_ST_VISITED   => 'Visited',
-            AGENDA_ST_REPORTED  => 'Reported',
-            AGENDA_ST_REPORT_APP=> 'Report Approved'
+if (!function_exists('indonesia_date_format')){
+    /**
+     * 
+     * @param type $format
+     * @param type $time
+     */
+    function indonesia_date_format($format='%d-%m-%Y', $time=NULL){
+        
+        //create date object
+        if (!$time) { $time = time(); }
+        $date_obj  =  getdate($time);
+        
+        //set Indonesian month name
+        $bulan = array(
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
         );
-        if (is_null($status)){
-            return $statuses;
-        }else if (isset($statuses[$status])){
-            return $statuses[$status];
-        }else{
-            return NULL;
-        }
+        
+        $bulan_short = array(
+            'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
+        );
+        
+        $hari = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
+        
+        $format_search = array('%d','%D','%m','%M','%S','%y','%Y','%H','%i','%s');
+        $format_replace = array( 
+            $date_obj['mday'], $hari[$date_obj['wday']],  $date_obj['mon'], $bulan[$date_obj['mon']-1],  
+            $bulan_short[$date_obj['mon']-1], $date_obj['year'], $date_obj['year'], $date_obj['hours'], 
+            $date_obj['minutes'], $date_obj['seconds']  
+        );
+        $str = str_replace($format_search, $format_replace, $format);
+        
+        return $str;
     }
 }
 /*
