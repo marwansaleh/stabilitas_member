@@ -388,6 +388,36 @@
                             }
                         },
                         {
+                            text: '<i class="fa fa-remove"></i> Delete',
+                            className: 'dt-btn-delete',
+                            enabled: false,
+                            action: function (e, dt, btn, config) {
+                                var item = dt.row({selected: true}).data();
+                                if (item) {
+                                    if (confirm('Hapus data peserta terpilih ?')){
+                                        var btnIcon = $(btn).find('i');
+                                        btnIcon.removeClass('fa-remove').addClass('fa-spin fa-spinner');
+                                        
+                                        $.ajax({
+                                            url: "<?php echo get_action_url('services/member/index'); ?>",
+                                            type: "DELETE",
+                                            data: {id: item.id}
+                                        }).then(function (data) {
+                                            if (data.status) {
+                                                dt.ajax.reload(null, false); // user paging is not reset on reload
+                                            } else {
+                                                alert(data.message);
+                                            }
+                                        }).always(function () {
+                                            btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-remove');
+                                        });
+                                    }
+                                } else {
+                                    alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
+                                }
+                            }
+                        },
+                        {
                             text: '<i class="fa fa-tag"></i> Events',
                             className: 'dt-btn-event',
                             enabled: false,
