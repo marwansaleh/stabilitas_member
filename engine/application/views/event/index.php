@@ -83,49 +83,59 @@
                 <h4 class="modal-title" id="myModalDetailLabel">DETAIL DATA EVENT</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered" id="tb-detail">
-                    <tbody>
-                        <tr>
-                            <th scope="row" class="active" style="width: 40%;">NAMA EVENT</th>
-                            <th scope="row" class="active text-center" style="width: 30%;">TANGGAL KEGIATAN</th>
-                            <th scope="row" class="active text-center" style="width: 30%;">JUMLAH HARI</th>
-                            
-                        </tr>
-                        <tr>
-                            <td class="nama_kegiatan"></td>
-                            <td class="tanggal text-center"></td>
-                            <td class="jumlah_hari text-center"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">MAX SEAT</th>
-                            <th scope="row" class="active text-center">PESERTA</th>
-                            <th scope="row" class="active text-center">KEHADIRAN</th>
-                            
-                        </tr>
-                        <tr>
-                            <td class="seat"></td>
-                            <td class="participants text-center"></td>
-                            <td class="presents text-center"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active" colspan="3">LOKASI</th>
-                        </tr>
-                        <tr>
-                            <td class="lokasi" colspan="3"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered table-striped table-condensed" id="tb-participants">
-                    <thead>
-                        <tr>
-                            <th>NAMA PESERTA</th>
-                            <th>PERUSAHAAN</th>
-                            <th>JABATAN</th>
-                            <th class="text-center">HADIR</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="widget">
+                    <div class="widget-header"><h3>SUMMARY DATA EVENT</h3></div>
+                    <div class="widget-content">
+                        <table class="table table-bordered" id="tb-detail">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="active" style="width: 40%;">NAMA EVENT</th>
+                                    <th scope="row" class="active text-center" style="width: 30%;">TANGGAL KEGIATAN</th>
+                                    <th scope="row" class="active text-center" style="width: 30%;">JUMLAH HARI</th>
+
+                                </tr>
+                                <tr>
+                                    <td class="nama_kegiatan"></td>
+                                    <td class="tanggal text-center"></td>
+                                    <td class="jumlah_hari text-center"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">MAX SEAT</th>
+                                    <th scope="row" class="active text-center">PESERTA</th>
+                                    <th scope="row" class="active text-center">KEHADIRAN</th>
+
+                                </tr>
+                                <tr>
+                                    <td class="seat"></td>
+                                    <td class="participants text-center"></td>
+                                    <td class="presents text-center"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active" colspan="3">LOKASI</th>
+                                </tr>
+                                <tr>
+                                    <td class="lokasi" colspan="3"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI EVENT</h3></div>
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped table-condensed" id="tb-participants">
+                            <thead>
+                                <tr>
+                                    <th>NAMA PESERTA</th>
+                                    <th>PERUSAHAAN</th>
+                                    <th>JABATAN</th>
+                                    <th class="text-center">HADIR</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-print" data-member-id=""><span class="fa fa-print"></span> Print</button>
