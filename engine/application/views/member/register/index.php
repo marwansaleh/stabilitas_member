@@ -244,42 +244,56 @@
                 <h4 class="modal-title" id="myModalDetailLabel">DETAIL DATA PESERTA</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered" id="tb-detail">
-                    <tbody>
-                        <tr>
-                            <th scope="row" class="active" style="width: 150px;">NOMOR REGISTRASI</th>
-                            <td class="nomor_registrasi"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">NAMA PESERTA</th>
-                            <td class="nama"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">JENIS KELAMIN</th>
-                            <td class="jenis_kelamin"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">TEMPAT/TGL.LAHIR</th>
-                            <td class="tempat_tgl_lahir"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">AGAMA</th>
-                            <td class="agama"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="active">NOMOR HP.</th>
-                            <td class="no_hp"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered table-striped" id="tb-events">
-                    <thead>
-                        <tr>
-                            <th>NAMA EVENT</th><th class="text-center">TANGGAL</th><th class="text-center">KEHADIRAN</th><th class="text-center">KURSI</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>DATA MEMBER</h3>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered" id="tb-detail">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="active" style="width: 150px;">NOMOR REG.</th>
+                                    <td class="nomor_registrasi"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">NAMA PESERTA</th>
+                                    <td class="nama"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">JENIS KELAMIN</th>
+                                    <td class="jenis_kelamin"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">TEMPAT/TGL.LAHIR</th>
+                                    <td class="tempat_tgl_lahir"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">AGAMA</th>
+                                    <td class="agama"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">NOMOR HP.</th>
+                                    <td class="no_hp"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>DAFTAR EVENT YANG DIIKUTI</h3>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped" id="tb-events">
+                            <thead>
+                                <tr>
+                                    <th>NAMA EVENT</th><th class="text-center">TANGGAL</th><th class="text-center">KEHADIRAN</th><th class="text-center">KURSI</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-print" data-member-id=""><span class="fa fa-print"></span> Print</button>
@@ -651,6 +665,10 @@
                 }).always(function () {
                     btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-tag');
                 });
+            });
+            
+            $('#myModalDetail').on('click', '.btn-print', function(){
+                $('#myModalDetail').find('.modal-body').printThis();
             });
         },
         loadEvents: function (member, targetTable) {
