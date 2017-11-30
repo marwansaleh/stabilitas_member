@@ -149,20 +149,26 @@ class Member extends REST_Api {
         $item = $this->rel_member_m->get($id);
         
         if ($item){
+            $result['deleted'] = array();
             //delete peserta
             $this->rel_member_m->delete($item->id);
+            $result['deleted'][] = 'anggota';
             
             //delete peserta terdaftar di event
             $this->rel_participant_m->delete_where(array('anggota'=>$item->id));
+            $result['deleted'][] = 'peserta';
             
             //delete interest peserta
             $this->rel_interest_m->delete_where(array('anggota'=>$item->id));
+            $result['deleted'][] = 'interest';
             
             //delete pendidikan peserta
             $this->rel_pendidikan_m->delete_where(array('anggota'=>$item->id));
+            $result['deleted'][] = 'pendidikan';
             
             //delete pelatihan peserta
             $this->rel_training_m->delete_where(array('anggota'=>$item->id));
+            $result['deleted'][] = 'pelatihan';
             
             $result['status'] = TRUE;
             $result['item'] = $item;
