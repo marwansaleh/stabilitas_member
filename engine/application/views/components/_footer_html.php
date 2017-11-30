@@ -38,6 +38,8 @@
         <script src="<?php echo get_plugin_url('fullcalendar/fullcalendar.min.js') ?>"></script>
         <!-- printArea -->
         <script src="<?php echo get_plugin_url('printArea/jquery.printarea.js') ?>"></script>
+        <!--printThis -->
+        <script src="<?php echo get_plugin_url('printThis/printThis.js') ?>"></script>
         <!-- Summernote texteditor -->
         <script src="<?php echo get_plugin_url('summernote/summernote.min.js') ?>"></script>
         <!-- Slimscroll -->
