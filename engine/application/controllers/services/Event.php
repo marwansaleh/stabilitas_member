@@ -131,6 +131,78 @@ class Event extends REST_Api {
         }
         $this->response($result);
     }
+    
+    public function seats_get(){
+        $this->load->model(array('ref_event_m','rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $event_id = $this->get('event_id');
+        $member_id = $this->get('member_id');
+        
+        //get event
+        $event = $this->ref_event_m->get($event_id);
+        if ($event){
+            $result['status'] = TRUE;
+            
+            $seats = array();
+            if ($event->seat > 0){
+                $max_seat = $event->seat;
+            }else{
+                $max_seat = 150;
+            }
+            
+            $seats_occupation = $this->_seat_occupation($event_id);
+            
+            for ($i=1; $i<=$max_seat; $i++){
+                $seat = new stdClass();
+                $seat->seat_number = $i;
+                $seat->participant = isset($seats_occupation[$i]) ? $seats_occupation[$i] : FALSE;
+                $seats[] = $seat;
+            }
+            $result['seats'] = $seats;
+        }else{
+            $result['message'] = 'Data event tidak ditemukan';
+        }
+        
+        $this->response($result);
+    }
+    
+    private function _seat_occupation($event_id){
+        $this->load->model(array('rel_participant_m'));
+        
+        $seats = array();
+        
+        $result = $this->rel_participant_m->get_by(array('event'=>$event_id));
+        if ($result){
+            foreach ($result as $r){
+                $seats[$r->seat] = $r->anggota;
+            }
+        }
+        
+        return $seats;
+    }
+    
+    public function seat_post(){
+        $this->load->model(array('rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $event_id = $this->post('event_id');
+        $member_id = $this->post('member_id');
+        $seat = $this->post('seat');
+        
+        $seat_participant = $this->rel_participant_m->get_by(array('anggota'=>$member_id, 'event'=>$event_id), TRUE);
+        if ($seat_participant){
+            $this->rel_participant_m->save(array(
+                'present'           => 1,
+                'seat'              => $seat
+            ), $seat_participant->id);
+            
+            $result['status'] = TRUE;
+        }else{
+            $result['message'] = 'Data participant tidak ada';
+        }
+        $this->response($result);
+    }
 }
 
 /**
