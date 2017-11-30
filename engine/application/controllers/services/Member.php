@@ -141,6 +141,37 @@ class Member extends REST_Api {
         $this->response($result);
     }
     
+    public function index_delete(){
+        $this->load->model(array('rel_member_m','rel_participant_m','rel_interest_m','rel_training_m','rel_pendidikan_m'));
+        $result = array('status'=>FALSE);
+        
+        $id = $this->get('id');
+        $item = $this->rel_member_m->get($id);
+        
+        if ($item){
+            //delete peserta
+            $this->rel_member_m->delete($item->id);
+            
+            //delete peserta terdaftar di event
+            $this->rel_participant_m->delete_where(array('anggota'=>$item->id));
+            
+            //delete interest peserta
+            $this->rel_interest_m->delete_where(array('anggota'=>$item->id));
+            
+            //delete pendidikan peserta
+            $this->rel_pendidikan_m->delete_where(array('anggota'=>$item->id));
+            
+            //delete pelatihan peserta
+            $this->rel_training_m->delete_where(array('anggota'=>$item->id));
+            
+            $result['status'] = TRUE;
+            $result['item'] = $item;
+        }else{
+            $result['message'] = 'Tidak ada data peserta dengan ID:'.$id;
+        }
+        $this->response($result);
+    }
+    
     public function get_get(){
         $this->load->model(array('rel_member_m'));
         $result = array('status'=>FALSE);
