@@ -207,6 +207,9 @@
                         if (confirm('Cetak name tag peserta ini ?')){
                             _this.printNameTag(memberId, eventId);
                         }
+                        //refresh form
+                        $('#MyFormUpdate').submit();
+                        
                         $dlg.modal('hide');
                     }else{
                         alert(data.message);
