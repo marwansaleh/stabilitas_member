@@ -158,6 +158,8 @@
                 $btnSaveSeat.data('eventId', eventId);
                 
                 $dlg.modal();
+                
+                $dlgBody.empty();
                 $dlgBody.append('<p class="text-center"><span class="fa fa-spin fa-spinner fa-3x"></span></p>');
                 
                 var $btnIcon = $(this).find('span');
@@ -179,7 +181,7 @@
                             $dlgBody.append(s);
                         }
                     }else{
-                        alert(data.message);
+                        $dlgBody.append('<p>'+data.message+'</p>');
                     }
                 }).always(function(){
                     $btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-pencil');
