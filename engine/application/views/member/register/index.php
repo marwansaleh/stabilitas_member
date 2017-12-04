@@ -4,13 +4,13 @@
             <thead>
                 <tr role="row">
                     <th style="width: 30px;"></th>
-                    <th class="text-center">REGID</th>
+                    <th style="width: 70px;" class="text-center">REGID</th>
                     <th>Nama</th>
                     <th class="text-center">L/P</th>
-                    <th class="text-center">Tgl.Lahir</th>
-                    <th>No.HP</th>
+                    <th class="text-center hidden-xs">Tgl.Lahir</th>
+                    <th class="text-center">No.HP</th>
                     <th>Perusahaan</th>
-                    <th>Jabatan</th>
+                    <th class="hidden-xs">Jabatan</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -318,7 +318,7 @@
                     buttons: [
                         {
                             text: '<i class="fa fa-plus"></i> Add',
-                            className: 'dt-btn-add',
+                            className: 'dt-btn-add btn-sm',
                             enabled: true,
                             action: function (e, dt, btn, config) {
                                 var $form = $('#MyFormUpdate');
@@ -349,7 +349,7 @@
                         },
                         {
                             text: '<i class="fa fa-pencil"></i> Edit',
-                            className: 'dt-btn-edit',
+                            className: 'dt-btn-edit btn-sm',
                             enabled: false,
                             action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
@@ -403,7 +403,7 @@
                         },
                         {
                             text: '<i class="fa fa-remove"></i> Delete',
-                            className: 'dt-btn-delete',
+                            className: 'dt-btn-delete btn-sm',
                             enabled: false,
                             action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
@@ -433,7 +433,7 @@
                         },
                         {
                             text: '<i class="fa fa-tag"></i> Events',
-                            className: 'dt-btn-event',
+                            className: 'dt-btn-event btn-sm',
                             enabled: false,
                             action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
@@ -469,8 +469,8 @@
                             }
                         },
                         {
-                            text: '<i class="fa fa-eye"></i> Lihat Detail',
-                            className: 'dt-btn-detail',
+                            text: '<i class="fa fa-eye"></i> Detail',
+                            className: 'dt-btn-detail btn-sm',
                             enabled: false,
                             action: function (e, dt, btn, config) {
                                 var item = dt.row({selected: true}).data();
@@ -531,7 +531,7 @@
                         },
                         {
                             text: '<i class="fa fa-recycle"></i> Reload',
-                            className: 'dt-btn-reload',
+                            className: 'dt-btn-reload btn-sm hidden-xs',
                             action: function (e, dt, btn, config) {
                                 dt.ajax.reload(null, false); // user paging is not reset on reload
                             }
@@ -546,12 +546,12 @@
                 columns: [
                     {data: null, class: "select-checkbox text-center", orderable: false, defaultContent: ""},
                     {data: "nomor_registrasi", class: "text-center"},
-                    {data: "nama"},
+                    {data: "nama", render: $.fn.dataTable.render.ellipsis(25)},
                     {data: "jenis_kelamin", class: "text-center"},
-                    {data: "tanggal_lahir", class: "text-center"},
-                    {data: "no_hp"},
-                    {data: "nama_perusahaan"},
-                    {data: "jabatan"}
+                    {data: "tanggal_lahir", class: "text-center hidden-xs"},
+                    {data: "no_hp", class:"text-center"},
+                    {data: "nama_perusahaan", class:"hidden-xs", render: $.fn.dataTable.render.ellipsis(16)},
+                    {data: "jabatan", class:"hidden-xs", render: $.fn.dataTable.render.ellipsis(16)}
                 ]
             });
             table.on('select', function (e, dt, type, indexes) {
