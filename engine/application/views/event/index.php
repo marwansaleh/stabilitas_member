@@ -5,9 +5,9 @@
                 <tr role="row">
                     <th style="width: 30px;"></th>
                     <th class="text-center">Nama Event</th>
-                    <th class="text-center" style="width: 100px;">Tanggal</th>
-                    <th class="text-center" style="width: 70px;">#Hari</th>
-                    <th class="text-right" style="width: 50px;">#Seat</th>
+                    <th class="text-center hidden-xs" style="width: 100px;">Tanggal</th>
+                    <th class="text-center hidden-xs" style="width: 70px;">#Hari</th>
+                    <th class="text-right hidden-xs" style="width: 50px;">#Seat</th>
                     <th class="text-right" style="width: 100px;">#Peserta</th>
                 </tr>
             </thead>
@@ -160,7 +160,7 @@
                     buttons: [
                         { 
                             text: '<i class="fa fa-plus"></i> Add', 
-                            className:'dt-btn-add', 
+                            className:'dt-btn-add btn-sm', 
                             enabled: true,
                             action: function( e, dt, btn, config ){
                                 var $form = $('#MyFormUpdate');
@@ -178,7 +178,7 @@
                         },
                         { 
                             text: '<i class="fa fa-pencil"></i> Edit', 
-                            className:'dt-btn-edit', 
+                            className:'dt-btn-edit btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
                                 var item = dt.row({selected: true}).data();
@@ -218,7 +218,7 @@
                         },
                         { 
                             text: '<i class="fa fa-eye"></i> Lihat Detail', 
-                            className:'dt-btn-detail', 
+                            className:'dt-btn-detail btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
                                 var item = dt.row({selected: true}).data();
@@ -279,7 +279,7 @@
                         },
                         { 
                             text: '<i class="fa fa-recycle"></i> Reload', 
-                            className:'dt-btn-reload', 
+                            className:'dt-btn-reload btn-sm', 
                             action: function(e, dt, btn, config){
                                 dt.ajax.reload( null, false ); // user paging is not reset on reload
                             }
@@ -293,10 +293,10 @@
                 select: true,
                 columns:[
                     {data: null, class:"select-checkbox text-center", orderable: false, defaultContent:""},
-                    {data: "nama_kegiatan"},
-                    {data: "tanggal", class: "text-center"},
-                    {data: "jumlah_hari", class: "text-right"},
-                    {data: "seat", class: "text-right"},
+                    {data: "nama_kegiatan", render: $.fn.dataTable.render.ellipsis(20)},
+                    {data: "tanggal", class: "text-center hidden-xs"},
+                    {data: "jumlah_hari", class: "text-right hidden-xs"},
+                    {data: "seat", class: "text-right hidden-xs"},
                     {data: "jumlah_peserta", class: "text-right"}
                 ]
             });
