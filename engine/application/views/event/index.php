@@ -217,7 +217,7 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-eye"></i> Lihat Detail', 
+                            text: '<i class="fa fa-eye"></i> Detail', 
                             className:'dt-btn-detail btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
@@ -279,7 +279,7 @@
                         },
                         { 
                             text: '<i class="fa fa-recycle"></i> Reload', 
-                            className:'dt-btn-reload btn-sm', 
+                            className:'dt-btn-reload btn-sm hidden-xs', 
                             action: function(e, dt, btn, config){
                                 dt.ajax.reload( null, false ); // user paging is not reset on reload
                             }
