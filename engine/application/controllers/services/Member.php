@@ -30,9 +30,10 @@ class Member extends REST_Api {
         $soc_youtube = $this->post('soc_youtube');
         $soc_linkedin = $this->post('soc_linkedin');
         $alamat_rumah = $this->post('alamat_rumah');
+        $kode_pos = $this->post('kode_pos');
         $propinsi = $this->post('propinsi');
         $kota = $this->post('kota');
-        $kode_pos = $this->post('kode_post');
+        $kode_pos = $this->post('kode_pos');
         $telepon_rumah = $this->post('telepon_rumah');
         $nama_perusahaan = $this->post('nama_perusahaan');
         $jabatan = $this->post('jabatan');
@@ -56,6 +57,7 @@ class Member extends REST_Api {
             'soc_youtube'           => $soc_youtube,
             'soc_linkedin'          => $soc_linkedin,
             'alamat_rumah'          => $alamat_rumah,
+            'kode_pos'              => $kode_pos,
             'propinsi'              => $propinsi,
             'kota'                  => $kota,
             'kode_pos'              => $kode_pos,
