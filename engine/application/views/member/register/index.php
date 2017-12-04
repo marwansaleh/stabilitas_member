@@ -309,7 +309,7 @@
             var table = $('#myDataTable').DataTable({
                 searching: true,
                 ordering: true,
-                order: [2, "desc"],
+                order: [1, "desc"],
                 rowId: 'id',
                 processing: true,
                 serverSide: true,
