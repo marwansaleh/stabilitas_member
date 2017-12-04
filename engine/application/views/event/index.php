@@ -151,7 +151,7 @@
             var table = $('#myDataTable').DataTable({
                 searching: true,
                 ordering: true,
-                order: [2,"desc"],
+                order: [0,"desc"],
                 rowId: 'id',
                 processing: true,
                 serverSide: true,
@@ -297,7 +297,7 @@
                     {data: "tanggal", class: "text-center hidden-xs"},
                     {data: "jumlah_hari", class: "text-right hidden-xs"},
                     {data: "seat", class: "text-right hidden-xs"},
-                    {data: "jumlah_peserta", class: "text-right"}
+                    {data: "jumlah_peserta", orderable:false, class: "text-right"}
                 ]
             });
             table.on( 'select', function ( e, dt, type, indexes ) {
