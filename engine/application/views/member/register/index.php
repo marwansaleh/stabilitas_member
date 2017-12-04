@@ -187,10 +187,10 @@
                 <h4 class="modal-title" id="myModalUpdateEventLabel">UPDATE DATABASE EVENT PESERTA</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered table-condensed small">
                     <thead>
                         <tr>
-                            <th>NAMA KEGIATAN</th><th class="text-center">HADIR</th><th class="text-center">KURSI</th><th class="text-center">#</th>
+                            <th>NAMA KEGIATAN</th><th class="text-center hidden-xs">HADIR</th><th class="text-center hidden-xs">KURSI</th><th class="text-center">#</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -284,10 +284,10 @@
                         <h3>DAFTAR EVENT YANG DIIKUTI</h3>
                     </div>
                     <div class="widget-content">
-                        <table class="table table-bordered table-striped" id="tb-events">
+                        <table class="table table-bordered table-striped small" id="tb-events">
                             <thead>
                                 <tr>
-                                    <th>NAMA EVENT</th><th class="text-center">TANGGAL</th><th class="text-center">KEHADIRAN</th><th class="text-center">KURSI</th>
+                                    <th>NAMA EVENT</th><th class="text-center hidden-xs">TANGGAL</th><th class="text-center hidden-xs">KEHADIRAN</th><th class="text-center">KURSI</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -503,8 +503,8 @@
                                                     var event = data.item.events[e];
                                                     var s = '<tr>';
                                                     s += '<td>' + event.nama_kegiatan + '</td>';
-                                                    s += '<td class="text-center">' + event.tanggal + '</td>';
-                                                    s += '<td class="text-center">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
+                                                    s += '<td class="text-center hidden-xs">' + event.tanggal + '</td>';
+                                                    s += '<td class="text-center hidden-xs">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
                                                     s += '<td class="text-center">' + event.seat + '</td>';
                                                     s += '</tr>';
 
@@ -685,8 +685,8 @@
                         var event = data.events[i];
                         var s = '<tr>';
                         s += '<td>' + event.nama_kegiatan + '</td>';
-                        s += '<td class="text-center">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
-                        s += '<td class="text-center">' + event.seat + '</td>';
+                        s += '<td class="text-center hidden-xs">' + (event.present == 1 ? '<span class="fa fa-check"></span>' : '<span class="fa fa-ellipsis-h"></span>') + '</td>';
+                        s += '<td class="text-center hidden-xs">' + event.seat + '</td>';
                         s += '<td class="text-center"><button class="btn btn-xs btn-danger btn-del-event" data-event-id="' + event.event_participant_id + '"><span class="fa fa-remove"></span></button></td>';
                         s += '</tr>';
                         tbl_events.append(s);
