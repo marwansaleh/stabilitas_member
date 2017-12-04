@@ -27,144 +27,187 @@
             </div>
             <div class="modal-body">
                 <form id="MyFormUpdate" class="form-validation">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>ID PESERTA</label>
-                                <input type="text" name="id" class="form-control" value="0" readonly="readonly">
+                    <input type="hidden" name="id" class="form-control" value="0">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#basic" role="tab" data-toggle="tab" aria-expanded="true">Basic</a></li>
+                        <li class=""><a href="#professional" role="tab" data-toggle="tab" aria-expanded="false">Profesional / Network</a></li>
+                        <li class=""><a href="#education" role="tab" data-toggle="tab" aria-expanded="false">Education</a></li>
+                        <li class=""><a href="#training" role="tab" data-toggle="tab" aria-expanded="false">Training</a></li>
+                        <li class=""><a href="#event" role="tab" data-toggle="tab" aria-expanded="false">Event</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="basic">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>NOMOR REGISTRASI PESERTA</label>
+                                        <input type="text" name="nomor_registrasi" class="form-control" value="" readonly="readonly">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Nama peserta</label>
-                                <input type="text" name="nama" class="form-control">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Nama peserta</label>
+                                        <input type="text" name="nama" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Tempat lahir</label>
+                                        <input type="text" name="tempat_lahir" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Tanggal Lahir</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control datepicker" name="tanggal_lahir" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Tempat lahir</label>
-                                <input type="text" name="tempat_lahir" class="form-control">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Telpon</label>
+                                        <input type="text" name="telepon_rumah" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>No. HP</label>
+                                        <input type="text" name="no_hp" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Jenis kelamin</label>
+                                        <select name="jenis_kelamin" class="form-control">
+                                            <option value="L">LAKI - LAKI</option>
+                                            <option value="P">PEREMPUAN</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Agama</label>
+                                        <select name="agama" class="form-control">
+                                            <?php foreach ($religion as $reli): ?>
+                                                <option value="<?php echo $reli->id; ?>"><?php echo $reli->agama; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Tanggal Lahir</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control datepicker" name="tanggal_lahir" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <div class="form-group">
+                                        <label>Alamat rumah</label>
+                                        <input type="text" name="alamat_rumah" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Kode pos</label>
+                                        <input type="text" name="kode_pos" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Jenis kelamin</label>
-                                <select name="jenis_kelamin" class="form-control">
-                                    <option value="L">LAKI - LAKI</option>
-                                    <option value="P">PEREMPUAN</option>
-                                </select>
+                        <div class="tab-pane fade" id="professional">
+                            <h5>Pekerjaan</h5>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label>Nama perusahaan</label>
+                                        <input type="text" name="nama_perusahaan" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Jabatan</label>
+                                        <input type="text" name="jabatan" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Nomor telepon</label>
+                                        <input type="text" name="telepon_kantor" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Nomor Fax</label>
+                                        <input type="text" name="fax_kantor" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Website</label>
+                                        <input type="url" name="website_kantor" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Alamat perusahaan</label>
+                                        <input type="text" name="alamat_kantor" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>Networking / Social Media</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat email</label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat Facebook</label>
+                                        <input type="text" name="soc_facebook" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat Twitter</label>
+                                        <input type="text" name="soc_twitter" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat Instagram</label>
+                                        <input type="text" name="soc_instagram" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat Youtube</label>
+                                        <input type="text" name="soc_youtube" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat Linkedin</label>
+                                        <input type="text" name="soc_linkedin" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Agama</label>
-                                <select name="agama" class="form-control">
-                                    <?php foreach ($religion as $reli): ?>
-                                        <option value="<?php echo $reli->id; ?>"><?php echo $reli->agama; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
+                        <div class="tab-pane fade" id="education">
+                            <p>Data pendidikan dari yang paling terakhir</p>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>No. HP</label>
-                                <input type="text" name="no_hp" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Alamat rumah</label>
-                                <input type="text" name="alamat_rumah" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat email</label>
-                                <input type="email" name="email" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat facebook</label>
-                                <input type="text" name="soc_facebook" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat twitter</label>
-                                <input type="text" name="soc_twitter" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat Instagram</label>
-                                <input type="text" name="soc_instagram" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat Youtube</label>
-                                <input type="text" name="soc_youtube" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Alamat Linkedin</label>
-                                <input type="text" name="soc_linkedin" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Nama perusahaan</label>
-                                <input type="text" name="nama_perusahaan" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Jabatan</label>
-                                <input type="text" name="jabatan" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Telp. kantor</label>
-                                <input type="text" name="telepon_kantor" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Alamat perusahaan</label>
-                                <input type="text" name="alamat_kantor" class="form-control">
-                            </div>
-                        </div>
-
+                        <div class="tab-pane fade" id="training"></div>
+                        <div class="tab-pane fade" id="event"></div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Submit</button>
@@ -342,6 +385,7 @@
                                 var $dlg = $('#myModalUpdate');
                                 $dlg.find('.modal-title').html('TAMBAH DATABASE PESERTA');
                                 $form.find('[name="id"]').val(0);
+                                $form.find('[name="nomor_registrasi"]').val('');
                                 $form.find('[name="nama"]').val('');
                                 $form.find('[name="tanggal_lahir"]').val();
                                 $form.find('[name="tempat_lahir"]').val('');
@@ -349,6 +393,8 @@
                                 $form.find('[name="agama"]').val('01');
                                 $form.find('[name="no_hp"]').val('');
                                 $form.find('[name="alamat_rumah"]').val('');
+                                $form.find('[name="kode_pos"]').val('');
+                                $form.find('[name="telepon_rumah"]').val('');
                                 $form.find('[name="alamat_email"]').val('');
                                 $form.find('[name="soc_facebook"]').val('');
                                 $form.find('[name="soc_twitter"]').val('');
@@ -359,6 +405,8 @@
                                 $form.find('[name="jabatan"]').val('');
                                 $form.find('[name="telepon_kantor"]').val('');
                                 $form.find('[name="alamat_kantor"]').val('');
+                                $form.find('[name="fax_kantor"]').val('');
+                                $form.find('[name="website_kantor"]').val('');
                                 $dlg.modal();
 
                                 $dlg.find('.btn-event').prop('disabled', true);
@@ -385,13 +433,16 @@
                                     }).then(function (data) {
                                         if (data.status) {
                                             $form.find('[name="id"]').val(data.item.id);
+                                            $form.find('[name="nomor_registrasi"]').val(data.item.nomor_registrasi);
                                             $form.find('[name="nama"]').val(data.item.nama);
                                             $form.find('[name="tanggal_lahir"]').val(data.item.tanggal_lahir);
                                             $form.find('[name="tempat_lahir"]').val(data.item.tempat_lahir);
                                             $form.find('[name="jenis_kelamin"]').val(data.item.jenis_kelamin);
-                                            $form.find('[name="agama"]').val(data.item.agama.id);
+                                            $form.find('[name="agama"]').val(data.item.agama);
                                             $form.find('[name="no_hp"]').val(data.item.no_hp);
                                             $form.find('[name="alamat_rumah"]').val(data.item.alamat_rumah);
+                                            $form.find('[name="kode_pos"]').val(data.item.kode_pos);
+                                            $form.find('[name="telepon_rumah"]').val(data.item.telepon_rumah);
                                             $form.find('[name="alamat_email"]').val(data.item.alamat_email);
                                             $form.find('[name="soc_facebook"]').val(data.item.soc_facebook);
                                             $form.find('[name="soc_twitter"]').val(data.item.soc_twitter);
@@ -402,6 +453,8 @@
                                             $form.find('[name="jabatan"]').val(data.item.jabatan);
                                             $form.find('[name="telepon_kantor"]').val(data.item.telepon_kantor);
                                             $form.find('[name="alamat_kantor"]').val(data.item.alamat_kantor);
+                                            $form.find('[name="fax_kantor"]').val(data.item.fax_kantor);
+                                            $form.find('[name="website_kantor"]').val(data.item.website_kantor);
                                             $dlg.modal();
 
                                             $dlg.find('.btn-event').prop('disabled', false).data('memberId', data.item.id);
