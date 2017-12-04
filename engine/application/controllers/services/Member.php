@@ -67,8 +67,7 @@ class Member extends REST_Api {
             'alamat_kantor'         => $alamat_kantor,
             'telepon_kantor'        => $telepon_kantor,
             'fax_kantor'            => $fax_kantor,
-            'website_kantor'        => $website_kantor,
-            'pendidikan_terakhir'   => $pendidikan_terakhir
+            'website_kantor'        => $website_kantor
         );
         
         if (!$id){
@@ -205,6 +204,7 @@ class Member extends REST_Api {
         $item = $this->rel_member_m->get($id);
         
         if ($item){
+            $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$id));
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
