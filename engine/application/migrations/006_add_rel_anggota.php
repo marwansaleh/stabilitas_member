@@ -38,17 +38,17 @@ class Migration_add_rel_anggota extends MY_Migration {
         'agama'  => array(
             'type' => 'VARCHAR',
             'constraint' => 2,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'no_hp'  => array(
             'type' => 'VARCHAR',
             'constraint' => 20,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'alamat_email'  => array(
             'type' => 'VARCHAR',
             'constraint' => 30,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'soc_facebook'  => array(
             'type' => 'VARCHAR',
@@ -63,32 +63,32 @@ class Migration_add_rel_anggota extends MY_Migration {
         'soc_instagram'  => array(
             'type' => 'VARCHAR',
             'constraint' => 200,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'soc_youtube'  => array(
             'type' => 'VARCHAR',
             'constraint' => 200,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'soc_linkedin'  => array(
             'type' => 'VARCHAR',
             'constraint' => 200,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'alamat_rumah'  => array(
             'type' => 'VARCHAR',
             'constraint' => 254,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'propinsi'    => array (
             'type'  => 'VARCHAR',
             'constraint' => 2,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'kota' => array(
             'type' => 'VARCHAR',
             'constraint' =>4,
-            'null' => FALSE
+            'null' => TRUE
         ),
         'kode_pos'  => array(
             'type' => 'VARCHAR',
