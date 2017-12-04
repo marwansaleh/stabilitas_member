@@ -123,12 +123,12 @@
                 <div class="widget">
                     <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI EVENT</h3></div>
                     <div class="widget-content">
-                        <table class="table table-bordered table-striped table-condensed" id="tb-participants">
+                        <table class="table table-bordered table-striped table-condensed small" id="tb-participants">
                             <thead>
                                 <tr>
                                     <th>NAMA PESERTA</th>
-                                    <th>PERUSAHAAN</th>
-                                    <th>JABATAN</th>
+                                    <th class="hidden-xs">PERUSAHAAN</th>
+                                    <th class="hidden-xs">JABATAN</th>
                                     <th class="text-center">HADIR</th>
                                 </tr>
                             </thead>
@@ -253,8 +253,8 @@
                                                     var participant = data.item.participants[p];
                                                     var s = '<tr>';
                                                     s+='<td>'+participant.nama+'</td>';
-                                                    s+='<td>'+participant.nama_perusahaan+'</td>';
-                                                    s+='<td>'+participant.jabatan+'</td>';
+                                                    s+='<td class="hidden-xs">'+participant.nama_perusahaan+'</td>';
+                                                    s+='<td class="hidden-xs">'+participant.jabatan+'</td>';
                                                     s+='<td class="text-center">'+(participant.present==1?'<span class="fa fa-check"></span>':'<span class="fa fa-ellipsis-h"></span>')+'</td>';
                                                     
                                                     tb_participant.append(s);
