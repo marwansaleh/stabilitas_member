@@ -13,7 +13,7 @@ class Member extends REST_Api {
     }
     
     public function index_post(){
-        $this->load->model(array('rel_member_m'));
+        $this->load->model(array('rel_member_m','rel_pendidikan_m'));
         $result = array('status'=>FALSE, 'message'=>'');
         
         $id = $this->post('id');
@@ -86,6 +86,23 @@ class Member extends REST_Api {
                 
                 $this->rel_member_m->save(array('nomor_registrasi'=>$noreg), $success_id);
             }
+            
+            //update data pendidikan
+            $this->rel_pendidikan_m->delete_where(array('anggota'=>$success_id));
+            $pendidikan = $this->post('edu_pendidikan');
+            $nama_institusi = $this->post('edu_nama_institusi');
+            $tahun_mulai = $this->post('edu_tahun_mulai');
+            $tahun_selesai = $this->post('edu_tahun_selesai');
+            for ($i=0; $i<count($pendidikan); $i++){
+                $this->rel_pendidikan_m->save(array(
+                    'anggota'           => $success_id,
+                    'pendidikan'        => $pendidikan[$i],
+                    'nama_institusi'    => $nama_institusi[$i],
+                    'tahun_mulai'       => $tahun_mulai[$i],
+                    'tahun_selesai'     => $tahun_selesai[$i]
+                ));
+            }
+            
             $result['status'] = TRUE;
             $result['item'] = $this->rel_member_m->get($success_id);
         }else{
@@ -181,7 +198,7 @@ class Member extends REST_Api {
     }
     
     public function get_get(){
-        $this->load->model(array('rel_member_m'));
+        $this->load->model(array('rel_member_m','rel_pendidikan_m'));
         $result = array('status'=>FALSE);
         
         $id = $this->get('id');
