@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-        <table id="myDataTable" class="table table-bordered" role="grid" style="width: 100%;">
+        <table id="myDataTable" class="table table-bordered small" role="grid" style="width: 100%;">
             <thead>
                 <tr role="row">
                     <th style="width: 30px;"></th>
