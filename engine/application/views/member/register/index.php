@@ -249,7 +249,7 @@
                         <h3>DATA MEMBER</h3>
                     </div>
                     <div class="widget-content">
-                        <table class="table table-bordered" id="tb-detail">
+                        <table class="table table-bordered table-condensed small" id="tb-detail">
                             <tbody>
                                 <tr>
                                     <th scope="row" class="active" style="width: 150px;">NOMOR REG.</th>
