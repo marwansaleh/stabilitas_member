@@ -8,6 +8,7 @@
 class Migration_add_rel_pendidikan_anggota extends MY_Migration {
     protected $_table_name = 'rel_pendidikan_anggota';
     protected $_primary_key = 'id';
+    protected $_index_keys = array('nama_institusi');
     protected $_fields = array(
         'id'    => array (
             'type'  => 'INT',
@@ -21,18 +22,23 @@ class Migration_add_rel_pendidikan_anggota extends MY_Migration {
             'null' => FALSE
         ),
         'pendidikan'    => array(
-            'type' => 'VARCHAR',
+            'type' => 'INT',
             'constraint' => 3,
             'null' => FALSE
         ),
-        'program'    => array(
+        'nama_institusi'    => array(
             'type' => 'VARCHAR',
             'constraint' => 50,
             'null' => TRUE
         ),
-        'universitas'    => array(
-            'type' => 'VARCHAR',
-            'constraint' => 50,
+        'tahun_mulai'    => array(
+            'type' => 'INT',
+            'constraint' => 4,
+            'null' => TRUE
+        ),
+        'tahun_selesai'    => array(
+            'type' => 'INT',
+            'constraint' => 4,
             'null' => TRUE
         )
     );
