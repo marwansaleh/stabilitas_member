@@ -130,11 +130,6 @@ class Migration_add_rel_anggota extends MY_Migration {
             'constraint' => 50,
             'null' => TRUE
         ),
-        'pendidikan_terakhir'  => array(
-            'type' => 'VARCHAR',
-            'constraint' => 3,
-            'null' => FALSE
-        ),
         'prioritas'  => array(
             'type' => 'INT',
             'constraint' => 3,
