@@ -254,26 +254,43 @@
                                 <tr>
                                     <th scope="row" class="active" style="width: 150px;">NOMOR REG.</th>
                                     <td class="nomor_registrasi"></td>
-                                </tr>
-                                <tr>
                                     <th scope="row" class="active">NAMA PESERTA</th>
                                     <td class="nama"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="active">JENIS KELAMIN</th>
                                     <td class="jenis_kelamin"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="active">TEMPAT/TGL.LAHIR</th>
-                                    <td class="tempat_tgl_lahir"></td>
-                                </tr>
-                                <tr>
                                     <th scope="row" class="active">AGAMA</th>
                                     <td class="agama"></td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" class="active">TEMPAT LAHIR</th>
+                                    <td class="tempat_lahir"></td>
+                                    <th scope="row" class="active">TGL.LAHIR</th>
+                                    <td class="tgl_lahir"></td>
+                                </tr>
+                                <tr>
                                     <th scope="row" class="active">NOMOR HP.</th>
                                     <td class="no_hp"></td>
+                                    <th scope="row" class="active">EMAIL ADDRESS</th>
+                                    <td class="email"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">PERUSAHAAN.</th>
+                                    <td class="nama_perusahaan"></td>
+                                    <th scope="row" class="active">JABATAN</th>
+                                    <td class="jabatan"></td>
+                                </tr>
+                                <tr>
+                                    
+                                    <th scope="row" class="active">TELPON</th>
+                                    <td class="telpon_kantor"></td>
+                                    <th scope="row" class="active">FAX</th>
+                                    <td class="fax_kantor"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active">ALAMAT KANTOR</th>
+                                    <td colspan="3" class="alamat_kantor"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -493,9 +510,16 @@
                                             table.find('.nomor_registrasi').html(data.item.nomor_registrasi);
                                             table.find('.nama').html(data.item.nama);
                                             table.find('.jenis_kelamin').html(data.item.jenis_kelamin);
-                                            table.find('.tempat_tgl_lahir').html(data.item.tempat_lahir + ', ' + data.item.tanggal_lahir);
+                                            table.find('.tempat_lahir').html(data.item.tempat_lahir);
+                                            table.find('.tgl_lahir').html(data.item.tanggal_lahir);
                                             table.find('.agama').html(data.item.agama.agama);
                                             table.find('.no_hp').html(data.item.no_hp);
+                                            table.find('.email').html(data.item.alamat_email);
+                                            table.find('.nama_perusahaan').html(data.item.nama_perusahaan);
+                                            table.find('.jabatan').html(data.item.jabatan);
+                                            table.find('.alamat_kantor').html(data.item.alamat_kantor);
+                                            table.find('.telpon_kantor').html(data.item.telepon_kantor);
+                                            table.find('.fax_kantor').html(data.item.fax_kantor);
 
                                             tb_events.empty();
                                             if (data.item.events.length > 0) {
