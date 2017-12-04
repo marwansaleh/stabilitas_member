@@ -547,7 +547,7 @@
                     {data: null, class: "select-checkbox text-center", orderable: false, defaultContent: ""},
                     {data: "nomor_registrasi", class: "text-center"},
                     {data: "nama", render: $.fn.dataTable.render.ellipsis(20)},
-                    {data: "jenis_kelamin", class: "text-center"},
+                    {data: "jenis_kelamin", class: "text-center hidden-xs"},
                     {data: "tanggal_lahir", class: "text-center hidden-xs"},
                     {data: "no_hp", class:"text-center hidden-xs"},
                     {data: "nama_perusahaan", class:"hidden-xs", render: $.fn.dataTable.render.ellipsis(16)},
