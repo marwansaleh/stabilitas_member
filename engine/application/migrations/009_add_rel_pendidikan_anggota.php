@@ -28,7 +28,7 @@ class Migration_add_rel_pendidikan_anggota extends MY_Migration {
         ),
         'nama_institusi'    => array(
             'type' => 'VARCHAR',
-            'constraint' => 50,
+            'constraint' => 30,
             'null' => TRUE
         ),
         'tahun_mulai'    => array(
