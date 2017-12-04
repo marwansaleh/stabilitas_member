@@ -151,12 +151,14 @@
                 var $btnSaveSeat = $dlg.find('.btn-save-seat'); 
                 var memberId = $(this).data('memberId');
                 var eventId = $(this).data('eventId');
+                var $dlgBody = $dlg.find('.modal-body');
                 
                 $dlg.find('.modal-title').html('SET KEHADIRAN DAN NOMOR KURSI');
                 $btnSaveSeat.data('memberId', memberId);
                 $btnSaveSeat.data('eventId', eventId);
                 
                 $dlg.modal();
+                $dlgBody.append('<p class="text-center"><span class="fa fa-spin fa-spinner fa-3x"></span></p>');
                 
                 var $btnIcon = $(this).find('span');
                 $btnIcon.removeClass('fa-pencil').addClass('fa-spin fa-spinner');
@@ -166,7 +168,7 @@
                     type: "GET",
                     data: {event_id: eventId, member_id: memberId}
                 }).then(function(data){
-                    var $dlgBody = $dlg.find('.modal-body');
+                    
                     $dlgBody.empty();
                     if (data.status){
                         for (var i in data.seats){
