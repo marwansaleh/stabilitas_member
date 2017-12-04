@@ -8,7 +8,7 @@
                     <th>Nama</th>
                     <th class="text-center">L/P</th>
                     <th class="text-center hidden-xs">Tgl.Lahir</th>
-                    <th class="text-center">No.HP</th>
+                    <th class="text-center hidden-xs">No.HP</th>
                     <th>Perusahaan</th>
                     <th class="hidden-xs">Jabatan</th>
                 </tr>
@@ -546,10 +546,10 @@
                 columns: [
                     {data: null, class: "select-checkbox text-center", orderable: false, defaultContent: ""},
                     {data: "nomor_registrasi", class: "text-center"},
-                    {data: "nama", render: $.fn.dataTable.render.ellipsis(25)},
+                    {data: "nama", render: $.fn.dataTable.render.ellipsis(20)},
                     {data: "jenis_kelamin", class: "text-center"},
                     {data: "tanggal_lahir", class: "text-center hidden-xs"},
-                    {data: "no_hp", class:"text-center"},
+                    {data: "no_hp", class:"text-center hidden-xs"},
                     {data: "nama_perusahaan", class:"hidden-xs", render: $.fn.dataTable.render.ellipsis(16)},
                     {data: "jabatan", class:"hidden-xs", render: $.fn.dataTable.render.ellipsis(16)}
                 ]
