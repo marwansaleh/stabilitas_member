@@ -293,7 +293,7 @@
                 select: true,
                 columns:[
                     {data: null, class:"select-checkbox text-center", orderable: false, defaultContent:""},
-                    {data: "nama_kegiatan", render: $.fn.dataTable.render.ellipsis(25)},
+                    {data: "nama_kegiatan", render: $.fn.dataTable.render.ellipsis(35)},
                     {data: "tanggal", class: "text-center hidden-xs"},
                     {data: "jumlah_hari", class: "text-right hidden-xs"},
                     {data: "seat", class: "text-right hidden-xs"},
