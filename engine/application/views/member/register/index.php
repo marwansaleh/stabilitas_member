@@ -204,7 +204,44 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="education">
-                            <p>Data pendidikan dari yang paling terakhir</p>
+                            <h5>Data Pendidikan Formal</h5>
+                            <p class="help-block">Data pendidikan dari tingkat yang terendah hingga tertinggi</p>
+                            <div class="row education">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Tingkat</label>
+                                        <select class="form-control" name="edu_pendidikan[]">
+                                            <?php foreach ($educations as $edu): ?>
+                                            <option value="<?php echo $edu->id; ?>"><?php echo $edu->pendidikan; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label>Nama institusi</label>
+                                        <input type="text" name="edu_nama_institusi[]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Tahun</label>
+                                        <input type="number" min="1945" max="2030" name="edu_tahun_mulai[]" maxlength="4" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>S/d</label>
+                                        <div class="input-group">
+                                            <input type="number" min="1945" max="2030" name="edu_tahun_selesai[]" maxlength="4" class="form-control">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary btn-add" type="button"><span class="fa fa-plus"></span></button>
+                                                <button class="btn btn-danger btn-del" type="button"><span class="fa fa-minus"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="training"></div>
                         <div class="tab-pane fade" id="event"></div>
@@ -456,7 +493,9 @@
                                             $form.find('[name="fax_kantor"]').val(data.item.fax_kantor);
                                             $form.find('[name="website_kantor"]').val(data.item.website_kantor);
                                             $dlg.modal();
-
+                                            
+                                            _this.cleanUpEducation();
+                                            
                                             $dlg.find('.btn-event').prop('disabled', false).data('memberId', data.item.id);
                                         } else {
                                             alert(data.message);
@@ -669,6 +708,24 @@
 
                 }
             });
+            
+            $('#education').on('click', '.btn-add', function(){
+                var $row = $(this).parents('.education');
+                var $clone = $row.clone(true);
+                $clone.find('[name="edu_pendidikan[]"]').val(1);
+                $clone.find('[name="edu_nama_institusi[]"]').val('');
+                $clone.find('[name="edu_tahun_mulai[]"]').val('');
+                $clone.find('[name="edu_tahun_selesai[]"]').val('');
+
+                $clone.insertAfter($row);
+            });
+            
+            $('#education').on('click', '.btn-del', function(){
+                var $row = $(this).parents('.education');
+                if ($('#education').find('.education').length > 1){
+                    $row.remove();
+                }
+            });
 
             $('#MyFormUpdateEvent').validate({
                 ignore: [],
@@ -773,6 +830,34 @@
                     tbl_events.append(s);
                 }
             });
+        },
+        cleanUpEducation: function(){
+            var $ctn = $('#education');
+            if ($ctn.find('.education').length>1){
+                $ctn.find('.education').each(function(index){
+                    if (index > 0){
+                        $(this).remove();
+                    }else{
+                        //empty the field
+                        $(this).find('[name="edu_pendidkan"]').val(1);
+                        $(this).find('[name="edu_nama_institusi"]').val('');
+                        $(this).find('[name="edu_tahun_mulai"]').val('');
+                        $(this).find('[name="edu_tahun_selesai"]').val('');
+                    }
+                });
+            }
+        },
+        insertEducation: function(items,rowBase){
+            var $edu = $('#education').find('.education');
+            for (var i in items){
+                var $clone = rowBase.clone(true);
+                $clone.find('[name="edu_pendidikan[]"]').val(items[i].pendidikan);
+                $clone.find('[name="edu_nama_institusi[]"]').val(items[i].nama_institusi);
+                $clone.find('[name="edu_tahun_mulai[]"]').val(items[i].tahun_mulai);
+                $clone.find('[name="edu_tahun_selesai[]"]').val(items[i].tahun_selesai);
+
+                $clone.insertAfter(rowBase);
+            }
         }
     };
     $(document).ready(function () {
