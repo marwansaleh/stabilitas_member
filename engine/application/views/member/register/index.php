@@ -495,6 +495,7 @@
                                             $dlg.modal();
                                             
                                             _this.cleanUpEducation();
+                                            _this.insertEducation(data.item.educations);
                                             
                                             $dlg.find('.btn-event').prop('disabled', false).data('memberId', data.item.id);
                                         } else {
@@ -847,16 +848,21 @@
                 });
             }
         },
-        insertEducation: function(items,rowBase){
-            var $edu = $('#education').find('.education');
-            for (var i in items){
-                var $clone = rowBase.clone(true);
-                $clone.find('[name="edu_pendidikan[]"]').val(items[i].pendidikan);
-                $clone.find('[name="edu_nama_institusi[]"]').val(items[i].nama_institusi);
-                $clone.find('[name="edu_tahun_mulai[]"]').val(items[i].tahun_mulai);
-                $clone.find('[name="edu_tahun_selesai[]"]').val(items[i].tahun_selesai);
-
-                $clone.insertAfter(rowBase);
+        insertEducation: function(items){
+            var $educations = $('#education').find('.education');
+            for (var i=0; i<items.length; i++){
+                var $edu = $educations.eq(i);
+                $edu.find('[name="edu_pendidikan[]"]').val(items[i].pendidikan);
+                $edu.find('[name="edu_nama_institusi[]"]').val(items[i].nama_institusi);
+                $edu.find('[name="edu_tahun_mulai[]"]').val(items[i].tahun_mulai);
+                $edu.find('[name="edu_tahun_selesai[]"]').val(items[i].tahun_selesai);
+                
+                if (i<items.length-1){
+                    var $clone = $edu.clone(true);
+                    $clone.insertAfter($edu);
+                }
+                
+                console.log(items[i].pendidikan);
             }
         }
     };
