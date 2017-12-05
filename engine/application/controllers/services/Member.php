@@ -13,7 +13,7 @@ class Member extends REST_Api {
     }
     
     public function index_post(){
-        $this->load->model(array('rel_member_m','rel_pendidikan_m'));
+        $this->load->model(array('rel_member_m','rel_pendidikan_m','rel_training_m'));
         $result = array('status'=>FALSE, 'message'=>'');
         
         $id = $this->post('id');
@@ -99,6 +99,20 @@ class Member extends REST_Api {
                     'nama_institusi'    => $nama_institusi[$i],
                     'tahun_mulai'       => $tahun_mulai[$i],
                     'tahun_selesai'     => $tahun_selesai[$i]
+                ));
+            }
+            
+            //update data training
+            $this->rel_training_m->delete_where(array('anggota'=>$success_id));
+            $nama_pelatihan = $this->post('tra_nama_pelatihan');
+            $nama_penyelenggara = $this->post('tra_nama_penyelenggara');
+            $tahun_training = $this->post('tra_tahun');
+            for ($i=0; $i<count($nama_pelatihan); $i++){
+                $this->rel_training_m->save(array(
+                    'anggota'           => $success_id,
+                    'nama_pelatihan'    => $nama_pelatihan[$i],
+                    'nama_penyelenggara'=> $nama_penyelenggara[$i],
+                    'tahun'             => $tahun_training[$i]
                 ));
             }
             
@@ -197,14 +211,17 @@ class Member extends REST_Api {
     }
     
     public function get_get(){
-        $this->load->model(array('rel_member_m','rel_pendidikan_m'));
+        $this->load->model(array('rel_member_m','rel_pendidikan_m','rel_training_m'));
         $result = array('status'=>FALSE);
         
         $id = $this->get('id');
         $item = $this->rel_member_m->get($id);
         
         if ($item){
+            //data pendidikan
             $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$id));
+            //data training
+            $item->trainings = $this->rel_training_m->get_by(array('anggota'=>$id));
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
