@@ -5,8 +5,12 @@ class Event extends Admin_Controller {
 
     public function register()
     {
+        $this->load->model(array('rel_member_m'));
+        
         $this->data['page_title'] = 'Event';
         $this->data['page_subtitle'] = 'Register event';
+        
+        $this->data['members'] = $this->rel_member_m->get();
         
         //set breadcumb
         breadcumb_add($this->data['breadcumb'], '<i class="fa fa-home"></i> Home', get_action_url('dashboard'));
