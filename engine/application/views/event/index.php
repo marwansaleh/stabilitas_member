@@ -108,7 +108,7 @@
                     <div class="widget-content">
                         <table class="table table-bordered table-condensed table-striped tbl-participants">
                             <thead>
-                                <tr><th>NAMA PESERTA</th><th>PERUSAHAAN</th><th>JABATAN</th><th class="text-center">#</th></tr>
+                                <tr><th>NAMA PESERTA</th><th class="hidden-xs">PERUSAHAAN</th><th class="hidden-xs">JABATAN</th><th class="text-center">#</th></tr>
                             </thead>
                             <tbody></tbody>
                         </table>
@@ -294,8 +294,8 @@
                                             for (var i in data.items){
                                                 var s = '<tr class="par-'+data.items[i].id+'">';
                                                 s+='<td>'+data.items[i].ref.nama+'</td>';
-                                                s+='<td>'+data.items[i].ref.nama_perusahaan+'</td>';
-                                                s+='<td>'+data.items[i].ref.jabatan+'</td>';
+                                                s+='<td class="hidden-xs">'+data.items[i].ref.nama_perusahaan+'</td>';
+                                                s+='<td class="hidden-xs">'+data.items[i].ref.jabatan+'</td>';
                                                 s+='<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del" data-participant-id="'+data.items[i].id+'"><span class="fa fa-remove"></span></button></td>';
                                                 s+='</tr>';
                                                 
@@ -459,8 +459,8 @@
                                 var $tbl = $('#myModalParticipant').find('table.tbl-participants tbody');
                                 var s= '<tr class="par-'+data.item.id+'">';
                                 s+='<td>'+data.item.ref.nama+'</td>';
-                                s+='<td>'+data.item.ref.nama_perusahaan+'</td>';
-                                s+='<td>'+data.item.ref.jabatan+'</td>';
+                                s+='<td class="hidden-xs">'+data.item.ref.nama_perusahaan+'</td>';
+                                s+='<td class="hidden-xs">'+data.item.ref.jabatan+'</td>';
                                 s+='<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del" data-participant-id="'+data.item.id+'"><span class="fa fa-remove"></span></button></td>';
                                 s+='</tr>';
                                 $tbl.append(s);
