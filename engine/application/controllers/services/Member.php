@@ -235,7 +235,7 @@ class Member extends REST_Api {
     }
     
     public function detail_get(){
-        $this->load->model(array('rel_member_m','ref_agama_m','ref_event_m','rel_participant_m'));
+        $this->load->model(array('rel_member_m','ref_agama_m','ref_event_m','rel_participant_m','rel_pendidikan_m','ref_pendidikan_m','rel_training_m'));
         $result = array('status'=>FALSE);
         
         $id = $this->get('id');
@@ -255,6 +255,9 @@ class Member extends REST_Api {
                     $item->events[] = $event;
                 }
             }
+            
+            $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$item->id));
+            $item->trainings = $this->rel_training_m->get_by(array('anggota'=>$item->id));
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
