@@ -243,7 +243,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="training"></div>
+                        <div class="tab-pane fade" id="training">
+                            <h5>Daftar Training</h5>
+                            <div class="row training">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label>Nama pelatihan</label>
+                                        <input type="text" name="tra_nama_pelatihan[]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Penyelenggara</label>
+                                        <input type="text" name="tra_nama_penyelenggara[]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Tahun</label>
+                                        <div class="input-group">
+                                            <input type="number" min="1945" max="2030" name="tra_tahun[]" maxlength="4" class="form-control">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary btn-add" type="button"><span class="fa fa-plus"></span></button>
+                                                <button class="btn btn-danger btn-del" type="button"><span class="fa fa-minus"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="event"></div>
                     </div>
                     <div class="form-group">
@@ -494,8 +522,12 @@
                                             $form.find('[name="website_kantor"]').val(data.item.website_kantor);
                                             $dlg.modal();
                                             
+                                            //Education
                                             _this.cleanUpEducation();
                                             _this.insertEducation(data.item.educations);
+                                            //Training
+                                            _this.cleanUpTraining();
+                                            _this.insertTraining(data.item.trainings);
                                             
                                             $dlg.find('.btn-event').prop('disabled', false).data('memberId', data.item.id);
                                         } else {
@@ -727,6 +759,23 @@
                     $row.remove();
                 }
             });
+            
+            $('#training').on('click', '.btn-add', function(){
+                var $row = $(this).parents('.training');
+                var $clone = $row.clone(true);
+                $clone.find('[name="tra_nama_pelatihan[]"]').val('');
+                $clone.find('[name="tra_nama_penyelenggara[]"]').val('');
+                $clone.find('[name="tra_tahun[]"]').val('');
+
+                $clone.insertAfter($row);
+            });
+            
+            $('#training').on('click', '.btn-del', function(){
+                var $row = $(this).parents('.training');
+                if ($('#training').find('.training').length > 1){
+                    $row.remove();
+                }
+            });
 
             $('#MyFormUpdateEvent').validate({
                 ignore: [],
@@ -850,7 +899,7 @@
         },
         insertEducation: function(items){
             for (var i=0; i<items.length;i++){
-                var $edu = $edu = $('#education').find('.education').eq(i);
+                var $edu = $('#education').find('.education').eq(i);
                 $edu.find('[name="edu_pendidikan[]"]').val(items[i].pendidikan);
                 $edu.find('[name="edu_nama_institusi[]"]').val(items[i].nama_institusi);
                 $edu.find('[name="edu_tahun_mulai[]"]').val(items[i].tahun_mulai);
@@ -859,6 +908,34 @@
                 if (i<items.length-1){
                     var $clone = $edu.clone(true);
                     $clone.insertAfter($edu);
+                }
+            }
+        },
+        cleanUpTraining: function(){
+            var $ctn = $('#training');
+            if ($ctn.find('.training').length>1){
+                $ctn.find('.training').each(function(index){
+                    if (index > 0){
+                        $(this).remove();
+                    }
+                });
+            }
+            var $tra = $ctn.find('.training').eq(0);
+            //empty the field
+            $tra.find('[name="tra_nama_pelatihan[]"]').val('');
+            $tra.find('[name="tra_nama_penyelenggara[]"]').val('');
+            $tra.find('[name="tra_tahun[]"]').val('');
+        },
+        insertTraining: function(items){
+            for (var i=0; i<items.length;i++){
+                var $tra = $('#training').find('.training').eq(i);
+                $tra.find('[name="tra_nama_pelatihan[]"]').val(items[i].nama_pelatihan);
+                $tra.find('[name="tra_nama_penyelenggara[]"]').val(items[i].nama_penyelenggara);
+                $tra.find('[name="tra_tahun[]"]').val(items[i].tahun);
+                
+                if (i<items.length-1){
+                    var $clone = $tra.clone(true);
+                    $clone.insertAfter($tra);
                 }
             }
         }
