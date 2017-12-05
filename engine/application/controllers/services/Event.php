@@ -203,6 +203,71 @@ class Event extends REST_Api {
         }
         $this->response($result);
     }
+    
+    public function participants_get(){
+        $this->load->model(array('rel_participant_m','rel_member_m','ref_event_m'));
+        $result = array('status'=>FALSE, 'event'=>NULL, 'items'=>array());
+        
+        $event_id = $this->get('id');
+        $event = $this->ref_event_m->get($event_id);
+        if ($event){
+            $result['status'] = TRUE;
+            $result['event'] = $event;
+        
+            $participants = $this->rel_participant_m->get_by(array('event'));
+            foreach ($participants as $parti){
+                $parti->ref = $this->rel_member_m->get($parti->anggota);
+                $result['items'][] = $parti;
+            }
+        }
+        
+        
+        $this->response($result);
+    }
+    
+    public function participant_post(){
+        $this->load->model(array('rel_participant_m','rel_member_m'));
+        $result = array('status'=>FALSE, 'event'=>NULL, 'items'=>array());
+        
+        $event_id = $this->post('event_id');
+        $anggota = $this->post('anggota');
+        
+        if ($this->rel_participant_m->get_count(array('anggota'=>$anggota,'event'=>$event_id))==0){
+            $parti_id = $this->rel_participant_m->save(array(
+                'anggota'       => $anggota,
+                'event'         => $event_id
+            ));
+            $result['status'] = TRUE;
+        
+            $participant = $this->rel_participant_m->get($parti_id);
+            $participant->ref = $this->rel_member_m->get($anggota);
+            $result['item'] = $participant;
+        }else{
+            $result['message'] = 'Data yang sama sudah ada di database';
+        }
+        
+        
+        $this->response($result);
+    }
+    
+    public function participant_delete(){
+        $this->load->model(array('rel_participant_m'));
+        $result = array('status'=>FALSE);
+        
+        $participant_id = $this->delete('participant_id');
+        
+        $participant = $this->rel_participant_m->get($participant_id);
+        if ($participant && $this->rel_participant_m->delete($participant_id)){
+            
+            $result['status'] = TRUE;
+            $result['item'] = $participant;
+        }else{
+            $result['message'] = $this->rel_participant_m->get_last_message();
+        }
+        
+        
+        $this->response($result);
+    }
 }
 
 /**
