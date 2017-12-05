@@ -93,7 +93,7 @@ class Member extends REST_Api {
             $tahun_mulai = $this->post('edu_tahun_mulai');
             $tahun_selesai = $this->post('edu_tahun_selesai');
             for ($i=0; $i<count($pendidikan); $i++){
-                if (!empty($pendidikan[$i])){
+                if (!empty($nama_institusi[$i])){
                     $this->rel_pendidikan_m->save(array(
                         'anggota'           => $success_id,
                         'pendidikan'        => $pendidikan[$i],
