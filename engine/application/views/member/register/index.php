@@ -63,7 +63,7 @@
                                         <label>Tanggal Lahir</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control datepicker" name="tanggal_lahir" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                                            <input type="text" class="form-control datepicker" name="tanggal_lahir" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
