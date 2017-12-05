@@ -15,7 +15,6 @@
         </table>
     </div>
 </div>
-
 <div class="modal fade in" id="myModalUpdate" role="dialog" aria-labelledby="myModalUpdateLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -70,6 +69,57 @@
                         <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="myModalParticipant" role="dialog" aria-labelledby="myModalParticipantLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title" id="myModalParticipantLabel">UPDATE EVENT PARTICIPANT</h4>
+            </div>
+            <div class="modal-body">
+                <form id="MyFormParticipant" class="form-validation">
+                    <input type="hidden" name="event_id" class="form-control" value="0">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Nama Peserta</label>
+                                <div class="input-group">
+                                    <select id="select-anggota" name="anggota" class="form-control" style="width: 100%;">
+                                        <?php foreach ($members as $member): ?>
+                                        <option value="<?php echo $member->id; ?>"><?php echo $member->nama; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> Add to event</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>DAFTAR PESERTA EVENT: <span class="event-name"></span></h3>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered table-condensed table-striped tbl-participants">
+                            <thead>
+                                <tr><th>NAMA PESERTA</th><th>PERUSAHAAN</th><th>JABATAN</th><th class="text-center">#</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><span class="fa fa-close"></span> Close</button>
+                    </div>
             </div>
         </div>
     </div>
@@ -217,6 +267,57 @@
                             }
                         },
                         { 
+                            text: '<i class="fa fa-person"></i> Participants', 
+                            className:'dt-btn-participant btn-sm', 
+                            enabled: false,
+                            action: function( e, dt, btn, config ){
+                                var item = dt.row({selected: true}).data();
+                                if (item){
+                                    var btnIcon = $(btn).find('i');
+                                    btnIcon.removeClass('fa-person').addClass('fa-spin fa-spinner');
+
+                                    var $form = $('#MyFormParticipant');
+                                    var $dlg = $('#myModalParticipant');
+                                    var $tbl = $dlg.find('table.tbl-participants tbody');
+                                    
+                                    $dlg.find('[name="event_id"]').val(item.id);
+                                    $dlg.find('.modal-title').html('UPDATE EVENT PARTICIPANT');
+                                    
+                                    $.ajax({
+                                        url:"<?php echo get_action_url('services/event/participants'); ?>",
+                                        type: "GET",
+                                        data: {id: item.id}
+                                    }).then(function(data){
+                                        if (data.status){
+                                            //update widget title
+                                            $dlg.find('span.event-name').html(data.event.nama_kegiatan);
+                                            $tbl.empty();
+                                            for (var i in data.items){
+                                                var s = '<tr class="par-'+data.items[i].id+'">';
+                                                s+='<td>'+data.items[i].ref.nama+'</td>';
+                                                s+='<td>'+data.items[i].ref.nama_perusahaan+'</td>';
+                                                s+='<td>'+data.items[i].ref.jabatan+'</td>';
+                                                s+='<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del" data-participant-id="'+data.items[i].id+'"><span class="fa fa-remove"></span></button></td>';
+                                                s+='</tr>';
+                                                
+                                                $tbl.append(s);
+                                            }
+                                            
+                                            $dlg.modal();
+                                        }else{
+                                            alert(data.message);
+                                        }
+                                    }).always(function(){
+                                        btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-person');
+                                    });
+
+                                    
+                                }else{
+                                    alert('Anda belum memilih baris data atau data yang anda pilih tidak dapat diubah');
+                                }
+                            }
+                        },
+                        { 
                             text: '<i class="fa fa-eye"></i> Detail', 
                             className:'dt-btn-detail btn-sm', 
                             enabled: false,
@@ -302,11 +403,11 @@
             });
             table.on( 'select', function ( e, dt, type, indexes ) {
                 var selectedRows = table.rows( { selected: true } ).count();
-                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit",".dt-btn-participant"]).enable(selectedRows > 0);
             });
             table.on( 'deselect', function ( e, dt, type, indexes ) {
                 var selectedRows = table.rows( { selected: true } ).count();
-                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit"]).enable(selectedRows > 0);
+                dt.buttons([".dt-btn-approve",".dt-btn-detail",".dt-btn-delete",".dt-btn-edit",".dt-btn-participant"]).enable(selectedRows > 0);
             });
 			
             $('#MyFormUpdate').validate({
@@ -339,9 +440,73 @@
                 }
             });
             
+            $('#MyFormParticipant').validate({
+                ignore: [],
+                rules: {
+                    event_id: "required",
+                    anggota: "required"
+                },
+                submitHandler: function(form){
+                    var $btn = $(form).find('[type="submit"]');
+                    var $btnIcon = $btn.find('span');
+                    $btnIcon.removeClass('fa-plus').addClass('fa-spin fa-spinner');
+                    
+                    $(form).ajaxSubmit({
+                        url: "<?php echo get_action_url('services/event/participant'); ?>",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(data){
+                            if (data.status){
+                                var $tbl = $('#myModalParticipant').find('table.tbl-participants tbody');
+                                var s= '<tr class="par-'+data.item.id+'">';
+                                s+='<td>'+data.item.ref.nama+'</td>';
+                                s+='<td>'+data.item.ref.nama_perusahaan+'</td>';
+                                s+='<td>'+data.item.ref.jabatan+'</td>';
+                                s+='<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del" data-participant-id="'+data.item.id+'"><span class="fa fa-remove"></span></button></td>';
+                                s+='</tr>';
+                                $tbl.append(s);
+                            }else{
+                                alert(data.message);
+                            }
+                        },
+                        complete: function(){
+                            $btnIcon.addClass('fa-plus').removeClass('fa-spin fa-spinner');
+                        }
+                    });
+                    
+                }
+            });
+            
+            $('#select-anggota').select2({
+                placeholder: 'Pilih peserta',
+                //width: 'element',
+                theme: 'bootstrap',
+                allowClear: true
+            });
+            
+            $('#myModalParticipant').on('click', '.btn-del', function(){
+                var participantId = $(this).data('participantId');
+                var $row = $(this).parents('tr');
+                
+                if (confirm('Hapus peserta terpilih dari event ini ?')){
+                    $.ajax({
+                        url: "<?php echo get_action_url('services/event/participant'); ?>",
+                        type: "DELETE",
+                        data: {participant_id: participantId}
+                    }).then(function (data) {
+                        if (data.status) {
+                            $row.remove();
+                        }else{
+                            alert(data.message);
+                        }
+                    });
+                }
+            });
+            
             $('#myModalDetail').on('click', '.btn-print', function(){
                 $('#myModalDetail').find('.modal-body').printThis();
             });
+            
         }
     };
     $(document).ready(function(){
