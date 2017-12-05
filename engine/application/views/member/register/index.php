@@ -72,7 +72,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Telpon</label>
+                                        <label>Telepon</label>
                                         <input type="text" name="telepon_rumah" class="form-control">
                                     </div>
                                 </div>
