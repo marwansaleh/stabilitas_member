@@ -838,20 +838,19 @@
                 $ctn.find('.education').each(function(index){
                     if (index > 0){
                         $(this).remove();
-                    }else{
-                        //empty the field
-                        $(this).find('[name="edu_pendidkan"]').val(1);
-                        $(this).find('[name="edu_nama_institusi"]').val('');
-                        $(this).find('[name="edu_tahun_mulai"]').val('');
-                        $(this).find('[name="edu_tahun_selesai"]').val('');
                     }
                 });
             }
+            var $edu = $ctn.find('.education').eq(0);
+            //empty the field
+            $edu.find('[name="edu_pendidikan[]"]').val(1);
+            $edu.find('[name="edu_nama_institusi[]"]').val('');
+            $edu.find('[name="edu_tahun_mulai[]"]').val('');
+            $edu.find('[name="edu_tahun_selesai[]"]').val('');
         },
         insertEducation: function(items){
-            var $educations = $('#education').find('.education');
-            for (var i=0; i<items.length; i++){
-                var $edu = $educations.eq(i);
+            for (var i=0; i<items.length;i++){
+                var $edu = $edu = $('#education').find('.education').eq(i);
                 $edu.find('[name="edu_pendidikan[]"]').val(items[i].pendidikan);
                 $edu.find('[name="edu_nama_institusi[]"]').val(items[i].nama_institusi);
                 $edu.find('[name="edu_tahun_mulai[]"]').val(items[i].tahun_mulai);
@@ -861,8 +860,6 @@
                     var $clone = $edu.clone(true);
                     $clone.insertAfter($edu);
                 }
-                
-                console.log(items[i].pendidikan);
             }
         }
     };
