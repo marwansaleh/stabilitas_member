@@ -87,7 +87,6 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Nama Peserta</label>
                                 <div class="input-group">
                                     <select id="select-anggota" name="anggota" class="form-control" style="width: 100%;">
                                         <?php foreach ($members as $member): ?>
