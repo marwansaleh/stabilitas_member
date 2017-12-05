@@ -419,6 +419,36 @@
                         </table>
                     </div>
                 </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>PENDIDIKAN FORMAL</h3>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped small" id="tb-education">
+                            <thead>
+                                <tr>
+                                    <th class="hidden-xs">PENDIDIKAN</th><th>NAMA INSTITUSI</th><th class="text-center">TAHUN</th><th class="text-center hidden-xs">S/D</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>PELATIHAN YANG DIIKUTI</h3>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped small" id="tb-training">
+                            <thead>
+                                <tr>
+                                    <th>NAMA PELATIHAN</th><th class="hidden-xs">PENYELENGGARA</th><th class="text-center">TAHUN</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-print" data-member-id=""><span class="fa fa-print"></span> Print</button>
@@ -631,6 +661,8 @@
                                         if (data.status) {
                                             var table = $dlg.find('table#tb-detail');
                                             var tb_events = $dlg.find('table#tb-events tbody');
+                                            var tb_edu = $dlg.find('table#tb-education tbody');
+                                            var tb_tra = $dlg.find('table#tb-training tbody');
 
                                             table.find('.nomor_registrasi').html(data.item.nomor_registrasi);
                                             table.find('.nama').html(data.item.nama);
@@ -662,6 +694,41 @@
                                             } else {
                                                 var s = '<tr><td colspan="4">Tidak ada data event yang diikuti peserta ini</td></tr>';
                                                 tb_events.append(s);
+                                            }
+                                            
+                                            tb_edu.empty();
+                                            if (data.item.educations.length > 0) {
+                                                for (var d in data.item.educations) {
+                                                    var edu = data.item.educations[d];
+                                                    var s = '<tr>';
+                                                    s += '<td class="hidden-xs">' + edu.pendidikan + '</td>';
+                                                    s += '<td>' + edu.nama_institusi + '</td>';
+                                                    s += '<td class="text-center">' + edu.tahun_mulai + '</td>';
+                                                    s += '<td class="text-center hidden-xs">' + edu.tahun_selesai + '</td>';
+                                                    s += '</tr>';
+
+                                                    tb_edu.append(s);
+                                                }
+                                            } else {
+                                                var s = '<tr><td colspan="4">Tidak ada data pendidikan yang diikuti peserta ini</td></tr>';
+                                                tb_edu.append(s);
+                                            }
+                                            
+                                            tb_tra.empty();
+                                            if (data.item.trainings.length > 0) {
+                                                for (var t in data.item.educations) {
+                                                    var tra = data.item.trainings[t];
+                                                    var s = '<tr>';
+                                                    s += '<td>' + tra.nama_pelatihan + '</td>';
+                                                    s += '<td class="hidden-xs">' + tra.nama_penyelenggara + '</td>';
+                                                    s += '<td class="text-center">' + tra.tahun + '</td>';
+                                                    s += '</tr>';
+
+                                                    tb_tra.append(s);
+                                                }
+                                            } else {
+                                                var s = '<tr><td colspan="3">Tidak ada data pelatihan yang diikuti peserta ini</td></tr>';
+                                                tb_tra.append(s);
                                             }
 
                                             $dlg.modal();
