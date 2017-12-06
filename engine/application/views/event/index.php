@@ -208,7 +208,7 @@
                 buttons:{
                     buttons: [
                         { 
-                            text: '<i class="fa fa-plus"></i> Add', 
+                            text: '<i class="fa fa-plus"></i><span class="hidden-xs hidden-sm"> Add</span>', 
                             className:'dt-btn-add btn-sm', 
                             enabled: true,
                             action: function( e, dt, btn, config ){
@@ -226,7 +226,7 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-pencil"></i> Edit', 
+                            text: '<i class="fa fa-pencil"></i><span class="hidden-xs hidden-sm"> Edit</span>', 
                             className:'dt-btn-edit btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
@@ -266,7 +266,7 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-person"></i> Participants', 
+                            text: '<i class="fa fa-person"></i><span class="hidden-xs hidden-sm"> Participants</span>', 
                             className:'dt-btn-participant btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
@@ -317,7 +317,7 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-eye"></i> Detail', 
+                            text: '<i class="fa fa-eye"></i><span class="hidden-xs hidden-sm"> Detail</span>', 
                             className:'dt-btn-detail btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
@@ -378,8 +378,8 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-recycle"></i> Reload', 
-                            className:'dt-btn-reload btn-sm hidden-xs', 
+                            text: '<i class="fa fa-recycle"></i><span class="hidden-xs hidden-sm"> Reload</span>', 
+                            className:'dt-btn-reload btn-sm', 
                             action: function(e, dt, btn, config){
                                 dt.ajax.reload( null, false ); // user paging is not reset on reload
                             }
