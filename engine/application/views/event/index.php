@@ -1,3 +1,12 @@
+<style type="text/css">
+    .blue {
+        border: solid 1px #0084b0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <table id="myDataTable" class="table table-bordered small" role="grid" style="width: 100%;">
@@ -457,13 +466,13 @@
                         success: function(data){
                             if (data.status){
                                 var $tbl = $('#myModalParticipant').find('table.tbl-participants tbody');
-                                var s= '<tr class="par-'+data.item.id+'">';
+                                var s= '<tr class="par-'+data.item.id+' blue">';
                                 s+='<td>'+data.item.ref.nama+'</td>';
                                 s+='<td class="hidden-xs">'+data.item.ref.nama_perusahaan+'</td>';
                                 s+='<td class="hidden-xs">'+data.item.ref.jabatan+'</td>';
                                 s+='<td class="text-center"><button type="button" class="btn btn-danger btn-xs btn-del" data-participant-id="'+data.item.id+'"><span class="fa fa-remove"></span></button></td>';
                                 s+='</tr>';
-                                $tbl.append(s);
+                                $tbl.prepend(s);
                             }else{
                                 alert(data.message);
                             }
