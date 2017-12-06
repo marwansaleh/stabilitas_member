@@ -266,14 +266,14 @@
                             }
                         },
                         { 
-                            text: '<i class="fa fa-person"></i><span class="hidden-xs hidden-sm"> Participants</span>', 
+                            text: '<i class="fa fa-users"></i><span class="hidden-xs hidden-sm"> Participants</span>', 
                             className:'dt-btn-participant btn-sm', 
                             enabled: false,
                             action: function( e, dt, btn, config ){
                                 var item = dt.row({selected: true}).data();
                                 if (item){
                                     var btnIcon = $(btn).find('i');
-                                    btnIcon.removeClass('fa-person').addClass('fa-spin fa-spinner');
+                                    btnIcon.removeClass('fa-users').addClass('fa-spin fa-spinner');
 
                                     var $form = $('#MyFormParticipant');
                                     var $dlg = $('#myModalParticipant');
@@ -307,7 +307,7 @@
                                             alert(data.message);
                                         }
                                     }).always(function(){
-                                        btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-person');
+                                        btnIcon.removeClass('fa-spin fa-spinner').addClass('fa-users');
                                     });
 
                                     
