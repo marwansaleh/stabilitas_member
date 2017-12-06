@@ -94,7 +94,7 @@
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> Add to event</button>
+                                        <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> Add</button>
                                     </div>
                                 </div>
                             </div>
