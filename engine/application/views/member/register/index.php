@@ -27,7 +27,7 @@
             </div>
             <div class="modal-body">
                 <form id="MyFormUpdate" class="form-validation">
-                    <input type="hidden" name="id" class="form-control" value="0">
+                    <input type="hidden" name="id" value="0">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#basic" role="tab" data-toggle="tab" aria-expanded="true">Basic</a></li>
                         <li class=""><a href="#professional" role="tab" data-toggle="tab" aria-expanded="false">Profesional / Network</a></li>
@@ -72,7 +72,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Telepon</label>
+                                        <label>Telepon Rumah</label>
                                         <input type="text" name="telepon_rumah" class="form-control">
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Nomor telepon</label>
+                                        <label>Nomor Telepon Kantor</label>
                                         <input type="text" name="telepon_kantor" class="form-control">
                                     </div>
                                 </div>
