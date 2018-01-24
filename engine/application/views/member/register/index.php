@@ -166,7 +166,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Alamat email</label>
-                                        <input type="email" name="email" class="form-control">
+                                        <input type="email" name="alamat_email" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -788,7 +788,7 @@
                     var $btn = $(form).find('[type="submit"]');
                     var $btnIcon = $btn.find('span');
                     $btnIcon.removeClass('fa-save').addClass('fa-spin fa-spinner');
-                    
+
                     $(form).ajaxSubmit({
                         url: "<?php echo get_action_url('services/member/index'); ?>",
                         type: "POST",
