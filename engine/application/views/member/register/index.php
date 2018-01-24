@@ -788,7 +788,7 @@
                     var $btn = $(form).find('[type="submit"]');
                     var $btnIcon = $btn.find('span');
                     $btnIcon.removeClass('fa-save').addClass('fa-spin fa-spinner');
-                    console.log('submitted');
+                    
                     $(form).ajaxSubmit({
                         url: "<?php echo get_action_url('services/member/index'); ?>",
                         type: "POST",
