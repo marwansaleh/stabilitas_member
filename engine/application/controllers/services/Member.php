@@ -80,8 +80,9 @@ class Member extends REST_Api {
         if ($success_id){
             if (!$id){
                 //generate nomor registrasi
-                $format = "%d%'.02d-%'.05d";
-                $noreg = sprintf($format,date('Y'),date('m'),$success_id);
+                //$format = "%d%'.02d-%'.05d";
+                //$noreg = sprintf($format,date('Y'),date('m'),$success_id);
+                $noreg = format_noreg(date('Y'),date('m'),$success_id);
                 
                 $this->rel_member_m->save(array('nomor_registrasi'=>$noreg), $success_id);
             }

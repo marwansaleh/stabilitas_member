@@ -265,6 +265,15 @@ if (!function_exists('indonesia_date_format')){
         return $str;
     }
 }
+
+if (!function_exists('format_noreg')){
+    function format_noreg($tahun,$bulan,$userid) {
+        $format = "%d%'.02d-%'.05d";
+        $noreg = sprintf($format,$tahun,$bulan,$userid);
+
+        return $noreg;
+    }
+}
 /*
  * Filename: general_helper.php
  * Location: application/helpers/general_helper.php
