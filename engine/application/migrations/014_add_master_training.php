@@ -20,7 +20,7 @@ class Migration_add_master_training extends MY_Migration {
             'constraint' => 200,
             'null' => FALSE
         ),
-        'pelaksana'    => array(
+        'penyelenggara'    => array(
             'type' => 'VARCHAR',
             'constraint' => 50,
             'null' => true
