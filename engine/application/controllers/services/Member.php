@@ -150,6 +150,7 @@ class Member extends REST_Api {
         if ($search && $search['value']){
             $this->db->like('nama', $search['value']);
             $this->db->or_like('nomor_registrasi', $search['value']);
+            $this->db->or_like('nama_perusahaan', $search['value']);
             
         }
         //get filtered count
@@ -163,6 +164,7 @@ class Member extends REST_Api {
             if ($search && $search['value']){
                 $this->db->like('nama', $search['value']);
                 $this->db->or_like('nomor_registrasi', $search['value']);
+                $this->db->or_like('nama_perusahaan', $search['value']);
             }
             //apply offset and limit of data
             $this->db->order_by($order_by,$order_dir);
