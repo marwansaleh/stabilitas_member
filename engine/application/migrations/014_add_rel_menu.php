@@ -207,6 +207,17 @@ class Migration_add_rel_menu extends MY_Migration {
                 )
             )
         );
+        $traing = array(
+            array(
+                'caption'       => 'PELATIHAN',
+                'title'         => 'Menu pelatihan',
+                'icon'          => 'fa-graduation-cap',
+                'link'          => 'training/index',
+                'sort'          => 5,
+                'admin'         => 0,
+                'hidden'        => 0
+            )
+        );
         if (!function_exists('menu_filter_url')){
             function menu_filter_url($data){
                 if (isset($data['link']) && $data['link']){
@@ -216,7 +227,7 @@ class Migration_add_rel_menu extends MY_Migration {
                 return $data;
             }
         }
-        $this->_seed_extend(array_merge_recursive($dashboard, $root, $peserta, $event),0,'parent','menu_filter_url');
+        $this->_seed_extend(array_merge_recursive($dashboard, $root, $peserta, $event, $traing),0,'parent','menu_filter_url');
     }
     
 }

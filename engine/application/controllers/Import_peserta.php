@@ -90,6 +90,10 @@ class Import_peserta extends CI_Controller {
 
         echo 'Finished.'. PHP_EOL;
     }
+
+    function convert_training_2_event(){
+        $this->load->model(array('rel_member_m','rel_training_m'));
+    }
 }
 
 class CsvImporter 
