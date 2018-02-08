@@ -719,8 +719,8 @@
                                                 for (var t in data.item.trainings) {
                                                     var tra = data.item.trainings[t];
                                                     var s = '<tr>';
-                                                    s += '<td>' + tra.nama_pelatihan + '</td>';
-                                                    s += '<td class="hidden-xs">' + tra.nama_penyelenggara + '</td>';
+                                                    s += '<td>' + tra.training + '</td>';
+                                                    s += '<td class="hidden-xs">' + tra.penyelenggara + '</td>';
                                                     s += '<td class="text-center">' + tra.tahun + '</td>';
                                                     s += '</tr>';
 

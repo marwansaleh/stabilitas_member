@@ -221,7 +221,7 @@ class Member extends REST_Api {
     }
     
     public function get_get(){
-        $this->load->model(array('rel_member_m','rel_pendidikan_m','rel_training_m'));
+        $this->load->model(array('rel_member_m','rel_pendidikan_m','rel_training_m','ref_training_m'));
         $result = array('status'=>FALSE);
         
         $id = $this->get('id');
@@ -231,7 +231,13 @@ class Member extends REST_Api {
             //data pendidikan
             $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$id));
             //data training
-            $item->trainings = $this->rel_training_m->get_by(array('anggota'=>$id));
+            $sql = "SELECT P.anggota, T.training, T.penyelenggara, T.tahun FROM `rel_pelatihan_anggota` P JOIN `ref_training` T ON T.id = P.pelatihan WHERE P.anggota=$id";
+            $trainings = $this->db->query($sql)->result();
+            if ($trainings) {
+                $item->trainings = $trainings;
+            } else {
+                $item->trainings = null;
+            }
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
@@ -250,7 +256,7 @@ class Member extends REST_Api {
         if ($item){
             $item->agama = $this->ref_agama_m->get($item->agama);
             $item->events = array();
-            $events = $this->rel_participant_m->get_by(array('anggota'=>$item->id));
+            $events = $this->rel_participant_m->get_by(array('anggota'=>$id));
             if ($events){
                 foreach($events as $event_peserta){
                     $event = $this->ref_event_m->get($event_peserta->event);
@@ -262,8 +268,15 @@ class Member extends REST_Api {
                 }
             }
             
-            $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$item->id));
-            $item->trainings = $this->rel_training_m->get_by(array('anggota'=>$item->id));
+            $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$id));
+            //data training
+            $sql = "SELECT P.anggota, T.training, T.penyelenggara, T.tahun FROM `rel_pelatihan_anggota` P JOIN `ref_training` T ON T.id = P.pelatihan WHERE P.anggota=$id";
+            $trainings = $this->db->query($sql)->result();
+            if ($trainings) {
+                $item->trainings = $trainings;
+            } else {
+                $item->trainings = null;
+            }
             $result['status'] = TRUE;
             $result['item'] = $item;
         }else{
