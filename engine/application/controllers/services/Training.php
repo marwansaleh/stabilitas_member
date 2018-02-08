@@ -117,7 +117,6 @@ class Training extends REST_Api {
             if ($participants){
                 foreach ($participants as $participant){
                     $member = $this->rel_member_m->get($participant->anggota);
-                    $member->present = $participant->present;
                     $item->participants [] = $member;
                 }
             }
