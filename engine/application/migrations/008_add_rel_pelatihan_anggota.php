@@ -20,21 +20,11 @@ class Migration_add_rel_pelatihan_anggota extends MY_Migration {
             'constraint' => 11,
             'null' => FALSE
         ),
-        'nama_pelatihan'    => array(
-            'type' => 'VARCHAR',
-            'constraint' => 50,
-            'null' => FALSE
-        ),
-        'nama_penyelenggara'    => array(
-            'type' => 'VARCHAR',
-            'constraint' => 50,
-            'null' => TRUE
-        ),
-        'tahun'    => array(
+        'pelatihan'    => array(
             'type' => 'INT',
-            'constraint' => 4,
+            'constraint' => 11,
             'null' => FALSE
-        ),
+        )
     );
 }
 

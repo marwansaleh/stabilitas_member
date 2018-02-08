@@ -107,16 +107,12 @@ class Member extends REST_Api {
             
             //update data training
             $this->rel_training_m->delete_where(array('anggota'=>$success_id));
-            $nama_pelatihan = $this->post('tra_nama_pelatihan');
-            $nama_penyelenggara = $this->post('tra_nama_penyelenggara');
-            $tahun_training = $this->post('tra_tahun');
-            for ($i=0; $i<count($nama_pelatihan); $i++){
-                if (!empty($nama_pelatihan[$i])){
+            $pelatihan = $this->post('tra_pelatihan');
+            for ($i=0; $i<count($pelatihan); $i++){
+                if (!empty($pelatihan[$i])){
                     $this->rel_training_m->save(array(
                         'anggota'           => $success_id,
-                        'nama_pelatihan'    => $nama_pelatihan[$i],
-                        'nama_penyelenggara'=> $nama_penyelenggara[$i],
-                        'tahun'             => $tahun_training[$i]
+                        'pelatihan'         => $pelatihan[$i]
                     ));
                 }
             }
@@ -231,7 +227,7 @@ class Member extends REST_Api {
             //data pendidikan
             $item->educations = $this->rel_pendidikan_m->get_by(array('anggota'=>$id));
             //data training
-            $sql = "SELECT P.anggota, T.training, T.penyelenggara, T.tahun FROM `rel_pelatihan_anggota` P JOIN `ref_training` T ON T.id = P.pelatihan WHERE P.anggota=$id";
+            $sql = "SELECT T.id, T.training, T.penyelenggara, T.tahun FROM `rel_pelatihan_anggota` P JOIN `ref_training` T ON T.id = P.pelatihan WHERE P.anggota=$id";
             $trainings = $this->db->query($sql)->result();
             if ($trainings) {
                 $item->trainings = $trainings;

@@ -246,23 +246,15 @@
                         <div class="tab-pane fade" id="training">
                             <h5>Daftar Training</h5>
                             <div class="row training">
-                                <div class="col-sm-5">
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Nama pelatihan</label>
-                                        <input type="text" name="tra_nama_pelatihan[]" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Penyelenggara</label>
-                                        <input type="text" name="tra_nama_penyelenggara[]" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label>Tahun</label>
                                         <div class="input-group">
-                                            <input type="number" min="1945" max="2030" name="tra_tahun[]" maxlength="4" class="form-control">
+                                            <select class="form-control" name="tra_pelatihan[]">
+                                                <option value=""></option>
+                                                <?php foreach ($trainings as $training): ?>
+                                                <option value="<?php echo $training->id; ?>"><?php echo $training->training; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-primary btn-add" type="button"><span class="fa fa-plus"></span></button>
                                                 <button class="btn btn-danger btn-del" type="button"><span class="fa fa-minus"></span></button>
@@ -989,16 +981,12 @@
             }
             var $tra = $ctn.find('.training').eq(0);
             //empty the field
-            $tra.find('[name="tra_nama_pelatihan[]"]').val('');
-            $tra.find('[name="tra_nama_penyelenggara[]"]').val('');
-            $tra.find('[name="tra_tahun[]"]').val('');
+            $tra.find('[name="tra_pelatihan[]"]').val('');
         },
         insertTraining: function(items){
             for (var i=0; i<items.length;i++){
                 var $tra = $('#training').find('.training').eq(i);
-                $tra.find('[name="tra_nama_pelatihan[]"]').val(items[i].nama_pelatihan);
-                $tra.find('[name="tra_nama_penyelenggara[]"]').val(items[i].nama_penyelenggara);
-                $tra.find('[name="tra_tahun[]"]').val(items[i].tahun);
+                $tra.find('[name="tra_pelatihan[]"]').val(items[i].id);
                 
                 if (i<items.length-1){
                     var $clone = $tra.clone(true);
