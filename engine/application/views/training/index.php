@@ -72,29 +72,24 @@
                 <h4 class="modal-title" id="myModalDetailLabel">DETAIL DATA TRAINING</h4>
             </div>
             <div class="modal-body">
-                <div class="widget">
-                    <div class="widget-header"><h3>SUMMARY DATA PELATIHAN</h3></div>
-                    <div class="widget-content">
-                        <table class="table table-bordered table-condensed small" id="tb-detail">
-                            <tbody>
-                                <tr>
-                                    <th colspan="2" scope="row" class="active">NAMA PELATIHAN</th>
-                                <tr>
-                                    <td colspan="2" class="training"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="active">PENYELENGGARA</th>
-                                    <th scope="row" class="active text-center">TAHUN</th>
+                <table class="table table-bordered table-condensed small" id="tb-detail">
+                    <tbody>
+                        <tr>
+                            <th colspan="2" scope="row" class="active">NAMA PELATIHAN</th>
+                        <tr>
+                            <td colspan="2" class="training"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="active">PENYELENGGARA</th>
+                            <th scope="row" class="active text-center">TAHUN</th>
 
-                                </tr>
-                                <tr>
-                                    <td class="penyelenggara"></td>
-                                    <td class="tahun text-center"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                        </tr>
+                        <tr>
+                            <td class="penyelenggara"></td>
+                            <td class="tahun text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="widget">
                     <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI PELATIHAN</h3></div>
                     <div class="widget-content" style="max-height:200px; overflow-y:auto;">
