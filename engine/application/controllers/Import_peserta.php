@@ -12,6 +12,9 @@ class Import_peserta extends CI_Controller {
             'nama'=>1,'jenis_kelamin'=>2, 'tempat_lahir'=>4, 'tanggal_lahir'=>5,
             'agama'=>3, 'no_hp'=>6, 'alamat_email'=>7, 'nama_perusahaan'=>8
         ];
+
+        $filename = 'static/userdata/import/'.$filename;
+
         echo 'Running parsing file:"'.$filename.'"'. PHP_EOL;
 
         $importer = new CsvImporter($filename, false, ','); 
@@ -22,6 +25,8 @@ class Import_peserta extends CI_Controller {
             foreach ($rows as $row) {
                 if (!$row[$map['nama']]) {
                     $failed++;
+
+                    echo 'Not valid name'. PHP_EOL;
                     continue;
                 }
 
@@ -62,7 +67,7 @@ class Import_peserta extends CI_Controller {
                 
                 if ($peserta_id) {
                     //Update nomor pendaftaran
-                    $this->rel_member_m(array('nomor_registrasi'=>format_noreg(date('Y'),date('m'), $peserta_id)));
+                    $this->rel_member_m->save(array('nomor_registrasi'=>format_noreg(date('Y'),date('m'), $peserta_id)), $peserta_id);
                     //Ambil nama pelatihan
                     $training_title = $row[9];
                     if ($training_title) {
@@ -95,7 +100,7 @@ class CsvImporter
     //-------------------------------------------------------------------- 
     function __construct($file_name, $parse_header=false, $delimiter="\t", $length=8000) 
     { 
-        $this->fp = fopen($file_name, "r"); 
+        $this->fp = fopen($file_name, "r") or die('Failed open file '. $file_name); 
         $this->parse_header = $parse_header; 
         $this->delimiter = $delimiter; 
         $this->length = $length; 

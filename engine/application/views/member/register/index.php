@@ -716,7 +716,7 @@
                                             
                                             tb_tra.empty();
                                             if (data.item.trainings.length > 0) {
-                                                for (var t in data.item.educations) {
+                                                for (var t in data.item.trainings) {
                                                     var tra = data.item.trainings[t];
                                                     var s = '<tr>';
                                                     s += '<td>' + tra.nama_pelatihan + '</td>';
