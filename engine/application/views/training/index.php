@@ -97,7 +97,7 @@
                 </div>
                 <div class="widget">
                     <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI PELATIHAN</h3></div>
-                    <div class="widget-content" style="max-height:250px; overflow-y:auto;">
+                    <div class="widget-content" style="max-height:200px; overflow-y:auto;">
                         <table class="table table-bordered table-striped table-condensed small" id="tb-participants">
                             <thead>
                                 <tr>
