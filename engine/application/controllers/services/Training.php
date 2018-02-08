@@ -113,12 +113,14 @@ class Training extends REST_Api {
         
         if ($item){
             $item->participants = array();
-            $participants = $this->rel_training_m->get_by(array('pelatihan'=>$id));
+            $sql = "SELECT P.anggota, M.nama, M.nama_perusahaan, M.jabatan FROM `rel_pelatihan_anggota` P
+                    JOIN `rel_anggota` M ON M.id=P.anggota
+                    WHERE P.pelatihan=$id";
+            $participants = $this->db->query($sql)->result();
             if ($participants){
-                foreach ($participants as $participant){
-                    $member = $this->rel_member_m->get($participant->anggota);
-                    $item->participants [] = $member;
-                }
+                $item->participants = $participants;
+            } else {
+                $item->participants = null;
             }
             
             $result['status'] = TRUE;
