@@ -91,7 +91,7 @@
                     </tbody>
                 </table>
                 <div class="widget">
-                    <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI PELATIHAN</h3></div>
+                    <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI PELATIHAN [<span class="jumlah-peserta"></span>]</h3></div>
                     <div class="widget-content">
                         <table class="table table-bordered table-striped table-condensed small" id="tb-participants">
                             <thead>
@@ -214,6 +214,8 @@
                                             table.find('.training').html(data.item.training);
                                             table.find('.penyelenggara').html(data.item.penyelenggara);
                                             table.find('.tahun').html(data.item.tahun);
+
+                                            $dlg.find('.jumlah-peserta').html(Number(data.item.participants.paging.total_records).format(',','.',0)+' orang');
                                             
                                             _this.drawDataTable(data.item.participants);
                                             _this.drawPaging(data.item.participants.paging);
