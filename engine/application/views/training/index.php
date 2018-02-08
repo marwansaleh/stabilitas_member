@@ -92,10 +92,11 @@
                 </table>
                 <div class="widget">
                     <div class="widget-header"><h3>DAFTAR PESERTA TERDAFTAR DI PELATIHAN</h3></div>
-                    <div class="widget-content" style="max-height:200px; overflow-y:auto;">
+                    <div class="widget-content">
                         <table class="table table-bordered table-striped table-condensed small" id="tb-participants">
                             <thead>
                                 <tr>
+                                    <th class="text-center hidden-xs">#</th>
                                     <th>NAMA PESERTA</th>
                                     <th class="hidden-xs">PERUSAHAAN</th>
                                     <th class="hidden-xs">JABATAN</th>
@@ -103,6 +104,12 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <nav aria-label="Search results pages">
+                            <ul class="pager">
+                                <li class="previous"><a href="#">Previous</a></li>
+                                <li class="next"><a href="#">Next</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -114,6 +121,8 @@
 </div>
 <script type="text/javascript">
     var Manager_JS = {
+        _lastId: null,
+        _lastPage: 1,
         init: function(){
             var _this = this;
             var table = $('#myDataTable').DataTable({
@@ -186,6 +195,7 @@
                             enabled: false,
                             action: function( e, dt, btn, config ){
                                 var item = dt.row({selected: true}).data();
+                                _this._lastId = item.id;
                                 if (item){
                                     var btnIcon = $(btn).find('i');
                                     btnIcon.removeClass('fa-eye').addClass('fa-spin fa-spinner');
@@ -193,7 +203,7 @@
                                     var $dlg = $('#myModalDetail');
                                     $dlg.find('.modal-title').html('DETAIL DATA TRAINING');
                                     $.ajax({
-                                        url:"<?php echo get_action_url('services/training/detail'); ?>/"+item.id,
+                                        url:"<?php echo get_action_url('services/training/detail'); ?>",
                                         type: "GET",
                                         data: {id: item.id}
                                     }).then(function(data){
@@ -205,22 +215,8 @@
                                             table.find('.penyelenggara').html(data.item.penyelenggara);
                                             table.find('.tahun').html(data.item.tahun);
                                             
-                                            tb_participant.empty();
-                                            if (data.item.participants.length > 0){
-                                                
-                                                for (var p in data.item.participants){
-                                                    var participant = data.item.participants[p];
-                                                    var s = '<tr>';
-                                                    s+='<td>'+participant.nama+'</td>';
-                                                    s+='<td class="hidden-xs">'+participant.nama_perusahaan+'</td>';
-                                                    s+='<td class="hidden-xs">'+participant.jabatan+'</td>';
-                                                    
-                                                    tb_participant.append(s);
-                                                }
-                                            }else{
-                                                var s ='<tr><td colspan="3">Tidak ada data peserta di pelatihan ini</td></tr>';
-                                                tb_participant.append(s);
-                                            }
+                                            _this.drawDataTable(data.item.participants);
+                                            _this.drawPaging(data.item.participants.paging);
                                             $dlg.modal();
                                         }else{
                                             alert(data.message);
@@ -295,6 +291,71 @@
                     
                 }
             });
+
+            $('ul.pager').on('click','li', function (e){
+                var page = _this._lastPage;
+                if ($(this).hasClass('previous')) {
+                    page = page - 1;
+                } else {
+                    page = page + 1;
+                }
+                e.preventDefault();
+                $.ajax({
+                    url:"<?php echo get_action_url('services/training/detail'); ?>",
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {id:_this._lastId,page:page}
+                }).then(function(data) {
+                    _this.drawDataTable(data.item.participants);
+                    _this.drawPaging(data.item.participants.paging);
+                });
+            });
+        },
+        drawDataTable: function(data) {
+            var _this = this;
+            var $tbl = $('table#tb-participants');
+
+            $tbl.find('tbody').empty();
+            if (!data.items) {
+                $tbl.find('tbody').append('<tr><td colspan="4">'+data.message+'</td></tr>');
+            } else {
+                if (data.items.length > 0) {
+                    var curPage = data.paging.current_page;
+                    var numrec = data.paging.numrec_page;
+                    var offset = (curPage-1) * numrec;
+                    console.log(curPage);
+                    for (var i in data.items) {
+                        var item = data.items[i];
+                        var s = '<tr>';
+                        s+='<td class="text-center hidden-xs">'+(offset+parseInt(i)+1)+'</td>';
+                        s+='<td>'+item.nama+'</td>';
+                        s+='<td class="hidden-xs">'+item.nama_perusahaan+'</td>';
+                        s+='<td class="hidden-xs">'+item.jabatan+'</td>';
+                        s+='</tr>';
+
+                        $tbl.find('tbody').append(s);
+                    }
+                } else {
+                    $tbl.find('tbody').append('<tr><td colspan="4">Maaf. Tidak ada data peserta ditemukan.</td></tr>');
+                } 
+            }
+        },
+        drawPaging: function (data){
+            this._lastPage = parseInt(data.current_page);
+
+            var $previous = $('ul.pager li.previous');
+            var $next = $('ul.pager li.next');
+            if (parseInt(data.current_page) < parseInt(data.total_pages)){
+                $next.removeClass('disabled');
+            } else {
+                $next.addClass('disabled');
+            }
+
+            if (parseInt(data.current_page) <= 1) {
+                $previous.addClass('disabled');
+            } else {
+                $previous.removeClass('disabled');
+            }
         }
     };
     $(document).ready(function(){

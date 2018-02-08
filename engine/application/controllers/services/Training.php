@@ -112,16 +112,36 @@ class Training extends REST_Api {
         $item = $this->ref_training_m->get($id);
         
         if ($item){
-            $item->participants = array();
-            $sql = "SELECT P.anggota, M.nama, M.nama_perusahaan, M.jabatan FROM `rel_pelatihan_anggota` P
-                    JOIN `rel_anggota` M ON M.id=P.anggota
-                    WHERE P.pelatihan=$id";
-            $participants = $this->db->query($sql)->result();
-            if ($participants){
-                $item->participants = $participants;
-            } else {
-                $item->participants = null;
+            $item->participants = [];
+
+            //claculate peserta
+            $page = $this->get('page') ? $this->get('page') : 1;
+            $numrec = $this->get('numrec') ? $this->get('numrec') : 10;
+            $offset = ($page-1) * $numrec;
+            $item->participants['paging']['current_page'] = $page;
+            $item->participants['paging']['numrec_page'] = $numrec;
+            $item->participants['paging']['offset'] = $offset;
+
+            $total_records = $this->rel_training_m->get_count(array('pelatihan'=>$id));
+            $item->participants['paging']['total_records'] = $total_records;
+            if ($total_records) {
+                $total_pages = ceil ($total_records / $numrec);
+                $item->participants['paging']['total_pages'] = $total_pages;
+
+                $sql = "SELECT P.anggota, M.nama, M.nama_perusahaan, M.jabatan FROM `rel_pelatihan_anggota` P
+                        JOIN `rel_anggota` M ON M.id=P.anggota
+                        WHERE P.pelatihan=$id
+                        LIMIT $numrec OFFSET $offset";
+                $participants = $this->db->query($sql)->result();
+                if ($participants){
+                    $item->participants['items_count'] = count($participants);
+                    $item->participants['items'] = $participants;
+                } else {
+                    $item->participants['items_count'] = 0;
+                    $item->participants['items'] = null;
+                }
             }
+            
             
             $result['status'] = TRUE;
             $result['item'] = $item;
