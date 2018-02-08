@@ -91,8 +91,27 @@ class Import_peserta extends CI_Controller {
         echo 'Finished.'. PHP_EOL;
     }
 
-    function convert_training_2_event(){
-        $this->load->model(array('rel_member_m','rel_training_m'));
+    function convert_training(){
+        $this->load->model(array('rel_member_m','rel_training_m', 'ref_training_m'));
+
+        $result = $this->db->query('SELECT DISTINCT(nama_pelatihan) FROM `rel_pelatihan_anggota`')->result();
+        if ($result) {
+            foreach ($result as $item) {
+                //check apakah sudah terdaftar di master training
+                if ($this->ref_training_m->get_count(array('training'=>$item->nama_pelatihan))==0) {
+                    $training_id = $this->ref_training_m->save(array(
+                        'training'  => $item->nama_pelatihan,
+                        'penyelenggara' => 'LPPI',
+                        'tahun' => 0
+                    ));
+
+                    if ($training_id) {
+                        //update table pelatihan peserta
+                        $this->db->simple_query("UPDATE `rel_pelatihan_anggota` SET pelatihan=$training_id WHERE nama_pelatihan='".$item->nama_pelatihan."'");
+                    }
+                }
+            }
+        }
     }
 }
 

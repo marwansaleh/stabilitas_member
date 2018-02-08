@@ -151,7 +151,8 @@ class Member extends REST_Api {
             $this->db->like('nama', $search['value']);
             $this->db->or_like('nomor_registrasi', $search['value']);
             $this->db->or_like('nama_perusahaan', $search['value']);
-            
+            $this->db->or_like('no_hp', $search['value']);
+            $this->db->or_like('tempat_lahir', $search['value']);
         }
         //get filtered count
         $totalFiltered = $this->rel_member_m->get_count();
@@ -165,6 +166,8 @@ class Member extends REST_Api {
                 $this->db->like('nama', $search['value']);
                 $this->db->or_like('nomor_registrasi', $search['value']);
                 $this->db->or_like('nama_perusahaan', $search['value']);
+                $this->db->or_like('no_hp', $search['value']);
+                $this->db->or_like('tempat_lahir', $search['value']);
             }
             //apply offset and limit of data
             $this->db->order_by($order_by,$order_dir);
