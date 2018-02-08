@@ -79,8 +79,10 @@ class Import_peserta extends CI_Controller {
                         ));
                     }
                 }
+
+                $count++;
             }
-            $count++;
+            
         }
 
         echo 'Success row:' . $count. PHP_EOL;
