@@ -106,8 +106,8 @@
                         </table>
                         <nav aria-label="Search results pages">
                             <ul class="pager">
-                                <li class="previous"><a href="#">Previous</a></li>
-                                <li class="next"><a href="#">Next</a></li>
+                                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                                <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
                             </ul>
                         </nav>
                     </div>
