@@ -233,6 +233,6 @@ class Migration_add_rel_menu extends MY_Migration {
 }
 
 /*
- * filename : 014_add_rel_menu.php
- * location : /application/migrations/014_add_rel_menu.php
+ * filename : 015_add_rel_menu.php
+ * location : /application/migrations/015_add_rel_menu.php
  */
