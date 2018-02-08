@@ -295,13 +295,18 @@
             });
 
             $('ul.pager').on('click','li', function (e){
+                var $btn = $(this);
+                var $btn_label = $btn.find('span').html();
                 var page = _this._lastPage;
                 if ($(this).hasClass('previous')) {
                     page = page - 1;
                 } else {
                     page = page + 1;
                 }
+
                 e.preventDefault();
+
+                $btn.find('span').html('Wait..');
                 $.ajax({
                     url:"<?php echo get_action_url('services/training/detail'); ?>",
                     method: 'GET',
@@ -310,6 +315,8 @@
                 }).then(function(data) {
                     _this.drawDataTable(data.item.participants);
                     _this.drawPaging(data.item.participants.paging);
+                }).always (function(){
+                    $btn.find('span').html($btn_label);
                 });
             });
         },
