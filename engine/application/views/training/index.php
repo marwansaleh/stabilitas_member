@@ -107,7 +107,7 @@
                         <nav aria-label="Search results pages">
                             <ul class="pager">
                                 <li class="btn-page previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                                <li class="paging-info"><span>#</span></li>
+                                <li class="paging-info"><span style="font-style:italic;">#</span></li>
                                 <li class="btn-page next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
                             </ul>
                         </nav>
