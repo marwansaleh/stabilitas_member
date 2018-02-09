@@ -106,8 +106,9 @@
                         </table>
                         <nav aria-label="Search results pages">
                             <ul class="pager">
-                                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                                <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="btn-page previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                                <li class="paging-info"><span>#</span></li>
+                                <li class="btn-page next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
                             </ul>
                         </nav>
                     </div>
@@ -294,7 +295,7 @@
                 }
             });
 
-            $('ul.pager').on('click','li', function (e){
+            $('ul.pager').on('click','li.btn-page', function (e){
                 var $btn = $(this);
                 var $btn_label = $btn.find('span').html();
                 var page = _this._lastPage;
@@ -338,7 +339,6 @@
                     var curPage = data.paging.current_page;
                     var numrec = data.paging.numrec_page;
                     var offset = (curPage-1) * numrec;
-                    console.log(curPage);
                     for (var i in data.items) {
                         var item = data.items[i];
                         var s = '<tr>';
@@ -360,6 +360,8 @@
 
             var $previous = $('ul.pager li.previous');
             var $next = $('ul.pager li.next');
+            var $info = $('ul.pager li.paging-info');
+
             if (parseInt(data.current_page) < parseInt(data.total_pages)){
                 $next.removeClass('disabled');
             } else {
@@ -371,6 +373,9 @@
             } else {
                 $previous.removeClass('disabled');
             }
+
+            //show paging information
+            $info.find('span').html(data.page_info);
         }
     };
     $(document).ready(function(){

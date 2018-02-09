@@ -140,6 +140,14 @@ class Training extends REST_Api {
                     $item->participants['items_count'] = 0;
                     $item->participants['items'] = null;
                 }
+
+                $item->participants['paging']['page_info'] = sprintf("Showing %s - %s of %s records", 
+                    number_format($offset+1,0), 
+                    number_format($offset+$item->participants['items_count'], 0),
+                    number_format($total_records, 0)
+                ) ;
+            } else {
+                $item->participants['paging']['page_info'] = 'Showing no data';
             }
             
             
