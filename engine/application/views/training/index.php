@@ -298,13 +298,19 @@
                 var $btn = $(this);
                 var $btn_label = $btn.find('span').html();
                 var page = _this._lastPage;
+
+                e.preventDefault();
+
+                if ($(this).hasClass('disabled')){
+                    return;
+                }
                 if ($(this).hasClass('previous')) {
                     page = page - 1;
                 } else {
                     page = page + 1;
                 }
 
-                e.preventDefault();
+                
 
                 $btn.find('span').html('Wait..');
                 $.ajax({
