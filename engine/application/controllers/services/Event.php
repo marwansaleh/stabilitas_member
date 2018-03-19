@@ -214,7 +214,7 @@ class Event extends REST_Api {
             $result['status'] = TRUE;
             $result['event'] = $event;
         
-            $participants = $this->rel_participant_m->get_by(array('event'));
+            $participants = $this->rel_participant_m->get_by(array('event'=>$event_id));
             foreach ($participants as $parti){
                 $parti->ref = $this->rel_member_m->get($parti->anggota);
                 $result['items'][] = $parti;
