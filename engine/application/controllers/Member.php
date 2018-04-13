@@ -22,6 +22,37 @@ class Member extends Admin_Controller {
         $this->data['subview'] = 'member/register/index';
         $this->load->view('_layout_main', $this->data);
     }
+    
+    public function export() {
+        $this->load->model(array('rel_member_m'));
+        
+        //get all data
+        $data = $this->rel_member_m->get();
+        
+        $headers = array();
+        $fields = $this->db->list_fields($this->rel_member_m->get_tablename());
+        foreach ($fields as $field)
+        {
+            $headers[] = $field;
+        }
+        
+        $fp = fopen('php://output', 'w');
+        if ($fp && $data) {
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="export.csv"');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+            fputcsv($fp, $headers);
+            foreach ($data as $row){
+                $item = array();
+                foreach ($fields as $field){
+                    $item[]=$row->$field;
+                }
+                fputcsv($fp, $item);
+            }
+        }
+        fclose($fp);
+    }
 }
 
 /*
