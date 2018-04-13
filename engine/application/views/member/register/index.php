@@ -738,6 +738,13 @@
                             }
                         },
                         {
+                            text: '<i class="fa fa-save"></i><span class="hidden-xs hidden-sm"> Export</span>',
+                            className: 'dt-btn-export btn-sm',
+                            action: function (e, dt, btn, config) {
+                                window.open("<?php echo get_action_url('member/export'); ?>","_blank");
+                            }
+                        },
+                        {
                             text: '<i class="fa fa-recycle"></i><span class="hidden-xs hidden-sm"> Reload</span>',
                             className: 'dt-btn-reload btn-sm',
                             action: function (e, dt, btn, config) {
