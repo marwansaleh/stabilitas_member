@@ -117,7 +117,7 @@
                     <div class="widget-content">
                         <table class="table table-bordered table-condensed table-striped tbl-participants">
                             <thead>
-                                <tr><th>NAMA PESERTA</th><th class="hidden-xs">PERUSAHAAN</th><th class="hidden-xs">JABATAN</th><th class="text-center">#</th></tr>
+                                <tr><th>NOREG</th><th>NAMA PESERTA</th><th class="hidden-xs">PERUSAHAAN</th><th class="hidden-xs">JABATAN</th><th class="text-center">#</th></tr>
                             </thead>
                             <tbody></tbody>
                         </table>
@@ -302,6 +302,7 @@
                                             $tbl.empty();
                                             for (var i in data.items){
                                                 var s = '<tr class="par-'+data.items[i].id+'">';
+                                                s+='<td>'+data.items[i].ref.nomor_registrasi+'</td>';
                                                 s+='<td>'+data.items[i].ref.nama+'</td>';
                                                 s+='<td class="hidden-xs">'+data.items[i].ref.nama_perusahaan+'</td>';
                                                 s+='<td class="hidden-xs">'+data.items[i].ref.jabatan+'</td>';
