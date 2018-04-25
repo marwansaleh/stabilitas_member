@@ -513,7 +513,6 @@
                 }
             });
             $('#myModalParticipant').on('click', '.btn-print', function(){
-                console.log('clicked');
                 $('#myModalParticipant').find('table').printArea();
             });
             
