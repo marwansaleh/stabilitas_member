@@ -121,6 +121,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <button type="button" class="btn bt-print"><span class="fa fa-print"></span> Print</button>
                     </div>
                 </div>
             </div>
@@ -510,6 +511,9 @@
                         }
                     });
                 }
+            });
+            $('#myModalParticipant').on('click', '.btn-print', function(){
+                $('#myModalParticipant').find('table').printArea();
             });
             
             $('#myModalDetail').on('click', '.btn-print', function(){
